@@ -1,11 +1,7 @@
-# Welcome to your Jupyter Book
+# Profile
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
+**Nama:** Ramadhan Dwi Rizki Prayogi<br>
+**NIM:** 220411100163<br>
+**Email:** 220411100163@student.trunojoyo.ac.id<br>
 
-Check out the content pages bundled with this sample book to see more.
-
-```{tableofcontents}
-```
+Saya adalah mahasiswa IT Universitas Trunojoyo Madura yang saat ini sedang menginjak semester akhir. Halaman ini berisi profil singkat untuk keperluan tugas PPW.
