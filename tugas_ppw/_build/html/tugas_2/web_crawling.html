@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -486,7 +486,7 @@ Program ini melakukan crawling data dari Springer Nature API menggunakan beberap
 <section id="menampilkan-informasi-dataset">
 <h2>Menampilkan informasi dataset<a class="headerlink" href="#menampilkan-informasi-dataset" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== INFORMASI DATASET ===&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total records: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total data hasil crawling: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kolom: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi per keyword:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Keyword&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
@@ -495,18 +495,16 @@ Program ini melakukan crawling data dari Springer Nature API menggunakan beberap
 </div>
 <p>Contoh output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">===</span> <span class="n">INFORMASI</span> <span class="n">DATASET</span> <span class="o">===</span>
-<span class="n">Total</span> <span class="n">records</span><span class="p">:</span> <span class="mi">40</span>
+<span class="n">Total</span> <span class="n">data</span> <span class="n">hasil</span> <span class="n">crawling</span><span class="p">:</span> <span class="mi">10</span>
 <span class="n">Kolom</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Keyword&#39;</span><span class="p">,</span> <span class="s1">&#39;DOI&#39;</span><span class="p">,</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span> <span class="s1">&#39;Abstract&#39;</span><span class="p">]</span>
 
 <span class="n">Distribusi</span> <span class="n">per</span> <span class="n">keyword</span><span class="p">:</span>
 <span class="n">Keyword</span>
-<span class="n">web</span> <span class="n">mining</span>               <span class="mi">10</span>
-<span class="n">web</span> <span class="n">usage</span> <span class="n">mining</span>         <span class="mi">10</span>
-<span class="n">data</span> <span class="n">mining</span>              <span class="mi">10</span>
-<span class="n">information</span> <span class="n">retrieval</span>    <span class="mi">10</span>
+<span class="n">web</span> <span class="n">mining</span>     <span class="mi">5</span>
+<span class="n">data</span> <span class="n">mining</span>    <span class="mi">5</span>
 <span class="n">Name</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
 
-<span class="n">Shape</span> <span class="n">dataset</span><span class="p">:</span> <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">Shape</span> <span class="n">dataset</span><span class="p">:</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
