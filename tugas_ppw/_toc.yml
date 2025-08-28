@@ -5,5 +5,5 @@ format: jb-book
 root: intro
 chapters:
 - file: tugas_1/pengantar_ppw
-
+- file: tugas_2/web_crawling
 

@@ -1,0 +1,5 @@
+====jika sidenaf tidak tetap=====
+Remove-Item -Recurse -Force _build; jupyter-book build .
+
+=======update=========
+ghp-import -n -p -f _build/html
