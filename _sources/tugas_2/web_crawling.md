@@ -94,7 +94,7 @@ Contoh output:
 ## Menampilkan informasi dataset
 ```python
 print("=== INFORMASI DATASET ===")
-print(f"Total records: {len(df)}")
+print(f"Total data hasil crawling: {len(df)}")
 print(f"Kolom: {list(df.columns)}")
 print(f"\nDistribusi per keyword:")
 print(df['Keyword'].value_counts())
@@ -104,16 +104,14 @@ print(f"\nShape dataset: {df.shape}")
 Contoh output:
 ```
 === INFORMASI DATASET ===
-Total records: 40
+Total data hasil crawling: 10
 Kolom: ['Keyword', 'DOI', 'Title', 'Abstract']
 
 Distribusi per keyword:
 Keyword
-web mining               10
-web usage mining         10
-data mining              10
-information retrieval    10
+web mining     5
+data mining    5
 Name: count, dtype: int64
 
-Shape dataset: (40, 4)
+Shape dataset: (10, 4)
 ```
