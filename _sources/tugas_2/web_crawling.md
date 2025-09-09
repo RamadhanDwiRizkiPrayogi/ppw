@@ -1,4 +1,4 @@
-# web crawling
+# web crawling - tugas 2
 
 Penjelasan program:
 Program ini melakukan crawling data dari Springer Nature API menggunakan beberapa kata kunci, menyimpan hasil ke file CSV, dan menampilkan ringkasan dataset.
