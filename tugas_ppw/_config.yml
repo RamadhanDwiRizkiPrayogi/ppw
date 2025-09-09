@@ -8,10 +8,27 @@ logo: foto_profil.jpg
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
+# ... existing code ...
 execute:
   execute_notebooks: force
 
-# Define the name of the latex output file for PDF builds
+parse:
+  myst_enable_extensions:
+    # don't forget to list any other extensions you want enabled,
+    # including those that are enabled by default!
+    - amsmath
+    - colon_fence
+    - deflist
+    - dollarmath
+    - html_admonition
+    - html_image
+    - linkify
+    - replacements
+    - smartquotes
+    - substitution
+    - tasklist
+# ... existing code ...
+
 latex:
   latex_documents:
     targetname: book.tex
