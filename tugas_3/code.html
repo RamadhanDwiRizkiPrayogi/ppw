@@ -183,7 +183,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../tugas_1/pengantar_ppw.html">Pengantar Web Mining</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tugas_2/web_crawling.html">web crawling - tugas 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="web_crawling.html">Web Crawling - Tugas 3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tugas_4/web_crawling.html">Web Crawling - Tugas 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tugas_4/web_crawling.html">Jalankan scraping</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </ul>
 
     </div>
@@ -405,10 +419,6 @@ document.write(`
 Requirement already satisfied: six in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from builtwith) (1.17.0)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 24.0 -&gt; 25.2
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
 </div>
 </div>
 <section id="menambahkan-abstrak-bahasa-inggris">
@@ -431,17 +441,9 @@ Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\users\hp\appdata\l
 Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from requests) (2025.8.3)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 24.0 -&gt; 25.2
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: beautifulsoup4 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (4.13.4)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: beautifulsoup4 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (4.13.5)
 Requirement already satisfied: soupsieve&gt;1.2 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from beautifulsoup4) (2.7)
 Requirement already satisfied: typing-extensions&gt;=4.0.0 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from beautifulsoup4) (4.14.1)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 24.0 -&gt; 25.2
-[notice] To update, run: python.exe -m pip install --upgrade pip
 </pre></div>
 </div>
 </div>
@@ -515,160 +517,171 @@ Requirement already satisfied: typing-extensions&gt;=4.0.0 in c:\users\hp\appdat
   warnings.warn(  # noqa: B028
 </pre></div>
 </div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">59</span>
-<span class="g g-Whitespace">     </span><span class="mi">56</span>     <span class="k">return</span> <span class="n">df</span>
-<span class="g g-Whitespace">     </span><span class="mi">58</span> <span class="c1"># Jalankan fungsi</span>
-<span class="ne">---&gt; </span><span class="mi">59</span> <span class="n">ptaa</span><span class="p">()</span>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<span class="nn">Cell In[3], line 10,</span> in <span class="ni">ptaa</span><span class="nt">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://pta.trunojoyo.ac.id/c_search/byprod/10/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">10</span>     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">request</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\api.py:73,</span> in <span class="ni">get</span><span class="nt">(url, params, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">62</span> <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">63</span><span class="w">     </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sends a GET request.</span>
-<span class="g g-Whitespace">     </span><span class="mi">64</span><span class="sd"> </span>
-<span class="g g-Whitespace">     </span><span class="mi">65</span><span class="sd">     :param url: URL for the new :class:`Request` object.</span>
-<span class="sd">   (...)     70     :rtype: requests.Response</span>
-<span class="g g-Whitespace">     </span><span class="mi">71</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">---&gt; </span><span class="mi">73</span>     <span class="k">return</span> <span class="n">request</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\api.py:59,</span> in <span class="ni">request</span><span class="nt">(method, url, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="c1"># By using the &#39;with&#39; statement we are sure the session is closed, thus we</span>
-<span class="g g-Whitespace">     </span><span class="mi">56</span> <span class="c1"># avoid leaving sockets open which can trigger a ResourceWarning in some</span>
-<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="c1"># cases, and look like a memory leak in others.</span>
-<span class="g g-Whitespace">     </span><span class="mi">58</span> <span class="k">with</span> <span class="n">sessions</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">59</span>     <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\sessions.py:589,</span> in <span class="ni">Session.request</span><span class="nt">(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)</span>
-<span class="g g-Whitespace">    </span><span class="mi">584</span> <span class="n">send_kwargs</span> <span class="o">=</span> <span class="p">{</span>
-<span class="g g-Whitespace">    </span><span class="mi">585</span>     <span class="s2">&quot;timeout&quot;</span><span class="p">:</span> <span class="n">timeout</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">586</span>     <span class="s2">&quot;allow_redirects&quot;</span><span class="p">:</span> <span class="n">allow_redirects</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">587</span> <span class="p">}</span>
-<span class="g g-Whitespace">    </span><span class="mi">588</span> <span class="n">send_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">589</span> <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">prep</span><span class="p">,</span> <span class="o">**</span><span class="n">send_kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">591</span> <span class="k">return</span> <span class="n">resp</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\sessions.py:703,</span> in <span class="ni">Session.send</span><span class="nt">(self, request, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">700</span> <span class="n">start</span> <span class="o">=</span> <span class="n">preferred_clock</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">702</span> <span class="c1"># Send the request</span>
-<span class="ne">--&gt; </span><span class="mi">703</span> <span class="n">r</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">705</span> <span class="c1"># Total elapsed time of the request (approximately)</span>
-<span class="g g-Whitespace">    </span><span class="mi">706</span> <span class="n">elapsed</span> <span class="o">=</span> <span class="n">preferred_clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\adapters.py:644,</span> in <span class="ni">HTTPAdapter.send</span><span class="nt">(self, request, stream, timeout, verify, cert, proxies)</span>
-<span class="g g-Whitespace">    </span><span class="mi">641</span>     <span class="n">timeout</span> <span class="o">=</span> <span class="n">TimeoutSauce</span><span class="p">(</span><span class="n">connect</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">read</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">643</span> <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">644</span>     <span class="n">resp</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">645</span>         <span class="n">method</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">646</span>         <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">647</span>         <span class="n">body</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">648</span>         <span class="n">headers</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">649</span>         <span class="n">redirect</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">650</span>         <span class="n">assert_same_host</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">651</span>         <span class="n">preload_content</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">652</span>         <span class="n">decode_content</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">653</span>         <span class="n">retries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_retries</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">654</span>         <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">655</span>         <span class="n">chunked</span><span class="o">=</span><span class="n">chunked</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">656</span>     <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">658</span> <span class="k">except</span> <span class="p">(</span><span class="n">ProtocolError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">)</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">659</span>     <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:789,</span> in <span class="ni">HTTPConnectionPool.urlopen</span><span class="nt">(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, preload_content, decode_content, **response_kw)</span>
-<span class="g g-Whitespace">    </span><span class="mi">786</span> <span class="n">response_conn</span> <span class="o">=</span> <span class="n">conn</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">release_conn</span> <span class="k">else</span> <span class="kc">None</span>
-<span class="g g-Whitespace">    </span><span class="mi">788</span> <span class="c1"># Make the request on the HTTPConnection object</span>
-<span class="ne">--&gt; </span><span class="mi">789</span> <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">790</span>     <span class="n">conn</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">791</span>     <span class="n">method</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">792</span>     <span class="n">url</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">793</span>     <span class="n">timeout</span><span class="o">=</span><span class="n">timeout_obj</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">794</span>     <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">795</span>     <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">796</span>     <span class="n">chunked</span><span class="o">=</span><span class="n">chunked</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">797</span>     <span class="n">retries</span><span class="o">=</span><span class="n">retries</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">798</span>     <span class="n">response_conn</span><span class="o">=</span><span class="n">response_conn</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">799</span>     <span class="n">preload_content</span><span class="o">=</span><span class="n">preload_content</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">800</span>     <span class="n">decode_content</span><span class="o">=</span><span class="n">decode_content</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">801</span>     <span class="o">**</span><span class="n">response_kw</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">802</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">804</span> <span class="c1"># Everything went great!</span>
-<span class="g g-Whitespace">    </span><span class="mi">805</span> <span class="n">clean_exit</span> <span class="o">=</span> <span class="kc">True</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:466,</span> in <span class="ni">HTTPConnectionPool._make_request</span><span class="nt">(self, conn, method, url, body, headers, retries, timeout, chunked, response_conn, preload_content, decode_content, enforce_content_length)</span>
-<span class="g g-Whitespace">    </span><span class="mi">463</span> <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">464</span>     <span class="c1"># Trigger any extra validation we need to do.</span>
-<span class="g g-Whitespace">    </span><span class="mi">465</span>     <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">466</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_validate_conn</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">467</span>     <span class="k">except</span> <span class="p">(</span><span class="n">SocketTimeout</span><span class="p">,</span> <span class="n">BaseSSLError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">468</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_raise_timeout</span><span class="p">(</span><span class="n">err</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout_value</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:1095,</span> in <span class="ni">HTTPSConnectionPool._validate_conn</span><span class="nt">(self, conn)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1093</span> <span class="c1"># Force connect early to allow us to validate the connection.</span>
-<span class="g g-Whitespace">   </span><span class="mi">1094</span> <span class="k">if</span> <span class="n">conn</span><span class="o">.</span><span class="n">is_closed</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1095</span>     <span class="n">conn</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1097</span> <span class="c1"># TODO revise this, see https://github.com/urllib3/urllib3/issues/2791</span>
-<span class="g g-Whitespace">   </span><span class="mi">1098</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">conn</span><span class="o">.</span><span class="n">is_verified</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">conn</span><span class="o">.</span><span class="n">proxy_is_verified</span><span class="p">:</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connection.py:730,</span> in <span class="ni">HTTPSConnection.connect</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">727</span>     <span class="c1"># Remove trailing &#39;.&#39; from fqdn hostnames to allow certificate validation</span>
-<span class="g g-Whitespace">    </span><span class="mi">728</span>     <span class="n">server_hostname_rm_dot</span> <span class="o">=</span> <span class="n">server_hostname</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">730</span>     <span class="n">sock_and_verified</span> <span class="o">=</span> <span class="n">_ssl_wrap_socket_and_match_hostname</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">731</span>         <span class="n">sock</span><span class="o">=</span><span class="n">sock</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">732</span>         <span class="n">cert_reqs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cert_reqs</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">733</span>         <span class="n">ssl_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ssl_version</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">734</span>         <span class="n">ssl_minimum_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ssl_minimum_version</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">735</span>         <span class="n">ssl_maximum_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ssl_maximum_version</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">736</span>         <span class="n">ca_certs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ca_certs</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">737</span>         <span class="n">ca_cert_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ca_cert_dir</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">738</span>         <span class="n">ca_cert_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ca_cert_data</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">739</span>         <span class="n">cert_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cert_file</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">740</span>         <span class="n">key_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">key_file</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">741</span>         <span class="n">key_password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">key_password</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">742</span>         <span class="n">server_hostname</span><span class="o">=</span><span class="n">server_hostname_rm_dot</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">743</span>         <span class="n">ssl_context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ssl_context</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">744</span>         <span class="n">tls_in_tls</span><span class="o">=</span><span class="n">tls_in_tls</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">745</span>         <span class="n">assert_hostname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">assert_hostname</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">746</span>         <span class="n">assert_fingerprint</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">assert_fingerprint</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">747</span>     <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">748</span>     <span class="bp">self</span><span class="o">.</span><span class="n">sock</span> <span class="o">=</span> <span class="n">sock_and_verified</span><span class="o">.</span><span class="n">socket</span>
-<span class="g g-Whitespace">    </span><span class="mi">750</span> <span class="c1"># If an error occurs during connection/handshake we may need to release</span>
-<span class="g g-Whitespace">    </span><span class="mi">751</span> <span class="c1"># our lock so another connection can probe the origin.</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connection.py:909,</span> in <span class="ni">_ssl_wrap_socket_and_match_hostname</span><span class="nt">(sock, cert_reqs, ssl_version, ssl_minimum_version, ssl_maximum_version, cert_file, key_file, key_password, ca_certs, ca_cert_dir, ca_cert_data, assert_hostname, assert_fingerprint, server_hostname, ssl_context, tls_in_tls)</span>
-<span class="g g-Whitespace">    </span><span class="mi">906</span>     <span class="k">if</span> <span class="n">is_ipaddress</span><span class="p">(</span><span class="n">normalized</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">907</span>         <span class="n">server_hostname</span> <span class="o">=</span> <span class="n">normalized</span>
-<span class="ne">--&gt; </span><span class="mi">909</span> <span class="n">ssl_sock</span> <span class="o">=</span> <span class="n">ssl_wrap_socket</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">910</span>     <span class="n">sock</span><span class="o">=</span><span class="n">sock</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">911</span>     <span class="n">keyfile</span><span class="o">=</span><span class="n">key_file</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">912</span>     <span class="n">certfile</span><span class="o">=</span><span class="n">cert_file</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">913</span>     <span class="n">key_password</span><span class="o">=</span><span class="n">key_password</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">914</span>     <span class="n">ca_certs</span><span class="o">=</span><span class="n">ca_certs</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">915</span>     <span class="n">ca_cert_dir</span><span class="o">=</span><span class="n">ca_cert_dir</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">916</span>     <span class="n">ca_cert_data</span><span class="o">=</span><span class="n">ca_cert_data</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">917</span>     <span class="n">server_hostname</span><span class="o">=</span><span class="n">server_hostname</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">918</span>     <span class="n">ssl_context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">919</span>     <span class="n">tls_in_tls</span><span class="o">=</span><span class="n">tls_in_tls</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">920</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">922</span> <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">923</span>     <span class="k">if</span> <span class="n">assert_fingerprint</span><span class="p">:</span>
-
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\util\ssl_.py:447,</span> in <span class="ni">ssl_wrap_socket</span><span class="nt">(sock, keyfile, certfile, cert_reqs, ca_certs, server_hostname, ssl_version, ciphers, ssl_context, ca_cert_dir, key_password, ca_cert_data, tls_in_tls)</span>
-<span class="g g-Whitespace">    </span><span class="mi">445</span> <span class="k">if</span> <span class="n">ca_certs</span> <span class="ow">or</span> <span class="n">ca_cert_dir</span> <span class="ow">or</span> <span class="n">ca_cert_data</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">446</span>     <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">447</span>         <span class="n">context</span><span class="o">.</span><span class="n">load_verify_locations</span><span class="p">(</span><span class="n">ca_certs</span><span class="p">,</span> <span class="n">ca_cert_dir</span><span class="p">,</span> <span class="n">ca_cert_data</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">448</span>     <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">449</span>         <span class="k">raise</span> <span class="n">SSLError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
-</pre></div>
-</div>
-</div>
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>penulis</th>
+      <th>judul</th>
+      <th>pembimbing_pertama</th>
+      <th>pembimbing_kedua</th>
+      <th>abstrak_indonesia</th>
+      <th>abstrak_inggris</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A.Ubaidillah S.Kom</td>
+      <td>PERANCANGAN DAN IMPLEMENTASI SISTEM DATABASE \...</td>
+      <td>Budi Setyono M.T</td>
+      <td>Hermawan S.T</td>
+      <td>Sistem  informasi  akademik  (SIAKAD) merupaka...</td>
+      <td>Academic information systems (SIAKAD) is an in...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>M. Basith Ardianto,</td>
+      <td>APLIKASI KONTROL DAN MONITORING JARINGAN KOMPU...</td>
+      <td>Drs. Budi Soesilo, MT</td>
+      <td>Koko Joni, ST</td>
+      <td>Berjalannya koneksi jaringan komputer dengan l...</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Akhmad Suyandi, S.Kom</td>
+      <td>RANCANG BANGUN APLIKASI PROXY SERVER UNTUK\r\n...</td>
+      <td>Drs. Budi Soesilo, M.T</td>
+      <td>Hermawan, ST, MT</td>
+      <td>Web server adalah sebuah perangkat lunak serve...</td>
+      <td>Web server is a server software functioning to...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Heri Supriyanto</td>
+      <td>SISTEM PENDUKUNG KEPUTUSAN OPTIMASI PENJADWALA...</td>
+      <td>Mulaab, S.Si., M.Kom</td>
+      <td>Firli Irhamni, ST., M.Kom</td>
+      <td>Penjadwalan  kuliah  di  Perguruan  Tinggi  me...</td>
+      <td>Scheduling  courses  in  universities  is  a  ...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Septian Rahman Hakim</td>
+      <td>SISTEM AUGMENTED REALITY ANIMASI BENDA BERGERA...</td>
+      <td>Arik Kurniawati, S.Kom., M.T.</td>
+      <td>Haryanto, S.T., M.T.</td>
+      <td>Seiring perkembangan teknologi yang ada diduni...</td>
+      <td>As the development of technology existing in t...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Adi Chandra Laksono</td>
+      <td>Gerak Pekerja Pada Game Real Time Strategy Men...</td>
+      <td>Kurniawan Eka P, S.Kom., Msc</td>
+      <td>Arik Kurniawati, S.Kom., M.T.</td>
+      <td>Gerak pekerja ada pada game yang memiliki genr...</td>
+      <td>Workers' movements in the game that has no gen...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NURRACHMAT</td>
+      <td>RANCANG BANGUN GAME PERAWATAN SAPI KARAPAN MEN...</td>
+      <td>Arik Kurniawati, S.Kom., M.T.</td>
+      <td>Kurniawan Eka Permana, S.Kom., MSc.</td>
+      <td>Perkembangan game yang semakin pesat, memberik...</td>
+      <td>The rapid development of the game, providing a...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Muhammad Choirur Rozi</td>
+      <td>EKSTRAKSI FITUR BERBASIS TWO DIMENSIONAL LINEA...</td>
+      <td>Dr. Arif Muntasa, S.Si.,M.T</td>
+      <td>Fitri Damayanti, S.Kom.,M.kom</td>
+      <td>Sistem pengenalan wajah adalah suatu sistem un...</td>
+      <td>Face recognition system is a system to recogni...</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>M Khoiril Anwar</td>
+      <td>IMPLEMENTASI  ALGORITMA PRIM  DAN DEPTH FIRST ...</td>
+      <td>Cucun Very Angkoso, S.T., M.T.</td>
+      <td>Arik Kurniawati S. Kom., M.T.</td>
+      <td>Teknologi mobile game beroperating system open...</td>
+      <td>Mobile technology is an open source game devel...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>MALIKUL HAMZAH</td>
+      <td>Perancangan Sistem Informasi Badan Kepegawaian...</td>
+      <td>Moch. Kautsar Sophan, S.Kom., M.MT.</td>
+      <td>Yeni Kustiyaningsih, S.Kom., M.Kom.</td>
+      <td>Kantor Badan Kepegawaian kota Bangkalan adalah...</td>
+      <td>Office of Personnel Agency is Bangkalan city g...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Norman</td>
+      <td>PEMANFAATAN TOGAF ADM UNTUK PERANCANGAN SISTEM...</td>
+      <td>M. Kautsar Sophan, S.Kom., M. MT.</td>
+      <td>Yeni Kustiyahningsih S.Kom., M.Kom.</td>
+      <td>Penyusunan Sistem Informasi Dinas Perindustria...</td>
+      <td>Preparation of the Information Systems Dinas P...</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Robiatul Adawiyah, S.Kom</td>
+      <td>APLIKASI METODE FUZZY ANALYTIC NETWORK PROCESS...</td>
+      <td>Diana Rahmawati, S.T, M.T</td>
+      <td>Budi Dwi Satoto, S.T, M.Kom</td>
+      <td>Perusahaan pemerintah maupun swasta mempunyai ...</td>
+      <td>Government and private companies have a goal t...</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Desy Mariana S. Kom</td>
+      <td>SISTEM PENDUKUNG KEPUTUSAN REKOMENDASI MENU DI...</td>
+      <td>Haryanto ST, MT</td>
+      <td>Firli Irhamni ST, M. Kom</td>
+      <td>Pelayanan makanan bagi pasien rawat inap di Ru...</td>
+      <td>Food service for patients hospitalized at the ...</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Lia Fransiska</td>
+      <td>RANCANG BANGUN APLIKASI PEMILIHAN TEKNIK REKAY...</td>
+      <td>Firli Irhamni S.T, M.Kom</td>
+      <td>Budi Dwi Satoto S.T, M.Kom</td>
+      <td>Penyusunan Sistem Pendukung Keputusan pemiliha...</td>
+      <td>Preparation of Decision Support System selecti...</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Erwina Safitri</td>
+      <td>DETEKSI COREPOINT SIDIK JARI MENGGUNAKAN METOD...</td>
+      <td>Dr. Indah Agustien, S.Kom., M.Kom</td>
+      <td>Fitri Damayanti, S.Kom., M.Kom</td>
+      <td>Sidik jari adalah salah satu karakteristik fis...</td>
+      <td>Fingerprints are one of the physical character...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -846,204 +859,190 @@ Requirement already satisfied: typing-extensions&gt;=4.0.0 in c:\users\hp\appdat
       <th>0</th>
       <td>www.cnnindonesia.com#</td>
       <td></td>
-      <td>Kapal Bantuan Gaza GSF Diserang Drone di Tunis...</td>
+      <td>Bernardo Tavares Resmi Tinggalkan PSM, Ada Per...</td>
       <td>BERITA TERBARU</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>milisi-palestina-ledakkan-tank-israel-4-tentar...</td>
+      <td>kenapa-kapal-perang-italia-mundur-kawal-global...</td>
       <td>Timur Tengah</td>
-      <td>Milisi Palestina Ledakkan Tank Israel, 4 Tenta...</td>
-      <td>Jakarta, CNN Indonesia -- Sebanyak tiga milisi...</td>
+      <td>Kenapa Kapal Perang Italia Mundur Kawal Global...</td>
+      <td>Jakarta, CNN Indonesia -- Italia mundur dalam ...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>kapal-bawa-bantuan-gaza-diserang-drone-di-tuni...</td>
-      <td>Timur Tengah</td>
-      <td>Kapal Bawa Bantuan Gaza Diserang Drone di Tuni...</td>
-      <td>Jakarta, CNN Indonesia -- Salah satu kapal yan...</td>
+      <td>kpk-tahan-eks-dirut-pgn-terkait-kasus-jual-bel...</td>
+      <td>Hukum Kriminal</td>
+      <td>KPK Tahan Eks Dirut PGN Terkait Kasus Jual Bel...</td>
+      <td>Jakarta, CNN Indonesia -- Komisi Pemberantasan...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>video-gen-z-nepal-demo-gegara-pemerintah-bloki...</td>
-      <td>Asia Pasifik</td>
-      <td>VIDEO: Gen-Z Nepal Demo Gegara Pemerintah Blok...</td>
-      <td>Jakarta, CNN Indonesia -- Kerusuhan besar terj...</td>
+      <td>link-live-streaming-bangkok-united-vs-persib-d...</td>
+      <td>Sepakbola</td>
+      <td>Link Live Streaming Bangkok United vs Persib d...</td>
+      <td>Jakarta, CNN Indonesia -- Bangkok United akan ...</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>video-momen-pemakaman-giorgio-armani-yang-dige...</td>
-      <td>Trends</td>
-      <td>VIDEO: Momen Pemakaman Giorgio Armani yang Dig...</td>
-      <td>Jakarta, CNN Indonesia -- Desainer Italia, Gio...</td>
+      <td>gerak-cepat-fajar-fikri-di-4-turnamen-kalahkan...</td>
+      <td>Raket</td>
+      <td>Gerak Cepat Fajar/Fikri di 4 Turnamen: Kalahka...</td>
+      <td>Jakarta, CNN Indonesia -- Fajar Alfian / Muham...</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>daftar-susunan-pemain-timnas-indonesia-u-23-vs...</td>
+      <td>vietnam-resmi-ajukan-2-pemain-brasil-untuk-din...</td>
       <td>Sepakbola</td>
-      <td>Daftar Susunan Pemain Timnas Indonesia U-23 vs...</td>
-      <td>Jakarta, CNN Indonesia -- Timnas Indonesia U-2...</td>
+      <td>Vietnam Resmi Ajukan 2 Pemain Brasil untuk Din...</td>
+      <td>Jakarta, CNN Indonesia -- Pelatih Vietnam , Ki...</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>video-peneliti-inggris-ciptakan-suplemen-baru-...</td>
-      <td>Sains</td>
-      <td>VIDEO: Peneliti Inggris Ciptakan Suplemen Baru...</td>
-      <td>Jakarta, CNN Indonesia -- Peneliti Universitas...</td>
+      <td>hasil-analisis-pakar-konstruksi-bangunan-ponpe...</td>
+      <td>Peristiwa</td>
+      <td>Hasil Analisis Pakar: Konstruksi Bangunan Ponp...</td>
+      <td>Sidoarjo, CNN Indonesia -- Basarnas dan ahli s...</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>menhan-sjafrie-respons-tindakan-tni-bidik-duga...</td>
-      <td>Hukum Kriminal</td>
-      <td>Menhan Sjafrie Respons Tindakan TNI Bidik Duga...</td>
-      <td>Jakarta, CNN Indonesia -- Menteri Pertahanan (...</td>
+      <td>korban-meninggal-ponpes-ambruk-sidoarjo-bertam...</td>
+      <td>Peristiwa</td>
+      <td>Korban Meninggal Ponpes Ambruk Sidoarjo Bertam...</td>
+      <td>Sidoarjo, CNN Indonesia -- Korban meninggal du...</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>lisa-mariana-surati-bareskrim-minta-tes-dna-ul...</td>
-      <td>Hukum Kriminal</td>
-      <td>Lisa Mariana Surati Bareskrim, Minta Tes DNA U...</td>
-      <td>Jakarta, CNN Indonesia -- Selebgram Lisa Maria...</td>
+      <td>15-korban-terdeteksi-di-reruntuhan-ponpes-kate...</td>
+      <td>Peristiwa</td>
+      <td>15 Korban Terdeteksi di Reruntuhan Ponpes: Kat...</td>
+      <td>Sidoarjo, CNN Indonesia -- Tim Basarnas mendet...</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>didemo-ribuan-gen-z-pm-nepal-kp-sharma-oli-mundur</td>
-      <td>Asia Pasifik</td>
-      <td>Didemo Ribuan Gen Z, PM Nepal KP Sharma Oli Mu...</td>
-      <td>Jakarta, CNN Indonesia -- Perdana Menteri Nepa...</td>
+      <td>basarnas-ungkap-bahaya-pakai-alat-berat-evakua...</td>
+      <td>Peristiwa</td>
+      <td>Basarnas Ungkap Bahaya Pakai Alat Berat Evakua...</td>
+      <td>Jakarta, CNN Indonesia -- Badan SAR Nasional (...</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>polda-metro-jaya-tni-konsultasi-dugaan-pencema...</td>
-      <td>Hukum Kriminal</td>
-      <td>Polda Metro Jaya: TNI Konsultasi Dugaan Pencem...</td>
-      <td>Jakarta, CNN Indonesia -- Polda Metro Jaya men...</td>
+      <td>harga-emas-cetak-rekor-baru-lagi-hari-ini-temb...</td>
+      <td>Bisnis</td>
+      <td>Harga Emas Cetak Rekor Baru Lagi Hari Ini, Tem...</td>
+      <td>Daftar Isi ‎Harga emas Antam: Harga emas UBS: ...</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>yusril-temui-delpedro-di-rutan-dia-bertahan-ba...</td>
-      <td>Hukum Kriminal</td>
-      <td>Yusril Temui Delpedro di Rutan: Dia Bertahan B...</td>
-      <td>Jakarta, CNN Indonesia -- Menteri Koordinator ...</td>
+      <td>menteri-ungkap-kuota-haji-2026-221-ribu-jemaah...</td>
+      <td>Peristiwa</td>
+      <td>Menteri Ungkap Kuota Haji 2026: 221 Ribu Jemaa...</td>
+      <td>Jakarta, CNN Indonesia -- Kementerian Haji dan...</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>menhan-sjafrie-sjamsoeddin-dikabarkan-jabat-me...</td>
-      <td>Politik</td>
-      <td>Menhan Sjafrie Sjamsoeddin Dikabarkan Jabat Me...</td>
-      <td>Jakarta, CNN Indonesia -- Menteri Pertahanan (...</td>
+      <td>daftar-lengkap-harga-bbm-pertamina-shell-bp-da...</td>
+      <td>Energi</td>
+      <td>Daftar Lengkap Harga BBM Pertamina, Shell, BP ...</td>
+      <td>Jakarta, CNN Indonesia -- Harga bahan bakar mi...</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>kemlu-ungkap-penyebab-mahasiswa-ri-meninggal-u...</td>
-      <td>Asean</td>
-      <td>Kemlu Ungkap Penyebab Mahasiswa RI Meninggal u...</td>
-      <td>Jakarta, CNN Indonesia -- Kementerian Luar Neg...</td>
+      <td>daftar-10-pemain-dipanggil-timnas-indonesia-u-...</td>
+      <td>Sepakbola</td>
+      <td>Daftar 10 Pemain Dipanggil Timnas Indonesia U-...</td>
+      <td>Jakarta, CNN Indonesia -- Satu per satu klub m...</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>bisakah-ekonomi-ri-makin-selamat-cerah-di-tang...</td>
-      <td>Makro</td>
-      <td>Bisakah Ekonomi RI Makin Selamat-Cerah di Tang...</td>
-      <td>Jakarta, CNN Indonesia -- Presiden Prabowo Sub...</td>
+      <td>pemerintah-as-resmi-shutdown-ini-dampak-besarnya</td>
+      <td>Eropa Amerika</td>
+      <td>Pemerintah AS Resmi Shutdown! Ini Dampak Besarnya</td>
+      <td>Jakarta, CNN Indonesia -- Pemerintah Amerika S...</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>tiga-jenderal-tni-bidik-ferry-irwandi-terkait-...</td>
-      <td>Hukum Kriminal</td>
-      <td>Tiga Jenderal TNI Bidik Ferry Irwandi Terkait ...</td>
-      <td>Jakarta, CNN Indonesia -- Sejumlah jenderal TN...</td>
+      <td>bos-bgn-bersuara-soal-mbg-diplesetkan-jadi-mak...</td>
+      <td>Bisnis</td>
+      <td>Bos BGN Bersuara soal MBG Diplesetkan Jadi 'Ma...</td>
+      <td>Jakarta, CNN Indonesia -- Kepala Badan Gizi Na...</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>demo-nepal-chaos-rumah-pm-presiden-hingga-gedu...</td>
-      <td>Asia Pasifik</td>
-      <td>Demo Nepal Chaos! Rumah PM, Presiden hingga Ge...</td>
-      <td>Jakarta, CNN Indonesia -- Kediaman pribadi Per...</td>
+      <td>ipo-inalum-diparkir-gara-gara-danantara</td>
+      <td>Energi</td>
+      <td>IPO Inalum 'Diparkir' Gara-gara Danantara</td>
+      <td>Jakarta, CNN Indonesia -- Rencana PT Indonesia...</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>video-asosiasi-pekerja-transportasi-online-ber...</td>
-      <td>Detail</td>
-      <td>VIDEO: Asosiasi Pekerja Transportasi Online Be...</td>
-      <td>Jakarta, CNN Indonesia -- Pimpinan DPR RI mene...</td>
+      <td>spk-jaecoo-j8-hybrid-tembus-200-unit-pengirima...</td>
+      <td>E-vehicle</td>
+      <td>SPK Jaecoo J8 Hybrid Tembus 200 unit, Pengirim...</td>
+      <td>Jakarta, CNN Indonesia -- Jaecoo Indonesia mem...</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>geruduk-kpk-icw-sampaikan-11-tuntutan-antikorupsi</td>
-      <td>Hukum Kriminal</td>
-      <td>Geruduk KPK, ICW Sampaikan 11 Tuntutan Antikor...</td>
-      <td>Jakarta, CNN Indonesia -- Indonesia Corruption...</td>
+      <td>bmkg-wanti-wanti-potensi-banjir-rob-di-5-pesis...</td>
+      <td>Climate</td>
+      <td>BMKG Wanti-wanti Potensi Banjir Rob di 5 Pesis...</td>
+      <td>Bali, CNN Indonesia -- Badan Meteorologi, Klim...</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>timnas-indonesia-u-23-vs-korea-suporter-korea-...</td>
-      <td>Sepakbola</td>
-      <td>Timnas Indonesia U-23 vs Korea: Suporter Korea...</td>
-      <td>Jakarta, CNN Indonesia -- Sejumlah suporter Ti...</td>
+      <td>makin-dekat-gaza-armada-bantuan-gsf-diteror-ka...</td>
+      <td>Eropa Amerika</td>
+      <td>Makin Dekat Gaza, Armada Bantuan GSF 'Diteror'...</td>
+      <td>Jakarta, CNN Indonesia -- Armada kapal Global ...</td>
     </tr>
     <tr>
       <th>20</th>
-      <td>ini-yang-terjadi-jika-minum-jus-seledri-setiap...</td>
-      <td>Food</td>
-      <td>Ini yang Terjadi Jika Minum Jus Seledri Setiap...</td>
-      <td>Daftar Isi 1. Tidur lebih berkualitas 2. Energ...</td>
+      <td>saran-resepsionis-staycation-nyaman-di-hotel-a...</td>
+      <td>Travel</td>
+      <td>Saran Resepsionis Staycation Nyaman di Hotel, ...</td>
+      <td>Jakarta, CNN Indonesia -- Menginap di hotel bi...</td>
     </tr>
     <tr>
       <th>21</th>
-      <td>dana-asing-kabur-rp41-t-usai-sri-mulyani-lengs...</td>
+      <td>bos-bgn-buka-suara-soal-wartawan-dicekik-saat-...</td>
       <td>Bisnis</td>
-      <td>Dana Asing Kabur Rp4,1 T Usai Sri Mulyani Leng...</td>
-      <td>Jakarta, CNN Indonesia -- Pergantian menteri k...</td>
+      <td>Bos BGN Buka Suara soal Wartawan Dicekik Saat ...</td>
+      <td>Jakarta, CNN Indonesia -- Kepala Badan Gizi Na...</td>
     </tr>
     <tr>
       <th>22</th>
-      <td>video-satsiber-tni-laporkan-ferry-irwandi-ke-p...</td>
-      <td>Detail</td>
-      <td>VIDEO: Satsiber TNI Laporkan Ferry Irwandi ke ...</td>
-      <td>Jakarta, CNN Indonesia -- Satuan Siber TNI men...</td>
+      <td>puluhan-siswa-smp-di-banjar-jabar-keracunan-mbg</td>
+      <td>Peristiwa</td>
+      <td>Puluhan Siswa SMP di Banjar Jabar Keracunan MBG</td>
+      <td>Bandung, CNN Indonesia -- Puluhan siswa SMP Ne...</td>
     </tr>
     <tr>
       <th>23</th>
-      <td>dpr-dan-pemerintah-sepakat-ruu-perampasan-aset...</td>
-      <td>Politik</td>
-      <td>DPR dan Pemerintah Sepakat RUU Perampasan Aset...</td>
-      <td>Jakarta, CNN Indonesia -- DPR RI dan pemerinta...</td>
+      <td>sinopsis-transporter-3-bioskop-trans-tv-1-okto...</td>
+      <td>Film</td>
+      <td>Sinopsis Transporter 3, Bioskop Trans TV 1 Okt...</td>
+      <td>Jakarta, CNN Indonesia -- Bioskop Trans TV mal...</td>
     </tr>
     <tr>
       <th>24</th>
-      <td>3-pelajaran-berharga-yang-bisa-dipetik-dari-in...</td>
-      <td>Sepakbola</td>
-      <td>3 Pelajaran Berharga yang Bisa Dipetik dari In...</td>
-      <td>Jakarta, CNN Indonesia -- Hasil imbang yang di...</td>
+      <td>bpom-314-siswa-sulteng-keracunan-tuna-mbg-akib...</td>
+      <td>Peristiwa</td>
+      <td>BPOM: 314 Siswa Sulteng Keracunan Tuna MBG Aki...</td>
+      <td>Jakarta, CNN Indonesia -- Balai Pengawas Obat ...</td>
     </tr>
     <tr>
       <th>25</th>
-      <td>purbaya-janji-terapkan-disiplin-fiskal-demi-ja...</td>
-      <td>Makro</td>
-      <td>Purbaya Janji Terapkan Disiplin Fiskal Demi Ja...</td>
-      <td>Jakarta, CNN Indonesia -- Menteri Keuangan Pur...</td>
+      <td>video-pemerintahan-as-shutdown-apa-dampaknya</td>
+      <td>Eropa Amerika</td>
+      <td>VIDEO: Pemerintahan AS Shutdown, Apa Dampaknya?</td>
+      <td>Jakarta, CNN Indonesia -- Pemerintah Amerika S...</td>
     </tr>
     <tr>
       <th>26</th>
-      <td>korban-tewas-demo-berdarah-di-nepal-tembus-19-...</td>
-      <td>Asia Pasifik</td>
-      <td>Korban Tewas Demo Berdarah di Nepal Tembus 19 ...</td>
-      <td>Jakarta, CNN Indonesia -- Jumlah korban tewas ...</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>pendiri-jyp-entertainment-resmi-isi-posisi-set...</td>
-      <td>Seleb</td>
-      <td>Pendiri JYP Entertainment Resmi Isi Posisi Set...</td>
-      <td>Jakarta, CNN Indonesia -- Pendiri JYP Entertai...</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>viral-video-eks-pm-nepal-babak-belur-saat-ruma...</td>
-      <td>Asia Pasifik</td>
-      <td>Viral Video Eks PM Nepal Babak Belur saat Ruma...</td>
-      <td>Jakarta, CNN Indonesia -- Eks Perdana Menteri ...</td>
+      <td>kpk-ungkap-alasan-tak-pakai-pasal-suap-di-kasu...</td>
+      <td>Hukum Kriminal</td>
+      <td>KPK Ungkap Alasan Tak Pakai Pasal Suap di Kasu...</td>
+      <td>Jakarta, CNN Indonesia -- Komisi Pemberantasan...</td>
     </tr>
   </tbody>
 </table>
@@ -1223,7 +1222,171 @@ Pembalap DucatiFrancesco Bagnaiaberharap finis di 10 besarMotoGP Catalunya 2025d
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error saat akses https://pta.trunojoyo.ac.id/index.html: 404 Client Error: Not Found for url: https://pta.trunojoyo.ac.id/index.html
-Jumlah data hasil crawl: 5249
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">start_url</span> <span class="o">=</span> <span class="s2">&quot;https://pta.trunojoyo.ac.id&quot;</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">run_crawler</span><span class="p">(</span><span class="n">start_url</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jumlah data hasil crawl: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">web_structur</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nn">Cell In[10], line 30,</span> in <span class="ni">run_crawler</span><span class="nt">(start_url, max_depth)</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_crawler</span><span class="p">(</span><span class="n">start_url</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="n">base_domain</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">start_url</span><span class="p">)</span><span class="o">.</span><span class="n">netloc</span>
+<span class="ne">---&gt; </span><span class="mi">30</span>     <span class="n">crawl_website</span><span class="p">(</span><span class="n">start_url</span><span class="p">,</span> <span class="n">base_domain</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">)</span>
+
+<span class="nn">Cell In[10], line 23,</span> in <span class="ni">crawl_website</span><span class="nt">(url, base_domain, max_depth, depth)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>         <span class="c1"># Batasi hanya ke domain informatika.trunojoyo.ac.id</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>         <span class="k">if</span> <span class="n">base_domain</span> <span class="ow">in</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">full_url</span><span class="p">)</span><span class="o">.</span><span class="n">netloc</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">23</span>             <span class="n">crawl_website</span><span class="p">(</span><span class="n">full_url</span><span class="p">,</span> <span class="n">base_domain</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">,</span> <span class="n">depth</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error saat akses </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nn">Cell In[10], line 7,</span> in <span class="ni">crawl_website</span><span class="nt">(url, base_domain, max_depth, depth)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">----&gt; </span><span class="mi">7</span>     <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\api.py:73,</span> in <span class="ni">get</span><span class="nt">(url, params, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span> <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">63</span><span class="w">     </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sends a GET request.</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span><span class="sd"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span><span class="sd">     :param url: URL for the new :class:`Request` object.</span>
+<span class="sd">   (...)     70     :rtype: requests.Response</span>
+<span class="g g-Whitespace">     </span><span class="mi">71</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">---&gt; </span><span class="mi">73</span>     <span class="k">return</span> <span class="n">request</span><span class="p">(</span><span class="s2">&quot;get&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\api.py:59,</span> in <span class="ni">request</span><span class="nt">(method, url, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="c1"># By using the &#39;with&#39; statement we are sure the session is closed, thus we</span>
+<span class="g g-Whitespace">     </span><span class="mi">56</span> <span class="c1"># avoid leaving sockets open which can trigger a ResourceWarning in some</span>
+<span class="g g-Whitespace">     </span><span class="mi">57</span> <span class="c1"># cases, and look like a memory leak in others.</span>
+<span class="g g-Whitespace">     </span><span class="mi">58</span> <span class="k">with</span> <span class="n">sessions</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">59</span>     <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\sessions.py:589,</span> in <span class="ni">Session.request</span><span class="nt">(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)</span>
+<span class="g g-Whitespace">    </span><span class="mi">584</span> <span class="n">send_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+<span class="g g-Whitespace">    </span><span class="mi">585</span>     <span class="s2">&quot;timeout&quot;</span><span class="p">:</span> <span class="n">timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">586</span>     <span class="s2">&quot;allow_redirects&quot;</span><span class="p">:</span> <span class="n">allow_redirects</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">587</span> <span class="p">}</span>
+<span class="g g-Whitespace">    </span><span class="mi">588</span> <span class="n">send_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">589</span> <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">prep</span><span class="p">,</span> <span class="o">**</span><span class="n">send_kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">591</span> <span class="k">return</span> <span class="n">resp</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\sessions.py:703,</span> in <span class="ni">Session.send</span><span class="nt">(self, request, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">700</span> <span class="n">start</span> <span class="o">=</span> <span class="n">preferred_clock</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">702</span> <span class="c1"># Send the request</span>
+<span class="ne">--&gt; </span><span class="mi">703</span> <span class="n">r</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">705</span> <span class="c1"># Total elapsed time of the request (approximately)</span>
+<span class="g g-Whitespace">    </span><span class="mi">706</span> <span class="n">elapsed</span> <span class="o">=</span> <span class="n">preferred_clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\adapters.py:644,</span> in <span class="ni">HTTPAdapter.send</span><span class="nt">(self, request, stream, timeout, verify, cert, proxies)</span>
+<span class="g g-Whitespace">    </span><span class="mi">641</span>     <span class="n">timeout</span> <span class="o">=</span> <span class="n">TimeoutSauce</span><span class="p">(</span><span class="n">connect</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">read</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">643</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">644</span>     <span class="n">resp</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">645</span>         <span class="n">method</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">646</span>         <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">647</span>         <span class="n">body</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">648</span>         <span class="n">headers</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">649</span>         <span class="n">redirect</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">650</span>         <span class="n">assert_same_host</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">651</span>         <span class="n">preload_content</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">652</span>         <span class="n">decode_content</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">653</span>         <span class="n">retries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_retries</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">654</span>         <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">655</span>         <span class="n">chunked</span><span class="o">=</span><span class="n">chunked</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">656</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">658</span> <span class="k">except</span> <span class="p">(</span><span class="n">ProtocolError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">)</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">659</span>     <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:789,</span> in <span class="ni">HTTPConnectionPool.urlopen</span><span class="nt">(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, preload_content, decode_content, **response_kw)</span>
+<span class="g g-Whitespace">    </span><span class="mi">786</span> <span class="n">response_conn</span> <span class="o">=</span> <span class="n">conn</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">release_conn</span> <span class="k">else</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">788</span> <span class="c1"># Make the request on the HTTPConnection object</span>
+<span class="ne">--&gt; </span><span class="mi">789</span> <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">790</span>     <span class="n">conn</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">791</span>     <span class="n">method</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">792</span>     <span class="n">url</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">793</span>     <span class="n">timeout</span><span class="o">=</span><span class="n">timeout_obj</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">794</span>     <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">795</span>     <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">796</span>     <span class="n">chunked</span><span class="o">=</span><span class="n">chunked</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">797</span>     <span class="n">retries</span><span class="o">=</span><span class="n">retries</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">798</span>     <span class="n">response_conn</span><span class="o">=</span><span class="n">response_conn</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">799</span>     <span class="n">preload_content</span><span class="o">=</span><span class="n">preload_content</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">800</span>     <span class="n">decode_content</span><span class="o">=</span><span class="n">decode_content</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">801</span>     <span class="o">**</span><span class="n">response_kw</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">802</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">804</span> <span class="c1"># Everything went great!</span>
+<span class="g g-Whitespace">    </span><span class="mi">805</span> <span class="n">clean_exit</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:466,</span> in <span class="ni">HTTPConnectionPool._make_request</span><span class="nt">(self, conn, method, url, body, headers, retries, timeout, chunked, response_conn, preload_content, decode_content, enforce_content_length)</span>
+<span class="g g-Whitespace">    </span><span class="mi">463</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">464</span>     <span class="c1"># Trigger any extra validation we need to do.</span>
+<span class="g g-Whitespace">    </span><span class="mi">465</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">466</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_validate_conn</span><span class="p">(</span><span class="n">conn</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">467</span>     <span class="k">except</span> <span class="p">(</span><span class="n">SocketTimeout</span><span class="p">,</span> <span class="n">BaseSSLError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">468</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_raise_timeout</span><span class="p">(</span><span class="n">err</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout_value</span><span class="o">=</span><span class="n">conn</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:1095,</span> in <span class="ni">HTTPSConnectionPool._validate_conn</span><span class="nt">(self, conn)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1093</span> <span class="c1"># Force connect early to allow us to validate the connection.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1094</span> <span class="k">if</span> <span class="n">conn</span><span class="o">.</span><span class="n">is_closed</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1095</span>     <span class="n">conn</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1097</span> <span class="c1"># TODO revise this, see https://github.com/urllib3/urllib3/issues/2791</span>
+<span class="g g-Whitespace">   </span><span class="mi">1098</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">conn</span><span class="o">.</span><span class="n">is_verified</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">conn</span><span class="o">.</span><span class="n">proxy_is_verified</span><span class="p">:</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connection.py:730,</span> in <span class="ni">HTTPSConnection.connect</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">727</span>     <span class="c1"># Remove trailing &#39;.&#39; from fqdn hostnames to allow certificate validation</span>
+<span class="g g-Whitespace">    </span><span class="mi">728</span>     <span class="n">server_hostname_rm_dot</span> <span class="o">=</span> <span class="n">server_hostname</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">730</span>     <span class="n">sock_and_verified</span> <span class="o">=</span> <span class="n">_ssl_wrap_socket_and_match_hostname</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">731</span>         <span class="n">sock</span><span class="o">=</span><span class="n">sock</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">732</span>         <span class="n">cert_reqs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cert_reqs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">733</span>         <span class="n">ssl_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ssl_version</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">734</span>         <span class="n">ssl_minimum_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ssl_minimum_version</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">735</span>         <span class="n">ssl_maximum_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ssl_maximum_version</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">736</span>         <span class="n">ca_certs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ca_certs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">737</span>         <span class="n">ca_cert_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ca_cert_dir</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">738</span>         <span class="n">ca_cert_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ca_cert_data</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">739</span>         <span class="n">cert_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cert_file</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">740</span>         <span class="n">key_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">key_file</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">741</span>         <span class="n">key_password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">key_password</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">742</span>         <span class="n">server_hostname</span><span class="o">=</span><span class="n">server_hostname_rm_dot</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">743</span>         <span class="n">ssl_context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ssl_context</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">744</span>         <span class="n">tls_in_tls</span><span class="o">=</span><span class="n">tls_in_tls</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">745</span>         <span class="n">assert_hostname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">assert_hostname</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">746</span>         <span class="n">assert_fingerprint</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">assert_fingerprint</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">747</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">748</span>     <span class="bp">self</span><span class="o">.</span><span class="n">sock</span> <span class="o">=</span> <span class="n">sock_and_verified</span><span class="o">.</span><span class="n">socket</span>
+<span class="g g-Whitespace">    </span><span class="mi">750</span> <span class="c1"># If an error occurs during connection/handshake we may need to release</span>
+<span class="g g-Whitespace">    </span><span class="mi">751</span> <span class="c1"># our lock so another connection can probe the origin.</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connection.py:909,</span> in <span class="ni">_ssl_wrap_socket_and_match_hostname</span><span class="nt">(sock, cert_reqs, ssl_version, ssl_minimum_version, ssl_maximum_version, cert_file, key_file, key_password, ca_certs, ca_cert_dir, ca_cert_data, assert_hostname, assert_fingerprint, server_hostname, ssl_context, tls_in_tls)</span>
+<span class="g g-Whitespace">    </span><span class="mi">906</span>     <span class="k">if</span> <span class="n">is_ipaddress</span><span class="p">(</span><span class="n">normalized</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">907</span>         <span class="n">server_hostname</span> <span class="o">=</span> <span class="n">normalized</span>
+<span class="ne">--&gt; </span><span class="mi">909</span> <span class="n">ssl_sock</span> <span class="o">=</span> <span class="n">ssl_wrap_socket</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">910</span>     <span class="n">sock</span><span class="o">=</span><span class="n">sock</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">911</span>     <span class="n">keyfile</span><span class="o">=</span><span class="n">key_file</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">912</span>     <span class="n">certfile</span><span class="o">=</span><span class="n">cert_file</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">913</span>     <span class="n">key_password</span><span class="o">=</span><span class="n">key_password</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">914</span>     <span class="n">ca_certs</span><span class="o">=</span><span class="n">ca_certs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">915</span>     <span class="n">ca_cert_dir</span><span class="o">=</span><span class="n">ca_cert_dir</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">916</span>     <span class="n">ca_cert_data</span><span class="o">=</span><span class="n">ca_cert_data</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">917</span>     <span class="n">server_hostname</span><span class="o">=</span><span class="n">server_hostname</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">918</span>     <span class="n">ssl_context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">919</span>     <span class="n">tls_in_tls</span><span class="o">=</span><span class="n">tls_in_tls</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">920</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">922</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">923</span>     <span class="k">if</span> <span class="n">assert_fingerprint</span><span class="p">:</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\util\ssl_.py:447,</span> in <span class="ni">ssl_wrap_socket</span><span class="nt">(sock, keyfile, certfile, cert_reqs, ca_certs, server_hostname, ssl_version, ciphers, ssl_context, ca_cert_dir, key_password, ca_cert_data, tls_in_tls)</span>
+<span class="g g-Whitespace">    </span><span class="mi">445</span> <span class="k">if</span> <span class="n">ca_certs</span> <span class="ow">or</span> <span class="n">ca_cert_dir</span> <span class="ow">or</span> <span class="n">ca_cert_data</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">446</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">447</span>         <span class="n">context</span><span class="o">.</span><span class="n">load_verify_locations</span><span class="p">(</span><span class="n">ca_certs</span><span class="p">,</span> <span class="n">ca_cert_dir</span><span class="p">,</span> <span class="n">ca_cert_data</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">448</span>     <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">449</span>         <span class="k">raise</span> <span class="n">SSLError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
