@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Pemeriksaan Ejaan &#8212; My sample book</title>
+    <title>1. Pembersihan Teks &#8212; My sample book</title>
   
   
   
@@ -183,7 +183,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../tugas_1/pengantar_ppw.html">Pengantar Web Mining</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tugas_2/web_crawling.html">web crawling - tugas 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tugas_3/web_crawling.html">Web Crawling - Tugas 3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="web_crawling.html">Web Crawling - Tugas 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web_crawling.html">tf-idf dan frekuensi - Tugas 4</a></li>
 </ul>
 
     </div>
@@ -356,7 +356,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -367,11 +369,24 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Pemeriksaan Ejaan</h1>
+    <h1>1. Pembersihan Teks</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>1. Pembersihan Teks</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenisasi"><strong>2. Tokenisasi</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penghapusan-kata-umum-stop-words"><strong>3. Penghapusan Kata Umum (Stop Words)</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#stemming-dan-lematisasi"><strong>4. Stemming dan Lematisasi</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-frekuensi-kata"><strong>5. Analisis Frekuensi Kata</strong></a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -383,7 +398,7 @@ document.write(`
                   
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install required packages</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install requests beautifulsoup4 lxml
 <span class="o">%</span><span class="k">pip</span> install openpyxl xlsxwriter
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
@@ -394,9 +409,33 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-
-<span class="c1"># Konstanta</span>
-<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://pta.trunojoyo.ac.id/c_search/byprod&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: requests in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (2.32.5)
+Requirement already satisfied: beautifulsoup4 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (4.13.5)
+Requirement already satisfied: lxml in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (6.0.1)
+Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from requests) (3.4.3)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from requests) (3.10)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from requests) (2.2.3)
+Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from requests) (2025.8.3)
+Requirement already satisfied: soupsieve&gt;1.2 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from beautifulsoup4) (2.7)
+Requirement already satisfied: typing-extensions&gt;=4.0.0 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from beautifulsoup4) (4.14.1)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: openpyxl in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (3.1.5)
+Requirement already satisfied: xlsxwriter in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (3.2.9)
+Requirement already satisfied: et-xmlfile in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from openpyxl) (2.0.0)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://pta.trunojoyo.ac.id/c_search/byprod&quot;</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">get_max_page</span><span class="p">(</span><span class="n">prodi_id</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Mendapatkan jumlah halaman maksimal untuk prodi tertentu&quot;&quot;&quot;</span>
@@ -420,21 +459,12 @@ document.write(`
     <span class="k">except</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">1</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">print_progress_bar</span><span class="p">(</span><span class="n">prodi_id</span><span class="p">,</span> <span class="n">prodi_name</span><span class="p">,</span> <span class="n">current_page</span><span class="p">,</span> <span class="n">max_page</span><span class="p">,</span> <span class="n">total_entries</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Menampilkan progress bar sederhana&quot;&quot;&quot;</span>
-    <span class="n">progress</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_page</span> <span class="o">/</span> <span class="n">max_page</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
-    <span class="n">filled</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">progress</span> <span class="o">//</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1"># Setiap 5% = 1 blok</span>
-    <span class="n">bar</span> <span class="o">=</span> <span class="s1">&#39;█&#39;</span> <span class="o">*</span> <span class="n">filled</span> <span class="o">+</span> <span class="s1">&#39;░&#39;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">20</span> <span class="o">-</span> <span class="n">filled</span><span class="p">)</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">[</span><span class="si">{</span><span class="n">prodi_id</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">prodi_name</span><span class="si">}</span><span class="s2"> - Page </span><span class="si">{</span><span class="n">current_page</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">max_page</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">bar</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">progress</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
 <span class="k">def</span><span class="w"> </span><span class="nf">pta</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Fungsi utama untuk scraping data PTA&quot;&quot;&quot;</span>
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     
     <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;penulis&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;judul&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;abstrak_id&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;abstrak_en&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;pembimbing_pertama&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;pembimbing_kedua&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;prodi&quot;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="s2">&quot;judul&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;abstrak_id&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;abstrak_en&quot;</span><span class="p">:</span> <span class="p">[]</span>
     <span class="p">}</span>
     
     <span class="n">prodi_id</span> <span class="o">=</span> <span class="mi">7</span>
@@ -455,10 +485,6 @@ document.write(`
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">link_keluar</span> <span class="o">=</span> <span class="n">jurnal</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s1">&#39;a.gray.button&#39;</span><span class="p">)[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
                     
-                    <span class="c1"># Ambil ID dari link PTA</span>
-                    <span class="n">id_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;/detail/(\d+)&quot;</span><span class="p">,</span> <span class="n">link_keluar</span><span class="p">)</span>
-                    <span class="n">pta_id</span> <span class="o">=</span> <span class="n">id_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">id_match</span> <span class="k">else</span> <span class="kc">None</span>
-                    
                     <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">link_keluar</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
                     <span class="n">soup1</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
                     <span class="n">isi</span> <span class="o">=</span> <span class="n">soup1</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s1">&#39;div#content_journal&#39;</span><span class="p">)</span>
@@ -468,22 +494,6 @@ document.write(`
                     
                     <span class="c1"># Extract data</span>
                     <span class="n">judul</span> <span class="o">=</span> <span class="n">isi</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s1">&#39;a.title&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                    
-                    <span class="c1"># Handle fields dengan error handling</span>
-                    <span class="k">try</span><span class="p">:</span>
-                        <span class="n">penulis</span> <span class="o">=</span> <span class="n">isi</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s1">&#39;span:contains(&quot;Penulis&quot;)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; : &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-                    <span class="k">except</span><span class="p">:</span>
-                        <span class="n">penulis</span> <span class="o">=</span> <span class="s2">&quot;N/A&quot;</span>
-                    
-                    <span class="k">try</span><span class="p">:</span>
-                        <span class="n">pembimbing_pertama</span> <span class="o">=</span> <span class="n">isi</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s1">&#39;span:contains(&quot;Dosen Pembimbing I&quot;)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; : &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-                    <span class="k">except</span><span class="p">:</span>
-                        <span class="n">pembimbing_pertama</span> <span class="o">=</span> <span class="s2">&quot;N/A&quot;</span>
-                    
-                    <span class="k">try</span><span class="p">:</span>
-                        <span class="n">pembimbing_kedua</span> <span class="o">=</span> <span class="n">isi</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s1">&#39;span:contains(&quot;Dosen Pembimbing II&quot;)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; : &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-                    <span class="k">except</span><span class="p">:</span>
-                        <span class="n">pembimbing_kedua</span> <span class="o">=</span> <span class="s2">&quot;N/A&quot;</span>
                     
                     <span class="c1"># Extract abstrak</span>
                     <span class="n">paragraf</span> <span class="o">=</span> <span class="n">isi</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p[align=&quot;justify&quot;]&#39;</span><span class="p">)</span>
@@ -495,52 +505,23 @@ document.write(`
                         <span class="n">abstrak_id</span> <span class="o">=</span> <span class="n">abstrak_id</span><span class="p">[</span><span class="mi">7</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                     
                     <span class="c1"># Append data</span>
-                    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pta_id</span><span class="p">)</span>
-                    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;penulis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">penulis</span><span class="p">)</span>
                     <span class="n">data</span><span class="p">[</span><span class="s2">&quot;judul&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">judul</span><span class="p">)</span>
                     <span class="n">data</span><span class="p">[</span><span class="s2">&quot;abstrak_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">abstrak_id</span><span class="p">)</span>
                     <span class="n">data</span><span class="p">[</span><span class="s2">&quot;abstrak_en&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">abstrak_en</span><span class="p">)</span>
-                    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pembimbing_pertama&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pembimbing_pertama</span><span class="p">)</span>
-                    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pembimbing_kedua&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pembimbing_kedua</span><span class="p">)</span>
-                    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;prodi&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prodi_name</span><span class="p">)</span>
                     
                     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
                     
                 <span class="k">except</span><span class="p">:</span>
                     <span class="k">continue</span>
             
-            <span class="c1"># Update progress bar</span>
-            <span class="n">print_progress_bar</span><span class="p">(</span><span class="n">prodi_id</span><span class="p">,</span> <span class="n">prodi_name</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">max_page</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]))</span>
-            
         <span class="k">except</span><span class="p">:</span>
             <span class="k">continue</span>
     
-    <span class="c1"># New line setelah progress selesai</span>
-    <span class="nb">print</span><span class="p">()</span>
-    
-    <span class="c1"># Simpan data dengan error handling</span>
+    <span class="c1"># Buat DataFrame</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     
-    <span class="c1"># Simpan ke CSV (selalu berhasil)</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;pta_lengkap.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💾 Data disimpan ke: pta_lengkap.csv&quot;</span><span class="p">)</span>
-    
-    <span class="c1"># Coba simpan ke Excel</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s2">&quot;pta_lengkap.xlsx&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;openpyxl&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💾 Data disimpan ke: pta_lengkap.xlsx&quot;</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠️  Excel tidak dapat disimpan: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📝 Data tetap tersimpan dalam format CSV&quot;</span><span class="p">)</span>
-    
-    <span class="c1"># Hitung durasi</span>
-    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    <span class="n">elapsed</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
-    <span class="n">jam</span><span class="p">,</span> <span class="n">sisa</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">elapsed</span><span class="p">,</span> <span class="mi">3600</span><span class="p">)</span>
-    <span class="n">menit</span><span class="p">,</span> <span class="n">detik</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">sisa</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
-    
     <span class="c1"># Summary</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Total data dikumpulkan: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Total data dikumpulkan: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">df</span>
 
@@ -561,48 +542,10 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: openpyxl in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (3.1.5)
-Requirement already satisfied: xlsxwriter in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (3.2.9)
-Requirement already satisfied: et-xmlfile in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from openpyxl) (2.0.0)
-Note: you may need to restart the kernel to use updated packages.
-</pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 24.0 -&gt; 25.2
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[7] Manajemen - Page 1/207 [░░░░░░░░░░░░░░░░░░░░] 0.48%
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install requests beautifulsoup4 lxml
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: requests in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (2.32.5)
-Requirement already satisfied: beautifulsoup4 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (4.13.4)
-Requirement already satisfied: lxml in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (6.0.1)
-Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from requests) (3.4.3)
-Requirement already satisfied: idna&lt;4,&gt;=2.5 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from requests) (3.10)
-Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from requests) (2.2.3)
-Requirement already satisfied: certifi&gt;=2017.4.17 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from requests) (2025.8.3)
-Requirement already satisfied: soupsieve&gt;1.2 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from beautifulsoup4) (2.7)
-Requirement already satisfied: typing-extensions&gt;=4.0.0 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from beautifulsoup4) (4.14.1)
-Note: you may need to restart the kernel to use updated packages.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 24.0 -&gt; 25.2
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-</div>
-</div>
-<p>#pembersihan teks</p>
+<section id="pembersihan-teks">
+<h1><strong>1. Pembersihan Teks</strong><a class="headerlink" href="#pembersihan-teks" title="Link to this heading">#</a></h1>
+<p><strong>Pembersihan teks</strong> adalah tahap preprocessing untuk menormalkan data teks agar konsisten dan siap dianalisis. Proses ini meliputi: mengubah teks ke huruf kecil (lowercasing), menghapus angka, menghilangkan tanda baca, dan membersihkan spasi berlebih. Tujuannya adalah mengurangi variasi yang tidak perlu dan memfokuskan analisis pada konten tekstual yang bermakna.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pembersihan teks</span>
@@ -715,7 +658,10 @@ Note: you may need to restart the kernel to use updated packages.
 </table>
 </div></div></div>
 </div>
-<p>#tokenisasi</p>
+</section>
+<section id="tokenisasi">
+<h1><strong>2. Tokenisasi</strong><a class="headerlink" href="#tokenisasi" title="Link to this heading">#</a></h1>
+<p><strong>Tokenisasi</strong> adalah proses memecah teks menjadi unit-unit yang lebih kecil seperti kata atau token. Pada tahap ini, setiap kalimat dalam abstrak dipecah menjadi kata-kata individual menggunakan <code class="docutils literal notranslate"><span class="pre">word_tokenize</span></code> dari NLTK. Contoh: kalimat “Penelitian ini menganalisis data” → [‘Penelitian’, ‘ini’, ‘menganalisis’, ‘data’]</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nltk.tokenize</span><span class="w"> </span><span class="kn">import</span> <span class="n">word_tokenize</span>
@@ -823,7 +769,10 @@ Note: you may need to restart the kernel to use updated packages.
 </table>
 </div></div></div>
 </div>
-<p>#Penghapusan Kata Umum (Stop Words)</p>
+</section>
+<section id="penghapusan-kata-umum-stop-words">
+<h1><strong>3. Penghapusan Kata Umum (Stop Words)</strong><a class="headerlink" href="#penghapusan-kata-umum-stop-words" title="Link to this heading">#</a></h1>
+<p><strong>Stop Words</strong> adalah kata-kata umum yang sering muncul dalam bahasa namun tidak memberikan makna signifikan untuk analisis teks, seperti “dan”, “atau”, “di”, “ke”, “yang”. Penghapusan stopwords bertujuan untuk mengurangi noise dan fokus pada kata-kata yang lebih bermakna untuk analisis. NLTK menyediakan daftar stopwords bahasa Indonesia yang sudah siap pakai.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>
@@ -931,621 +880,130 @@ Note: you may need to restart the kernel to use updated packages.
 </table>
 </div></div></div>
 </div>
-<p>#Stemming dan Lematisasi</p>
+</section>
+<section id="stemming-dan-lematisasi">
+<h1><strong>4. Stemming dan Lematisasi</strong><a class="headerlink" href="#stemming-dan-lematisasi" title="Link to this heading">#</a></h1>
+<p><strong>Stemming</strong> adalah proses mengubah kata-kata menjadi bentuk dasar (root/stem) dengan menghilangkan imbuhan seperti awalan, akhiran, dan sisipan. Contoh: “penelitian” → “teliti”, “menganalisis” → “analisis”. <strong>Lematisasi</strong> serupa dengan stemming namun menghasilkan kata dasar yang lebih bermakna secara linguistik. Pada kode ini menggunakan library Sastrawi untuk stemming bahasa Indonesia dan TF-IDF untuk mengukur kepentingan kata dalam dokumen.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install Sastrawi untuk stemming bahasa Indonesia</span>
-<span class="o">%</span><span class="k">pip</span> install Sastrawi
-
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">Sastrawi</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.Stemmer.StemmerFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StemmerFactory</span>
-
 <span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
-<span class="n">indo_stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
+<span class="n">stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
 
-<span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_stemmed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-    <span class="k">lambda</span> <span class="n">tokens</span><span class="p">:</span> <span class="p">[</span><span class="n">indo_stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+<span class="c1"># Test stemming dengan satu dokumen</span>
+<span class="n">input_stemm</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">hasil_stemm</span> <span class="o">=</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">input_stemm</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hasil_stemm</span><span class="p">)</span>
+
+<span class="c1"># Stemming untuk semua dokumen</span>
+<span class="n">hasil_stemm</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">]:</span>
+    <span class="n">stemmed_doc</span> <span class="o">=</span> <span class="p">[</span><span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">]</span>
+    <span class="n">hasil_stemm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stemmed_doc</span><span class="p">)</span>
+
+<span class="c1"># Konversi hasil stemming ke string untuk TF-IDF</span>
+<span class="n">stemmed_texts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">hasil_stemm</span><span class="p">]</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">stemmed_texts</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>satiyah pengaruh faktorfaktor latih kembang produktivitas kerja dinas laut ikan bangkal bawah bimbing drahjsanugrahini irawatimm helm buyung auliasstsemmt upaya tingkat produktivitas kerja mudah salah usaha produktivitas tingkat terap program latih kembang sumber daya manusia sdm laksana instansi produktivitas capai tingkat mampu pegawai efektif efisien latih pengembnagan harap pegawai sesuai kebutuhankebutuhan sikap tingkah laku terampil tahu sesuai tuntut ubah latih kembang pegawai dukung cipta suasana kerja kondusif instansi produktivitas kerja tingkat tuju teliti pengaruh faktorfaktor latih kembang produktivitas kerja dinas laut ikan bangkal ukur menganalisa hubung variabel teliti dekat observasional analitik amat langsung responden sebar kuisioner analis teliti teliti populasi responden sampel olah spss versi analis metode statistik metode non probality sampling simple random sampling simpul teliti a faktorfaktor latih kembang beda individu pegawai x hubung analisis jabat x motivasi x partisipasi aktif x seleksi serta x seleksi instruktur x metode latih kembang x pengaruh simultan produktivitas kerja pegawai dinas laut ikan kabupaten bangkal bukti nilai koefisien determinasi ganda r r square fhitung ftabel b faktor hubung analisis jabat pengaruh parsial produktivitas kerja pegawai dinas laut ikan kabupaten bangkal uji hipotesis variabel motivasi x bukti nilai thitung seleksi serta x pengaruh dominan produktivitas kerja pegawai instansi dinas laut ikan bangkal kunci dinas laut ikan faktorfaktor latih kembang produktivitas kerja
+&lt;Compressed Sparse Row sparse matrix of dtype &#39;float64&#39;
+	with 62537 stored elements and shape (1031, 6475)&gt;
+  Coords	Values
+  (0, 5117)	0.06722909312737141
+  (0, 4191)	0.0541516702031106
+  (0, 1659)	0.14269167120886075
+  (0, 3096)	0.3419521854596088
+  (0, 2689)	0.2310267040658058
+  (0, 4529)	0.4241844729957941
+  (0, 2737)	0.14776812022071217
+  (0, 1274)	0.24247402690069209
+  (0, 3099)	0.3422172695416197
+  (0, 2170)	0.3422172695416197
+  (0, 565)	0.13115632018860826
+  (0, 615)	0.017685349056678706
+  (0, 749)	0.014704490440205433
+  (0, 1374)	0.05872778381208961
+  (0, 2376)	0.04986258626517635
+  (0, 2030)	0.035368695117738866
+  (0, 858)	0.03567291780221519
+  (0, 491)	0.06722909312737141
+  (0, 6182)	0.04853490227498815
+  (0, 5973)	0.07313060697977133
+  (0, 3662)	0.0454131261181226
+  (0, 5045)	0.029088567353457058
+  (0, 6192)	0.01607571840857942
+  (0, 5892)	0.03920571001602217
+  (0, 4556)	0.032774717779635684
+  :	:
+  (1030, 6112)	0.055849694747306416
+  (1030, 3013)	0.022333743758070956
+  (1030, 587)	0.07090377689539146
+  (1030, 2921)	0.060379964180943234
+  (1030, 4493)	0.2350619392012171
+  (1030, 2598)	0.08840301812553714
+  (1030, 5349)	0.09884747636372776
+  (1030, 2949)	0.17320503439401574
+  (1030, 3703)	0.10404077977456368
+  (1030, 3170)	0.217764671836858
+  (1030, 5685)	0.13772822035300814
+  (1030, 5210)	0.32735961265474545
+  (1030, 1466)	0.3570267232638322
+  (1030, 3369)	0.1407467242108548
+  (1030, 2993)	0.11900890775461075
+  (1030, 856)	0.08180467455076844
+  (1030, 6198)	0.11115953760380255
+  (1030, 3094)	0.09385618099923122
+  (1030, 1948)	0.20808155954912735
+  (1030, 2930)	0.11343969100261525
+  (1030, 1469)	0.11900890775461075
+  (1030, 3775)	0.13242749465741444
+  (1030, 3419)	0.14027686480822266
+  (1030, 2833)	0.2805537296164453
+  (1030, 1857)	0.2805537296164453
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="analisis-frekuensi-kata">
+<h1><strong>5. Analisis Frekuensi Kata</strong><a class="headerlink" href="#analisis-frekuensi-kata" title="Link to this heading">#</a></h1>
+<p><strong>Analisis Frekuensi</strong> adalah proses menghitung seberapa sering setiap kata muncul dalam corpus setelah melalui tahap preprocessing. Menggunakan <code class="docutils literal notranslate"><span class="pre">FreqDist</span></code> dari NLTK untuk menghitung distribusi frekuensi kata dan mengidentifikasi kata-kata yang paling sering muncul. Hasil analisis ini disimpan dalam format CSV untuk analisis lebih lanjut dan memberikan insight tentang tema-tema utama dalam dokumen.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nltk</span><span class="w"> </span><span class="kn">import</span> <span class="n">FreqDist</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Gabungkan semua kata dari hasil stemming</span>
+<span class="n">all_words</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">hasil_stemm</span><span class="p">:</span>
+    <span class="n">all_words</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+
+<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">all_words</span><span class="p">)</span>
+
+<span class="n">frequency_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">fdist</span><span class="o">.</span><span class="n">most_common</span><span class="p">(),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Word&#39;</span><span class="p">,</span> <span class="s1">&#39;Frequency&#39;</span><span class="p">]</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PTA - Stemming &amp; Lemmatization (abstrak_id):&quot;</span><span class="p">)</span>
-<span class="n">pta_df</span><span class="p">[[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">,</span> <span class="s2">&quot;abstrak_id_stemmed&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">frequency_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;Management_dataHasilPreprocessing.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File disimpan sebagai Management_dataHasilPreprocessing.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: Sastrawi in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (1.0.1)
-Note: you may need to restart the kernel to use updated packages.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 24.0 -&gt; 25.2
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">9</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">indo_stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
-<span class="ne">----&gt; </span><span class="mi">9</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_stemmed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="k">lambda</span> <span class="n">tokens</span><span class="p">:</span> <span class="p">[</span><span class="n">indo_stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PTA - Stemming &amp; Lemmatization (abstrak_id):&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">pta_df</span><span class="p">[[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">,</span> <span class="s2">&quot;abstrak_id_stemmed&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py:4924,</span> in <span class="ni">Series.apply</span><span class="nt">(self, func, convert_dtype, args, by_row, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4789</span> <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">4790</span>     <span class="bp">self</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">4791</span>     <span class="n">func</span><span class="p">:</span> <span class="n">AggFuncType</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">4796</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">4797</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span> <span class="o">|</span> <span class="n">Series</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">4798</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">4799</span><span class="sd">     Invoke function on values of Series.</span>
-<span class="g g-Whitespace">   </span><span class="mi">4800</span><span class="sd"> </span>
-<span class="sd">   (...)   4915     dtype: float64</span>
-<span class="g g-Whitespace">   </span><span class="mi">4916</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">4917</span>     <span class="k">return</span> <span class="n">SeriesApply</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">4918</span>         <span class="bp">self</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">4919</span>         <span class="n">func</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">4920</span>         <span class="n">convert_dtype</span><span class="o">=</span><span class="n">convert_dtype</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">4921</span>         <span class="n">by_row</span><span class="o">=</span><span class="n">by_row</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">4922</span>         <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">4923</span>         <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="ne">-&gt; </span><span class="mi">4924</span>     <span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py:1427,</span> in <span class="ni">SeriesApply.apply</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1424</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_compat</span><span class="p">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1426</span> <span class="c1"># self.func is Callable</span>
-<span class="ne">-&gt; </span><span class="mi">1427</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_standard</span><span class="p">()</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py:1507,</span> in <span class="ni">SeriesApply.apply_standard</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1501</span> <span class="c1"># row-wise access</span>
-<span class="g g-Whitespace">   </span><span class="mi">1502</span> <span class="c1"># apply doesn&#39;t have a `na_action` keyword and for backward compat reasons</span>
-<span class="g g-Whitespace">   </span><span class="mi">1503</span> <span class="c1"># we need to give `na_action=&quot;ignore&quot;` for categorical data.</span>
-<span class="g g-Whitespace">   </span><span class="mi">1504</span> <span class="c1"># TODO: remove the `na_action=&quot;ignore&quot;` when that default has been changed in</span>
-<span class="g g-Whitespace">   </span><span class="mi">1505</span> <span class="c1">#  Categorical (GH51645).</span>
-<span class="g g-Whitespace">   </span><span class="mi">1506</span> <span class="n">action</span> <span class="o">=</span> <span class="s2">&quot;ignore&quot;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">CategoricalDtype</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
-<span class="ne">-&gt; </span><span class="mi">1507</span> <span class="n">mapped</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">_map_values</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1508</span>     <span class="n">mapper</span><span class="o">=</span><span class="n">curried</span><span class="p">,</span> <span class="n">na_action</span><span class="o">=</span><span class="n">action</span><span class="p">,</span> <span class="n">convert</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_dtype</span>
-<span class="g g-Whitespace">   </span><span class="mi">1509</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1511</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mapped</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mapped</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ABCSeries</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1512</span>     <span class="c1"># GH#43986 Need to do list(mapped) in order to get treated as nested</span>
-<span class="g g-Whitespace">   </span><span class="mi">1513</span>     <span class="c1">#  See also GH#25959 regarding EA support</span>
-<span class="g g-Whitespace">   </span><span class="mi">1514</span>     <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">_constructor_expanddim</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mapped</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\base.py:921,</span> in <span class="ni">IndexOpsMixin._map_values</span><span class="nt">(self, mapper, na_action, convert)</span>
-<span class="g g-Whitespace">    </span><span class="mi">918</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">ExtensionArray</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">919</span>     <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">na_action</span><span class="o">=</span><span class="n">na_action</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">921</span> <span class="k">return</span> <span class="n">algorithms</span><span class="o">.</span><span class="n">map_array</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">na_action</span><span class="o">=</span><span class="n">na_action</span><span class="p">,</span> <span class="n">convert</span><span class="o">=</span><span class="n">convert</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\algorithms.py:1743,</span> in <span class="ni">map_array</span><span class="nt">(arr, mapper, na_action, convert)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1741</span> <span class="n">values</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1742</span> <span class="k">if</span> <span class="n">na_action</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1743</span>     <span class="k">return</span> <span class="n">lib</span><span class="o">.</span><span class="n">map_infer</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">convert</span><span class="o">=</span><span class="n">convert</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1744</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1745</span>     <span class="k">return</span> <span class="n">lib</span><span class="o">.</span><span class="n">map_infer_mask</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1746</span>         <span class="n">values</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">isna</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="n">convert</span><span class="o">=</span><span class="n">convert</span>
-<span class="g g-Whitespace">   </span><span class="mi">1747</span>     <span class="p">)</span>
-
-<span class="nn">File lib.pyx:2972,</span> in <span class="ni">pandas._libs.lib.map_infer</span><span class="nt">()</span>
-
-<span class="nn">Cell In[6], line 10,</span> in <span class="ni">&lt;lambda&gt;</span><span class="nt">(tokens)</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">indo_stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_stemmed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-<span class="ne">---&gt; </span><span class="mi">10</span>     <span class="k">lambda</span> <span class="n">tokens</span><span class="p">:</span> <span class="p">[</span><span class="n">indo_stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PTA - Stemming &amp; Lemmatization (abstrak_id):&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">pta_df</span><span class="p">[[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">,</span> <span class="s2">&quot;abstrak_id_stemmed&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="nn">Cell In[6], line 10,</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">indo_stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_stemmed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-<span class="ne">---&gt; </span><span class="mi">10</span>     <span class="k">lambda</span> <span class="n">tokens</span><span class="p">:</span> <span class="p">[</span><span class="n">indo_stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PTA - Stemming &amp; Lemmatization (abstrak_id):&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">pta_df</span><span class="p">[[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">,</span> <span class="s2">&quot;abstrak_id_stemmed&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\CachedStemmer.py:20,</span> in <span class="ni">CachedStemmer.stem</span><span class="nt">(self, text)</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">stems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="k">else</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">20</span>     <span class="n">stem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delegatedStemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">stem</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">stems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stem</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Stemmer.py:27,</span> in <span class="ni">Stemmer.stem</span><span class="nt">(self, text)</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="n">stems</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">27</span>     <span class="n">stems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stem_word</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
-<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stems</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Stemmer.py:36,</span> in <span class="ni">Stemmer.stem_word</span><span class="nt">(self, word)</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stem_plural_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">35</span> <span class="k">else</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">36</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stem_singular_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Stemmer.py:84,</span> in <span class="ni">Stemmer.stem_singular_word</span><span class="nt">(self, word)</span>
-<span class="g g-Whitespace">     </span><span class="mi">82</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Stem a singular word to its common stem form.&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">83</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">visitor_provider</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">84</span> <span class="n">context</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">86</span> <span class="k">return</span> <span class="n">context</span><span class="o">.</span><span class="n">result</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:37,</span> in <span class="ni">Context.execute</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Execute stemming process; the result can be retrieved with result&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">36</span> <span class="c1">#step 1 - 5</span>
-<span class="ne">---&gt; </span><span class="mi">37</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_stemming_process</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">39</span> <span class="c1">#step 6</span>
-<span class="g g-Whitespace">     </span><span class="mi">40</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:80,</span> in <span class="ni">Context.start_stemming_process</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">     </span><span class="mi">77</span>     <span class="k">return</span>
-<span class="g g-Whitespace">     </span><span class="mi">79</span> <span class="c1">#step 4, 5</span>
-<span class="ne">---&gt; </span><span class="mi">80</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_prefixes</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">82</span>     <span class="k">return</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:89,</span> in <span class="ni">Context.remove_prefixes</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="k">def</span><span class="w"> </span><span class="nf">remove_prefixes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">88</span>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">89</span>         <span class="bp">self</span><span class="o">.</span><span class="n">accept_prefix_visitors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix_pisitors</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">90</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">91</span>             <span class="k">return</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:110,</span> in <span class="ni">Context.accept_prefix_visitors</span><span class="nt">(self, visitors)</span>
-<span class="g g-Whitespace">    </span><span class="mi">108</span> <span class="n">removalCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removals</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">109</span> <span class="k">for</span> <span class="n">visitor</span> <span class="ow">in</span> <span class="n">visitors</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">110</span>     <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">visitor</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">111</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">112</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:97,</span> in <span class="ni">Context.accept</span><span class="nt">(self, visitor)</span>
-<span class="g g-Whitespace">     </span><span class="mi">96</span> <span class="k">def</span><span class="w"> </span><span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitor</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">97</span>     <span class="n">visitor</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Visitor\AbstractDisambiguatePrefixRule.py:14,</span> in <span class="ni">AbstractDisambiguatePrefixRule.visit</span><span class="nt">(self, context)</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="k">for</span> <span class="n">disambiguator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">disambiguators</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">14</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">disambiguator</span><span class="o">.</span><span class="n">disambiguate</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span>         <span class="k">break</span>
-
-<span class="nn">File c:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Morphology\Disambiguator\DisambiguatorPrefixRule15.py:21,</span> in <span class="ni">DisambiguatorPrefixRule15b.disambiguate</span><span class="nt">(self, word)</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="k">class</span><span class="w"> </span><span class="nc">DisambiguatorPrefixRule15b</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Disambiguate Prefix Rule 15b</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span><span class="sd">     Rule 15b : men{V} -&gt; me-t{V}</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">---&gt; </span><span class="mi">21</span>     <span class="k">def</span><span class="w"> </span><span class="nf">disambiguate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span><span class="w">         </span><span class="sd">&quot;&quot;&quot;Disambiguate Prefix Rule 15b</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span><span class="sd">         Rule 15b : men{V} -&gt; me-t{V}</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span><span class="sd">         &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span>         <span class="n">matches</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^men([aiueo])(.*)$&#39;</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>File disimpan sebagai Management_dataHasilPreprocessing.csv
 </pre></div>
 </div>
 </div>
 </div>
-<p>#Menangani Kontraksi</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install contractions
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: contractions in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (0.1.73)
-Requirement already satisfied: textsearch&gt;=0.0.21 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from contractions) (0.0.24)
-Requirement already satisfied: anyascii in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from textsearch&gt;=0.0.21-&gt;contractions) (0.3.3)
-Requirement already satisfied: pyahocorasick in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from textsearch&gt;=0.0.21-&gt;contractions) (2.2.0)
-Note: you may need to restart the kernel to use updated packages.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 24.0 -&gt; 25.2
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-</div>
-</div>
-<p>#Kontraksi bahasa indonesia</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">expand_indonesian_contractions</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Fungsi untuk memperluas bentuk slang atau kontraksi informal bahasa Indonesia</span>
-<span class="sd">    menjadi bentuk baku.</span>
-<span class="sd">    </span>
-<span class="sd">    Args:</span>
-<span class="sd">        text (str): Teks input dalam bahasa Indonesia.</span>
-<span class="sd">    </span>
-<span class="sd">    Returns:</span>
-<span class="sd">        str: Teks dengan kontraksi/slang yang telah diperluas.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Kamus kontraksi/slang bahasa Indonesia</span>
-    <span class="n">contractions_dict</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;gak&quot;</span><span class="p">:</span> <span class="s2">&quot;tidak&quot;</span><span class="p">,</span> <span class="s2">&quot;ga&quot;</span><span class="p">:</span> <span class="s2">&quot;tidak&quot;</span><span class="p">,</span> <span class="s2">&quot;nggak&quot;</span><span class="p">:</span> <span class="s2">&quot;tidak&quot;</span><span class="p">,</span> <span class="s2">&quot;enggak&quot;</span><span class="p">:</span> <span class="s2">&quot;tidak&quot;</span><span class="p">,</span> <span class="s2">&quot;ngga&quot;</span><span class="p">:</span> <span class="s2">&quot;tidak&quot;</span><span class="p">,</span> <span class="s2">&quot;gk&quot;</span><span class="p">:</span> <span class="s2">&quot;tidak&quot;</span><span class="p">,</span> <span class="s2">&quot;tdk&quot;</span><span class="p">:</span> <span class="s2">&quot;tidak&quot;</span><span class="p">,</span> <span class="s2">&quot;tk&quot;</span><span class="p">:</span> <span class="s2">&quot;tidak&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;gue&quot;</span><span class="p">:</span> <span class="s2">&quot;saya&quot;</span><span class="p">,</span> <span class="s2">&quot;gw&quot;</span><span class="p">:</span> <span class="s2">&quot;saya&quot;</span><span class="p">,</span> <span class="s2">&quot;gua&quot;</span><span class="p">:</span> <span class="s2">&quot;saya&quot;</span><span class="p">,</span> <span class="s2">&quot;sy&quot;</span><span class="p">:</span> <span class="s2">&quot;saya&quot;</span><span class="p">,</span> <span class="s2">&quot;aq&quot;</span><span class="p">:</span> <span class="s2">&quot;saya&quot;</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="s2">&quot;saya&quot;</span><span class="p">,</span> <span class="s2">&quot;ane&quot;</span><span class="p">:</span> <span class="s2">&quot;saya&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;lu&quot;</span><span class="p">:</span> <span class="s2">&quot;kamu&quot;</span><span class="p">,</span> <span class="s2">&quot;loe&quot;</span><span class="p">:</span> <span class="s2">&quot;kamu&quot;</span><span class="p">,</span> <span class="s2">&quot;lo&quot;</span><span class="p">:</span> <span class="s2">&quot;kamu&quot;</span><span class="p">,</span> <span class="s2">&quot;km&quot;</span><span class="p">:</span> <span class="s2">&quot;kamu&quot;</span><span class="p">,</span> <span class="s2">&quot;kmu&quot;</span><span class="p">:</span> <span class="s2">&quot;kamu&quot;</span><span class="p">,</span> <span class="s2">&quot;elu&quot;</span><span class="p">:</span> <span class="s2">&quot;kamu&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;dah&quot;</span><span class="p">:</span> <span class="s2">&quot;sudah&quot;</span><span class="p">,</span> <span class="s2">&quot;udah&quot;</span><span class="p">:</span> <span class="s2">&quot;sudah&quot;</span><span class="p">,</span> <span class="s2">&quot;sdh&quot;</span><span class="p">:</span> <span class="s2">&quot;sudah&quot;</span><span class="p">,</span> <span class="s2">&quot;udh&quot;</span><span class="p">:</span> <span class="s2">&quot;sudah&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;blm&quot;</span><span class="p">:</span> <span class="s2">&quot;belum&quot;</span><span class="p">,</span> <span class="s2">&quot;td&quot;</span><span class="p">:</span> <span class="s2">&quot;tadi&quot;</span><span class="p">,</span> <span class="s2">&quot;ntar&quot;</span><span class="p">:</span> <span class="s2">&quot;nanti&quot;</span><span class="p">,</span> <span class="s2">&quot;skr&quot;</span><span class="p">:</span> <span class="s2">&quot;sekarang&quot;</span><span class="p">,</span> <span class="s2">&quot;skrg&quot;</span><span class="p">:</span> <span class="s2">&quot;sekarang&quot;</span><span class="p">,</span> <span class="s2">&quot;skg&quot;</span><span class="p">:</span> <span class="s2">&quot;sekarang&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;kmrn&quot;</span><span class="p">:</span> <span class="s2">&quot;kemarin&quot;</span><span class="p">,</span> <span class="s2">&quot;kemrn&quot;</span><span class="p">:</span> <span class="s2">&quot;kemarin&quot;</span><span class="p">,</span> <span class="s2">&quot;kmarin&quot;</span><span class="p">:</span> <span class="s2">&quot;kemarin&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;aja&quot;</span><span class="p">:</span> <span class="s2">&quot;saja&quot;</span><span class="p">,</span> <span class="s2">&quot;aj&quot;</span><span class="p">:</span> <span class="s2">&quot;saja&quot;</span><span class="p">,</span> <span class="s2">&quot;sj&quot;</span><span class="p">:</span> <span class="s2">&quot;saja&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;nih&quot;</span><span class="p">:</span> <span class="s2">&quot;ini&quot;</span><span class="p">,</span> <span class="s2">&quot;nie&quot;</span><span class="p">:</span> <span class="s2">&quot;ini&quot;</span><span class="p">,</span> <span class="s2">&quot;ni&quot;</span><span class="p">:</span> <span class="s2">&quot;ini&quot;</span><span class="p">,</span> <span class="s2">&quot;tuh&quot;</span><span class="p">:</span> <span class="s2">&quot;itu&quot;</span><span class="p">,</span> <span class="s2">&quot;gtu&quot;</span><span class="p">:</span> <span class="s2">&quot;begitu&quot;</span><span class="p">,</span> <span class="s2">&quot;gitu&quot;</span><span class="p">:</span> <span class="s2">&quot;begitu&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;trs&quot;</span><span class="p">:</span> <span class="s2">&quot;terus&quot;</span><span class="p">,</span> <span class="s2">&quot;trus&quot;</span><span class="p">:</span> <span class="s2">&quot;terus&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;yg&quot;</span><span class="p">:</span> <span class="s2">&quot;yang&quot;</span><span class="p">,</span> <span class="s2">&quot;utk&quot;</span><span class="p">:</span> <span class="s2">&quot;untuk&quot;</span><span class="p">,</span> <span class="s2">&quot;dlm&quot;</span><span class="p">:</span> <span class="s2">&quot;dalam&quot;</span><span class="p">,</span> <span class="s2">&quot;dr&quot;</span><span class="p">:</span> <span class="s2">&quot;dari&quot;</span><span class="p">,</span> <span class="s2">&quot;dg&quot;</span><span class="p">:</span> <span class="s2">&quot;dengan&quot;</span><span class="p">,</span> <span class="s2">&quot;jd&quot;</span><span class="p">:</span> <span class="s2">&quot;jadi&quot;</span><span class="p">,</span> <span class="s2">&quot;jg&quot;</span><span class="p">:</span> <span class="s2">&quot;juga&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;krn&quot;</span><span class="p">:</span> <span class="s2">&quot;karena&quot;</span><span class="p">,</span> <span class="s2">&quot;tp&quot;</span><span class="p">:</span> <span class="s2">&quot;tetapi&quot;</span><span class="p">,</span> <span class="s2">&quot;tpi&quot;</span><span class="p">:</span> <span class="s2">&quot;tetapi&quot;</span><span class="p">,</span> <span class="s2">&quot;sm&quot;</span><span class="p">:</span> <span class="s2">&quot;sama&quot;</span><span class="p">,</span> <span class="s2">&quot;thd&quot;</span><span class="p">:</span> <span class="s2">&quot;terhadap&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;dll&quot;</span><span class="p">:</span> <span class="s2">&quot;dan lain-lain&quot;</span><span class="p">,</span> <span class="s2">&quot;dsb&quot;</span><span class="p">:</span> <span class="s2">&quot;dan sebagainya&quot;</span><span class="p">,</span> <span class="s2">&quot;dst&quot;</span><span class="p">:</span> <span class="s2">&quot;dan seterusnya&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;banget&quot;</span><span class="p">:</span> <span class="s2">&quot;sekali&quot;</span><span class="p">,</span> <span class="s2">&quot;bgt&quot;</span><span class="p">:</span> <span class="s2">&quot;sekali&quot;</span><span class="p">,</span> <span class="s2">&quot;sgt&quot;</span><span class="p">:</span> <span class="s2">&quot;sangat&quot;</span><span class="p">,</span> <span class="s2">&quot;sngt&quot;</span><span class="p">:</span> <span class="s2">&quot;sangat&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;lg&quot;</span><span class="p">:</span> <span class="s2">&quot;sedang&quot;</span><span class="p">,</span> <span class="s2">&quot;sdg&quot;</span><span class="p">:</span> <span class="s2">&quot;sedang&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;dl&quot;</span><span class="p">:</span> <span class="s2">&quot;dulu&quot;</span><span class="p">,</span> <span class="s2">&quot;pls&quot;</span><span class="p">:</span> <span class="s2">&quot;tolong&quot;</span><span class="p">,</span> <span class="s2">&quot;tolongin&quot;</span><span class="p">:</span> <span class="s2">&quot;tolong&quot;</span><span class="p">,</span> <span class="s2">&quot;plis&quot;</span><span class="p">:</span> <span class="s2">&quot;tolong&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;wkwk&quot;</span><span class="p">:</span> <span class="s2">&quot;tertawa&quot;</span><span class="p">,</span> <span class="s2">&quot;wkwkwk&quot;</span><span class="p">:</span> <span class="s2">&quot;tertawa&quot;</span><span class="p">,</span> <span class="s2">&quot;hehe&quot;</span><span class="p">:</span> <span class="s2">&quot;tertawa kecil&quot;</span><span class="p">,</span> <span class="s2">&quot;hihi&quot;</span><span class="p">:</span> <span class="s2">&quot;tertawa kecil&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;btw&quot;</span><span class="p">:</span> <span class="s2">&quot;ngomong-ngomong&quot;</span><span class="p">,</span> <span class="s2">&quot;imo&quot;</span><span class="p">:</span> <span class="s2">&quot;menurut saya&quot;</span><span class="p">,</span> <span class="s2">&quot;imho&quot;</span><span class="p">:</span> <span class="s2">&quot;menurut saya&quot;</span><span class="p">,</span> <span class="s2">&quot;cmiiw&quot;</span><span class="p">:</span> <span class="s2">&quot;koreksi jika saya salah&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;idk&quot;</span><span class="p">:</span> <span class="s2">&quot;saya tidak tahu&quot;</span><span class="p">,</span> <span class="s2">&quot;jk&quot;</span><span class="p">:</span> <span class="s2">&quot;hanya bercanda&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;ok&quot;</span><span class="p">:</span> <span class="s2">&quot;baik&quot;</span><span class="p">,</span> <span class="s2">&quot;oke&quot;</span><span class="p">:</span> <span class="s2">&quot;baik&quot;</span><span class="p">,</span> <span class="s2">&quot;okey&quot;</span><span class="p">:</span> <span class="s2">&quot;baik&quot;</span><span class="p">,</span> <span class="s2">&quot;sip&quot;</span><span class="p">:</span> <span class="s2">&quot;baik&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;ciyus&quot;</span><span class="p">:</span> <span class="s2">&quot;serius&quot;</span><span class="p">,</span> <span class="s2">&quot;serem&quot;</span><span class="p">:</span> <span class="s2">&quot;menyeramkan&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;kl&quot;</span><span class="p">:</span> <span class="s2">&quot;kalau&quot;</span><span class="p">,</span> <span class="s2">&quot;klo&quot;</span><span class="p">:</span> <span class="s2">&quot;kalau&quot;</span><span class="p">,</span> <span class="s2">&quot;klu&quot;</span><span class="p">:</span> <span class="s2">&quot;kalau&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;spy&quot;</span><span class="p">:</span> <span class="s2">&quot;supaya&quot;</span><span class="p">,</span> <span class="s2">&quot;spya&quot;</span><span class="p">:</span> <span class="s2">&quot;supaya&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;bbrp&quot;</span><span class="p">:</span> <span class="s2">&quot;beberapa&quot;</span><span class="p">,</span> <span class="s2">&quot;tsb&quot;</span><span class="p">:</span> <span class="s2">&quot;tersebut&quot;</span><span class="p">,</span> <span class="s2">&quot;trsbt&quot;</span><span class="p">:</span> <span class="s2">&quot;tersebut&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;dpt&quot;</span><span class="p">:</span> <span class="s2">&quot;dapat&quot;</span><span class="p">,</span> <span class="s2">&quot;bs&quot;</span><span class="p">:</span> <span class="s2">&quot;bisa&quot;</span><span class="p">,</span> <span class="s2">&quot;bsa&quot;</span><span class="p">:</span> <span class="s2">&quot;bisa&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;stlh&quot;</span><span class="p">:</span> <span class="s2">&quot;setelah&quot;</span><span class="p">,</span> <span class="s2">&quot;sblm&quot;</span><span class="p">:</span> <span class="s2">&quot;sebelum&quot;</span><span class="p">,</span>
-
-      <span class="s2">&quot;mnj&quot;</span><span class="p">:</span> <span class="s2">&quot;manajemen&quot;</span><span class="p">,</span> <span class="s2">&quot;man&quot;</span><span class="p">:</span> <span class="s2">&quot;manajemen&quot;</span><span class="p">,</span> <span class="s2">&quot;mgt&quot;</span><span class="p">:</span> <span class="s2">&quot;management&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;org&quot;</span><span class="p">:</span> <span class="s2">&quot;organisasi&quot;</span><span class="p">,</span> <span class="s2">&quot;org2&quot;</span><span class="p">:</span> <span class="s2">&quot;organisasi&quot;</span><span class="p">,</span> <span class="s2">&quot;orgzt&quot;</span><span class="p">:</span> <span class="s2">&quot;organisasi&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;str&quot;</span><span class="p">:</span> <span class="s2">&quot;struktur&quot;</span><span class="p">,</span> <span class="s2">&quot;stkt&quot;</span><span class="p">:</span> <span class="s2">&quot;struktur&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;ldr&quot;</span><span class="p">:</span> <span class="s2">&quot;leader&quot;</span><span class="p">,</span> <span class="s2">&quot;ldrshp&quot;</span><span class="p">:</span> <span class="s2">&quot;leadership&quot;</span><span class="p">,</span> <span class="s2">&quot;pimp&quot;</span><span class="p">:</span> <span class="s2">&quot;pimpinan&quot;</span><span class="p">,</span> <span class="s2">&quot;pemimp&quot;</span><span class="p">:</span> <span class="s2">&quot;pemimpin&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;pln&quot;</span><span class="p">:</span> <span class="s2">&quot;perencanaan&quot;</span><span class="p">,</span> <span class="s2">&quot;renc&quot;</span><span class="p">:</span> <span class="s2">&quot;perencanaan&quot;</span><span class="p">,</span> <span class="s2">&quot;plan&quot;</span><span class="p">:</span> <span class="s2">&quot;perencanaan&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;orgz&quot;</span><span class="p">:</span> <span class="s2">&quot;organizing&quot;</span><span class="p">,</span> <span class="s2">&quot;orgzn&quot;</span><span class="p">:</span> <span class="s2">&quot;organisasi&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;dir&quot;</span><span class="p">:</span> <span class="s2">&quot;directing&quot;</span><span class="p">,</span> <span class="s2">&quot;pgn&quot;</span><span class="p">:</span> <span class="s2">&quot;pengarahan&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;cnt&quot;</span><span class="p">:</span> <span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="s2">&quot;cont&quot;</span><span class="p">:</span> <span class="s2">&quot;control&quot;</span><span class="p">,</span> <span class="s2">&quot;ctrl&quot;</span><span class="p">:</span> <span class="s2">&quot;kontrol&quot;</span><span class="p">,</span> <span class="s2">&quot;pengend&quot;</span><span class="p">:</span> <span class="s2">&quot;pengendalian&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;eff&quot;</span><span class="p">:</span> <span class="s2">&quot;efisiensi&quot;</span><span class="p">,</span> <span class="s2">&quot;effct&quot;</span><span class="p">:</span> <span class="s2">&quot;efektivitas&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;sdm&quot;</span><span class="p">:</span> <span class="s2">&quot;sumber daya manusia&quot;</span><span class="p">,</span> <span class="s2">&quot;hr&quot;</span><span class="p">:</span> <span class="s2">&quot;human resource&quot;</span><span class="p">,</span> <span class="s2">&quot;hrd&quot;</span><span class="p">:</span> <span class="s2">&quot;human resource development&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;res&quot;</span><span class="p">:</span> <span class="s2">&quot;resource&quot;</span><span class="p">,</span> <span class="s2">&quot;rsc&quot;</span><span class="p">:</span> <span class="s2">&quot;resource&quot;</span><span class="p">,</span> <span class="s2">&quot;sda&quot;</span><span class="p">:</span> <span class="s2">&quot;sumber daya alam&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;inv&quot;</span><span class="p">:</span> <span class="s2">&quot;investasi&quot;</span><span class="p">,</span> <span class="s2">&quot;invt&quot;</span><span class="p">:</span> <span class="s2">&quot;investasi&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;pmas&quot;</span><span class="p">:</span> <span class="s2">&quot;pemasaran&quot;</span><span class="p">,</span> <span class="s2">&quot;mkt&quot;</span><span class="p">:</span> <span class="s2">&quot;marketing&quot;</span><span class="p">,</span> <span class="s2">&quot;mktg&quot;</span><span class="p">:</span> <span class="s2">&quot;marketing&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;prod&quot;</span><span class="p">:</span> <span class="s2">&quot;produksi&quot;</span><span class="p">,</span> <span class="s2">&quot;prdks&quot;</span><span class="p">:</span> <span class="s2">&quot;produksi&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;fin&quot;</span><span class="p">:</span> <span class="s2">&quot;finance&quot;</span><span class="p">,</span> <span class="s2">&quot;keu&quot;</span><span class="p">:</span> <span class="s2">&quot;keuangan&quot;</span><span class="p">,</span> <span class="s2">&quot;akut&quot;</span><span class="p">:</span> <span class="s2">&quot;akuntansi&quot;</span><span class="p">,</span> <span class="s2">&quot;acct&quot;</span><span class="p">:</span> <span class="s2">&quot;akuntansi&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;ris&quot;</span><span class="p">:</span> <span class="s2">&quot;risiko&quot;</span><span class="p">,</span> <span class="s2">&quot;rsko&quot;</span><span class="p">:</span> <span class="s2">&quot;risiko&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;anal&quot;</span><span class="p">:</span> <span class="s2">&quot;analisis&quot;</span><span class="p">,</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span> <span class="s2">&quot;evaluasi&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;strtg&quot;</span><span class="p">:</span> <span class="s2">&quot;strategi&quot;</span><span class="p">,</span> <span class="s2">&quot;stg&quot;</span><span class="p">:</span> <span class="s2">&quot;strategi&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;ops&quot;</span><span class="p">:</span> <span class="s2">&quot;operasi&quot;</span><span class="p">,</span> <span class="s2">&quot;opr&quot;</span><span class="p">:</span> <span class="s2">&quot;operasional&quot;</span><span class="p">,</span> <span class="s2">&quot;oprs&quot;</span><span class="p">:</span> <span class="s2">&quot;operasional&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;bsc&quot;</span><span class="p">:</span> <span class="s2">&quot;balanced scorecard&quot;</span><span class="p">,</span> <span class="s2">&quot;swot&quot;</span><span class="p">:</span> <span class="s2">&quot;analisis swot&quot;</span><span class="p">,</span> <span class="s2">&quot;pest&quot;</span><span class="p">:</span> <span class="s2">&quot;analisis pest&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;csr&quot;</span><span class="p">:</span> <span class="s2">&quot;corporate social responsibility&quot;</span><span class="p">,</span> <span class="s2">&quot;gcn&quot;</span><span class="p">:</span> <span class="s2">&quot;good corporate governance&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;qm&quot;</span><span class="p">:</span> <span class="s2">&quot;quality management&quot;</span><span class="p">,</span> <span class="s2">&quot;iso&quot;</span><span class="p">:</span> <span class="s2">&quot;standar iso&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;kpi&quot;</span><span class="p">:</span> <span class="s2">&quot;key performance indicator&quot;</span><span class="p">,</span> <span class="s2">&quot;indik&quot;</span><span class="p">:</span> <span class="s2">&quot;indikator&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;knowl&quot;</span><span class="p">:</span> <span class="s2">&quot;knowledge management&quot;</span><span class="p">,</span> <span class="s2">&quot;kmgt&quot;</span><span class="p">:</span> <span class="s2">&quot;knowledge management&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;chg&quot;</span><span class="p">:</span> <span class="s2">&quot;change management&quot;</span><span class="p">,</span> <span class="s2">&quot;innv&quot;</span><span class="p">:</span> <span class="s2">&quot;inovasi&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;cnfl&quot;</span><span class="p">:</span> <span class="s2">&quot;konflik&quot;</span><span class="p">,</span> <span class="s2">&quot;cnflt&quot;</span><span class="p">:</span> <span class="s2">&quot;konflik&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;krj&quot;</span><span class="p">:</span> <span class="s2">&quot;kerja&quot;</span><span class="p">,</span> <span class="s2">&quot;tm&quot;</span><span class="p">:</span> <span class="s2">&quot;tim&quot;</span><span class="p">,</span> <span class="s2">&quot;tmwrk&quot;</span><span class="p">:</span> <span class="s2">&quot;kerja sama tim&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;cst&quot;</span><span class="p">:</span> <span class="s2">&quot;cost&quot;</span><span class="p">,</span> <span class="s2">&quot;faktorfaktor&quot;</span><span class="p">:</span> <span class="s2">&quot;faktor&quot;</span><span class="p">,</span> <span class="s2">&quot;dampakdampak&quot;</span><span class="p">:</span> <span class="s2">&quot;dampak&quot;</span><span class="p">,</span> <span class="s2">&quot;bya&quot;</span><span class="p">:</span> <span class="s2">&quot;biaya&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;val&quot;</span><span class="p">:</span> <span class="s2">&quot;nilai&quot;</span><span class="p">,</span> <span class="s2">&quot;valu&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;proj&quot;</span><span class="p">:</span> <span class="s2">&quot;proyek&quot;</span><span class="p">,</span> <span class="s2">&quot;prjk&quot;</span><span class="p">:</span> <span class="s2">&quot;proyek&quot;</span><span class="p">,</span>
-
-      <span class="s2">&quot;med&quot;</span><span class="p">:</span> <span class="s2">&quot;medis&quot;</span><span class="p">,</span> <span class="s2">&quot;obat2&quot;</span><span class="p">:</span> <span class="s2">&quot;obat-obatan&quot;</span><span class="p">,</span> <span class="s2">&quot;rs&quot;</span><span class="p">:</span> <span class="s2">&quot;rumah sakit&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;dok&quot;</span><span class="p">:</span> <span class="s2">&quot;dokter&quot;</span><span class="p">,</span> <span class="s2">&quot;drg&quot;</span><span class="p">:</span> <span class="s2">&quot;dokter gigi&quot;</span><span class="p">,</span> <span class="s2">&quot;prof&quot;</span><span class="p">:</span> <span class="s2">&quot;profesor&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="s2">&quot;perguruan tinggi&quot;</span><span class="p">,</span> <span class="s2">&quot;univ&quot;</span><span class="p">:</span> <span class="s2">&quot;universitas&quot;</span><span class="p">,</span> <span class="s2">&quot;fak&quot;</span><span class="p">:</span> <span class="s2">&quot;fakultas&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;skripsi&quot;</span><span class="p">:</span> <span class="s2">&quot;skripsi&quot;</span><span class="p">,</span> <span class="s2">&quot;tesis&quot;</span><span class="p">:</span> <span class="s2">&quot;tesis&quot;</span><span class="p">,</span> <span class="s2">&quot;disertasi&quot;</span><span class="p">:</span> <span class="s2">&quot;disertasi&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;mhs&quot;</span><span class="p">:</span> <span class="s2">&quot;mahasiswa&quot;</span><span class="p">,</span> <span class="s2">&quot;mhsw&quot;</span><span class="p">:</span> <span class="s2">&quot;mahasiswa&quot;</span>
-    <span class="p">}</span>
-    
-    <span class="c1"># Membuat pola regex untuk mencocokkan kata-kata utuh</span>
-    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\b(&#39;</span> <span class="o">+</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">contractions_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;)\b&#39;</span>
-    
-    <span class="c1"># Fungsi pengganti (DIPERBAIKI)</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">replace_match</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
-        <span class="n">original_word</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Ambil kata asli (misal: &#39;Gue&#39;)</span>
-        <span class="n">lower_word</span> <span class="o">=</span> <span class="n">original_word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>  <span class="c1"># Konversi ke huruf kecil (misal: &#39;gue&#39;)</span>
-        <span class="k">return</span> <span class="n">contractions_dict</span><span class="p">[</span><span class="n">lower_word</span><span class="p">]</span>  <span class="c1"># Cari di kamus</span>
-    
-    <span class="c1"># Lakukan penggantian</span>
-    <span class="n">expanded_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">replace_match</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">expanded_text</span>
-
-<span class="c1"># Terapkan kontraksi bahasa Indonesia ke data abstrak yang sudah di-stemming</span>
-<span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_expanded&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_stemmed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-    <span class="k">lambda</span> <span class="n">tokens</span><span class="p">:</span> <span class="n">expand_indonesian_contractions</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens</span><span class="p">))</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Penanganan kontraksi selesai untuk </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pta_df</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> abstrak&quot;</span><span class="p">)</span>
-
-<span class="c1"># Tampilkan hasil dalam bentuk DataFrame</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 HASIL PENANGANAN KONTRAKSI (SEMUA DATA):&quot;</span><span class="p">)</span>
-<span class="n">comparison_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s1">&#39;abstrak_stemmed&#39;</span><span class="p">:</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_stemmed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">15</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">15</span> <span class="k">else</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
-    <span class="s1">&#39;abstrak_expanded&#39;</span><span class="p">:</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_expanded&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">15</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">15</span> <span class="k">else</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="p">})</span>
-
-<span class="n">comparison_df</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>✅ Penanganan kontraksi selesai untuk 1,031 abstrak
-
-📊 HASIL PENANGANAN KONTRAKSI (SEMUA DATA):
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>abstrak_stemmed</th>
-      <th>abstrak_expanded</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>satiyah pengaruh faktorfaktor latih kembang pr...</td>
-      <td>satiyah pengaruh faktor latih kembang produkti...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>tuju teliti persepsi brand association langgan...</td>
-      <td>tuju teliti persepsi brand association langgan...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>aplikasi nyata manfaat teknologi informasi kom...</td>
-      <td>aplikasi nyata manfaat teknologi informasi kom...</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>teliti metode kuantitatif tekan uji hipotesis ...</td>
-      <td>teliti metode kuantitatif tekan uji hipotesis ...</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>1026</th>
-      <td>teliti tuju hitung tingkat huni kamar hotel pa...</td>
-      <td>teliti tuju hitung tingkat huni kamar hotel pa...</td>
-    </tr>
-    <tr>
-      <th>1027</th>
-      <td>uswatun hasanah pengaruh latih kompensasi prod...</td>
-      <td>uswatun hasanah pengaruh latih kompensasi prod...</td>
-    </tr>
-    <tr>
-      <th>1028</th>
-      <td>tuju teliti peran service performance climate ...</td>
-      <td>tuju teliti peran service performance climate ...</td>
-    </tr>
-    <tr>
-      <th>1029</th>
-      <td>teliti tuju baur promosi iklan x jual pribadi ...</td>
-      <td>teliti tuju baur promosi iklan x jual pribadi ...</td>
-    </tr>
-    <tr>
-      <th>1030</th>
-      <td>teliti tuju pengaruh motivasi kerja mediator s...</td>
-      <td>teliti tuju pengaruh motivasi kerja mediator s...</td>
-    </tr>
-  </tbody>
-</table>
-<p>1031 rows × 2 columns</p>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install library yang diperlukan</span>
-<span class="o">%</span><span class="k">pip</span> install pyspellchecker tqdm
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">spellchecker</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpellChecker</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-
-<span class="c1"># Inisialisasi SpellChecker kosong</span>
-<span class="n">spell</span> <span class="o">=</span> <span class="n">SpellChecker</span><span class="p">(</span><span class="n">language</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-
-<span class="c1"># Load kamus Indonesia dari file</span>
-<span class="n">wordlist_file</span> <span class="o">=</span> <span class="s2">&quot;00-indonesian-wordlist.lst&quot;</span>
-
-<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">wordlist_file</span><span class="p">):</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">wordlist_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;latin-1&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">indo_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
-    
-    <span class="n">spell</span><span class="o">.</span><span class="n">word_frequency</span><span class="o">.</span><span class="n">load_words</span><span class="p">(</span><span class="n">indo_words</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Memuat </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">indo_words</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> kata dari kamus Indonesia&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="c1"># Cari file di direktori lain yang mungkin</span>
-    <span class="n">possible_paths</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;tugas_4&quot;</span><span class="p">,</span> <span class="n">wordlist_file</span><span class="p">),</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;tugas_4&quot;</span><span class="p">,</span> <span class="n">wordlist_file</span><span class="p">),</span>
-    <span class="p">]</span>
-    
-    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">possible_paths</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-            <span class="n">wordlist_file</span> <span class="o">=</span> <span class="n">path</span>
-            <span class="k">break</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File &#39;</span><span class="si">{</span><span class="n">wordlist_file</span><span class="si">}</span><span class="s2">&#39; tidak ditemukan!&quot;</span><span class="p">)</span>
-    
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">wordlist_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;latin-1&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">indo_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
-    
-    <span class="n">spell</span><span class="o">.</span><span class="n">word_frequency</span><span class="o">.</span><span class="n">load_words</span><span class="p">(</span><span class="n">indo_words</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Memuat </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">indo_words</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> kata dari kamus Indonesia&quot;</span><span class="p">)</span>
-
-<span class="c1"># Fungsi untuk koreksi kata</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">correct_word</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">word</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">word</span>
-    <span class="n">corr</span> <span class="o">=</span> <span class="n">spell</span><span class="o">.</span><span class="n">correction</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">corr</span> <span class="k">if</span> <span class="n">corr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">word</span>
-
-<span class="c1"># Pastikan pta_df sudah ada dan memiliki kolom yang diperlukan</span>
-<span class="k">if</span> <span class="s1">&#39;pta_df&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">pta_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-    <span class="c1"># Tentukan kolom sumber yang akan digunakan</span>
-    <span class="k">if</span> <span class="s1">&#39;abstrak_id_expanded&#39;</span> <span class="ow">in</span> <span class="n">pta_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-        <span class="n">source_column</span> <span class="o">=</span> <span class="s1">&#39;abstrak_id_expanded&#39;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Gunakan kolom alternatif</span>
-        <span class="n">available_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">pta_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;abstrak&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
-        <span class="n">source_column</span> <span class="o">=</span> <span class="n">available_columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">available_columns</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠️  Menggunakan &#39;</span><span class="si">{</span><span class="n">source_column</span><span class="si">}</span><span class="s2">&#39; karena &#39;abstrak_id_expanded&#39; belum tersedia&quot;</span><span class="p">)</span>
-    
-    <span class="k">if</span> <span class="n">source_column</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔤 Memproses spell checking untuk </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pta_df</span><span class="p">)</span><span class="si">}</span><span class="s2"> dokumen...&quot;</span><span class="p">)</span>
-        
-        <span class="c1"># Terapkan spellcheck</span>
-        <span class="n">corrected_texts</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">pta_df</span><span class="p">[</span><span class="n">source_column</span><span class="p">],</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Spell checking&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="p">):</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-                <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
-            
-            <span class="n">corrected</span> <span class="o">=</span> <span class="p">[</span><span class="n">correct_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">word</span><span class="p">]</span>
-            <span class="n">corrected_texts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">corrected</span><span class="p">)</span>
-
-        <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_spellchecked&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">corrected_texts</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Spell checking selesai!&quot;</span><span class="p">)</span>
-        
-        <span class="c1"># Tampilkan contoh hasil (hanya 3 dokumen)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📝 Contoh hasil (3 dokumen pertama):&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pta_df</span><span class="p">))):</span>
-            <span class="n">original_tokens</span> <span class="o">=</span> <span class="n">pta_df</span><span class="p">[</span><span class="n">source_column</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">original_tokens</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">original_tokens</span> <span class="o">=</span> <span class="n">original_tokens</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">original_tokens</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-                <span class="n">original_tokens</span> <span class="o">=</span> <span class="p">[]</span>
-                
-            <span class="n">corrected_tokens</span> <span class="o">=</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_spellchecked&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            
-            <span class="n">original</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">original_tokens</span><span class="p">[:</span><span class="mi">8</span><span class="p">])</span>
-            <span class="n">corrected</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">corrected_tokens</span><span class="p">[:</span><span class="mi">8</span><span class="p">])</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dok </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">original</span><span class="si">}</span><span class="s2">... → </span><span class="si">{</span><span class="n">corrected</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
-    
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ DataFrame &#39;pta_df&#39; tidak ditemukan!&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💡 Jalankan sel sebelumnya terlebih dahulu&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 24.0 -&gt; 25.2
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pyspellchecker in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (0.8.3)
-Requirement already satisfied: tqdm in c:\users\hp\appdata\roaming\python\python311\site-packages (4.67.1)
-Requirement already satisfied: colorama in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from tqdm) (0.4.6)
-Note: you may need to restart the kernel to use updated packages.
-Working directory saat ini: d:\kuliah\semester 7\ppw\tugas_ppw\tugas_4
-✅ File ditemukan: d:\kuliah\semester 7\ppw\tugas_ppw\tugas_4\00-indonesian-wordlist.lst
-✅ Berhasil memuat 79,898 kata dari kamus Indonesia
-📊 DataFrame ditemukan dengan 1031 dokumen
-🔍 Kolom yang tersedia: [&#39;abstrak_id_clean&#39;, &#39;abstrak_id_tokens&#39;, &#39;abstrak_id_filtered&#39;]
-❌ Kolom &#39;abstrak_id_expanded&#39; tidak ditemukan!
-💡 Jalankan sel &#39;Kontraksi bahasa indonesia&#39; terlebih dahulu
-🔧 Kolom alternatif yang tersedia: [&#39;abstrak_id_clean&#39;, &#39;abstrak_id_tokens&#39;, &#39;abstrak_id_filtered&#39;]
-🔄 Menggunakan kolom &#39;abstrak_id_filtered&#39; sebagai gantinya...
-📊 Memproses 1031 dokumen...
-✅ Berhasil memuat 79,898 kata dari kamus Indonesia
-📊 DataFrame ditemukan dengan 1031 dokumen
-🔍 Kolom yang tersedia: [&#39;abstrak_id_clean&#39;, &#39;abstrak_id_tokens&#39;, &#39;abstrak_id_filtered&#39;]
-❌ Kolom &#39;abstrak_id_expanded&#39; tidak ditemukan!
-💡 Jalankan sel &#39;Kontraksi bahasa indonesia&#39; terlebih dahulu
-🔧 Kolom alternatif yang tersedia: [&#39;abstrak_id_clean&#39;, &#39;abstrak_id_tokens&#39;, &#39;abstrak_id_filtered&#39;]
-🔄 Menggunakan kolom &#39;abstrak_id_filtered&#39; sebagai gantinya...
-📊 Memproses 1031 dokumen...
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spellchecking:  59%|█████▉    | 613/1031 [1:50:35&lt;1:23:17, 11.96s/row]
-</pre></div>
-</div>
-</div>
-</div>
-<section class="tex2jax_ignore mathjax_ignore" id="pemeriksaan-ejaan">
-<h1>Pemeriksaan Ejaan<a class="headerlink" href="#pemeriksaan-ejaan" title="Link to this heading">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install pyspellchecker
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pyspellchecker in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (0.8.3)
-Note: you may need to restart the kernel to use updated packages.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 24.0 -&gt; 25.2
-[notice] To update, run: python.exe -m pip install --upgrade pip
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spellchecker</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpellChecker</span>
-
-<span class="n">spell</span> <span class="o">=</span> <span class="n">SpellChecker</span><span class="p">()</span>
-<span class="n">corrected_corpus</span> <span class="o">=</span> <span class="p">[[</span><span class="n">spell</span><span class="o">.</span><span class="n">correction</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">]</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_expanded&quot;</span><span class="p">]]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">corrected_corpus</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">30</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span><span class="w"> </span><span class="nn">spellchecker</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpellChecker</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">spell</span> <span class="o">=</span> <span class="n">SpellChecker</span><span class="p">()</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">corrected_corpus</span> <span class="o">=</span> <span class="p">[[</span><span class="n">spell</span><span class="o">.</span><span class="n">correction</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">]</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">tokenized_corpus</span><span class="p">]</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="nb">print</span><span class="p">(</span><span class="n">corrected_corpus</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;tokenized_corpus&#39; is not defined
-</pre></div>
-</div>
-</div>
-</div>
-<p>Stemmed (Hasil Stemming)
-Stemming adalah proses mengembalikan kata ke bentuk dasarnya dengan memotong imbuhan (awalan, akhiran, sisipan).</p>
-<p>Contoh:</p>
-<p>“berjalan” → “jalan”
-“berlari” → “lari”
-“menjalankan” → “jalan”
-“pembelajaran” → “ajar”</p>
-<p>Expanded (Hasil Penanganan Kontraksi)
-Expansion adalah proses mengubah kata-kata singkatan atau slang menjadi bentuk lengkapnya.</p>
-<p>Contoh:</p>
-<p>“gak” → “tidak”
-“yg” → “yang”
-“utk” → “untuk”
-“dr” → “dari”
-“tp” → “tetapi”</p>
-<p>Urutan Proses dalam Pipeline:
-Teks Asli: “Penelitian ini menggunakan metode yg tepat utk analisis data”
-Cleaning: “penelitian ini menggunakan metode yg tepat utk analisis data”
-Tokenizing: [“penelitian”, “ini”, “menggunakan”, “metode”, “yg”, “tepat”, “utk”, “analisis”, “data”]
-Stop Words Removal: [“penelitian”, “menggunakan”, “metode”, “yg”, “tepat”, “utk”, “analisis”, “data”]
-Stemming: [“teliti”, “guna”, “metode”, “yg”, “tepat”, “utk”, “analisis”, “data”] ← INI STEMMED
-Expansion: [“teliti”, “guna”, “metode”, “yang”, “tepat”, “untuk”, “analisis”, “data”] ← INI EXPANDED</p>
-<p>Stemmed = kata sudah dipotong imbuhannya
-Expanded = singkatan/slang sudah diubah ke bentuk lengkap</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1584,6 +1042,26 @@ Expanded = singkatan/slang sudah diubah ke bentuk lengkap</p>
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>1. Pembersihan Teks</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenisasi"><strong>2. Tokenisasi</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penghapusan-kata-umum-stop-words"><strong>3. Penghapusan Kata Umum (Stop Words)</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#stemming-dan-lematisasi"><strong>4. Stemming dan Lematisasi</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-frekuensi-kata"><strong>5. Analisis Frekuensi Kata</strong></a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>
