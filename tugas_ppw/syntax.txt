@@ -2,7 +2,7 @@
 Remove-Item -Recurse -Force _build; jupyter-book build .
 
 test
-
+ok
 =======update=========
 ghp-import -n -p -f _build/html
 
