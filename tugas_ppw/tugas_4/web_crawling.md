@@ -1,4 +1,4 @@
-# tf-idf dan frekuensi - Tugas 4
+# preprocessing, tf-idf dan CBOW - Tugas 4
 
 Program ini melakukan text preprocessing untuk membersihkan dan memproses teks abstrak PTA Trunojoyo dengan berbagai tahapan:
 
