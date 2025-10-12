@@ -31,8 +31,9 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['import requests', 'from bs4 import BeautifulSoup', 'import pandas as pd', '', 'def ptaa():']
-...
-['', '    return df', '', '# Jalankan fungsi', 'ptaa()']
+start_url = "https://pta.trunojoyo.ac.id"
+run_crawler(start_url, max_depth=1)
+
+print(f"Jumlah data hasil crawl: {len(web_structur)}")
 -------------------
 
