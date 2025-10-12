@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>preprocessing, tf-idf dan CBOW - Tugas 4 &#8212; My sample book</title>
+    <title>preprocessing, tf-idf dan cbow &#8212; My sample book</title>
   
   
   
@@ -182,7 +182,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../tugas_1/pengantar_ppw.html">Pengantar Web Mining</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tugas_2/web_crawling.html">web crawling - tugas 2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tugas_3/web_crawling.html">Web Crawling - Tugas 3</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">preprocessing, tf-idf dan CBOW - Tugas 4</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">preprocessing, tf-idf dan cbow</a></li>
 </ul>
 
     </div>
@@ -368,7 +368,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>preprocessing, tf-idf dan CBOW - Tugas 4</h1>
+    <h1>preprocessing, tf-idf dan cbow</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -378,52 +378,24 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-collection-dan-setup">Data Collection dan Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-libraries-dan-import-dependencies">Install Libraries dan Import Dependencies</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#web-scraping-pta-trunojoyo">Web Scraping PTA Trunojoyo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports-setup">Imports &amp; setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scraping-kompas">scraping (Kompas)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-singkat">Penjelasan singkat</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-cleaning">Basic cleaning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stemming-lemmatization">Stemming &amp; lemmatization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenizing">Tokenizing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stopwords-removal">Stopwords removal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf-markdown-explanation">TF-IDF (markdown explanation)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf">tf-idf</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-cleaning">1. Text Cleaning</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pembersihan-teks">Pembersihan Teks</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenization">2. Tokenization</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenisasi-dengan-nltk">Tokenisasi dengan NLTK</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stopwords-removal">3. Stopwords Removal</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penghapusan-stopwords-bahasa-indonesia">Penghapusan Stopwords Bahasa Indonesia</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stemming-dan-lemmatization">4. Stemming dan Lemmatization</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stemming-dengan-sastrawi">Stemming dengan Sastrawi</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-frekuensi-kata">5. Analisis Frekuensi Kata</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-text-preprocessing-pipeline">Ringkasan Text Preprocessing Pipeline</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embeddings-dengan-cbow-continuous-bag-of-words">6. Word Embeddings dengan CBOW (Continuous Bag of Words)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-model-cbow">Training Model CBOW</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-semantic-similarity">Analisis Semantic Similarity</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#document-embeddings-dan-similarity-analysis">Document Embeddings dan Similarity Analysis</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#export-dan-analisis-komprehensif">7. Export dan Analisis Komprehensif</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf-analysis-excel-format">TF-IDF Analysis (Excel Format)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cbow-analysis-excel-format">CBOW Analysis (Excel Format)</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-hasil-tf-idf-vs-cbow">8. Perbandingan Hasil: TF-IDF vs CBOW</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-pendekatan">Perbedaan Pendekatan:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-yang-dihasilkan">Output yang Dihasilkan:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aplikasi-praktis">Aplikasi Praktis:</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-lengkap-text-mining-pipeline">Ringkasan Lengkap Text Mining Pipeline</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-preprocessing">Text Preprocessing:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-analysis">Text Analysis:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-output">Final Output:</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf-code">TF-IDF code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embedding-markdown-explanation">Word embedding (markdown explanation)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embedding">word embedding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-corpus-train-word2vec">Prepare corpus &amp; train Word2Vec</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meanembeddingvectorizer-definition">MeanEmbeddingVectorizer definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-mean-embeddings">Create mean embeddings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-per-term-embeddings">Save per-term embeddings</a></li>
 </ul>
             </nav>
         </div>
@@ -435,992 +407,240 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="preprocessing-tf-idf-dan-cbow-tugas-4">
-<h1>preprocessing, tf-idf dan CBOW - Tugas 4<a class="headerlink" href="#preprocessing-tf-idf-dan-cbow-tugas-4" title="Link to this heading">#</a></h1>
-<p>Program ini melakukan text preprocessing untuk membersihkan dan memproses teks abstrak PTA Trunojoyo dengan berbagai tahapan:</p>
-<ol class="arabic simple">
-<li><p>Crawling data PTA Trunojoyo untuk mendapatkan abstrak bahasa Indonesia</p></li>
-<li><p>Text cleaning untuk membersihkan teks dari noise</p></li>
-<li><p>Tokenization untuk memecah teks menjadi token</p></li>
-<li><p>Stopwords removal untuk menghilangkan kata-kata stop</p></li>
-<li><p>Stemming untuk mengubah kata ke bentuk dasar</p></li>
-</ol>
-<section id="data-collection-dan-setup">
-<h2>Data Collection dan Setup<a class="headerlink" href="#data-collection-dan-setup" title="Link to this heading">#</a></h2>
-<section id="install-libraries-dan-import-dependencies">
-<h3>Install Libraries dan Import Dependencies<a class="headerlink" href="#install-libraries-dan-import-dependencies" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">requests</span> <span class="n">beautifulsoup4</span> <span class="n">lxml</span>
-<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">openpyxl</span> <span class="n">xlsxwriter</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+  <section class="tex2jax_ignore mathjax_ignore" id="preprocessing-tf-idf-dan-cbow">
+<h1>preprocessing, tf-idf dan cbow<a class="headerlink" href="#preprocessing-tf-idf-dan-cbow" title="Link to this heading">#</a></h1>
+<section id="imports-setup">
+<h2>Imports &amp; setup<a class="headerlink" href="#imports-setup" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Requirement</span> <span class="n">already</span> <span class="n">satisfied</span><span class="p">:</span> <span class="n">requests</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>\<span class="n">users</span>\<span class="n">hp</span>\<span class="n">appdata</span>\<span class="n">local</span>\<span class="n">programs</span>\<span class="n">python</span>\<span class="n">python311</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span> <span class="p">(</span><span class="mf">2.32.5</span><span class="p">)</span>
-<span class="n">Requirement</span> <span class="n">already</span> <span class="n">satisfied</span><span class="p">:</span> <span class="n">beautifulsoup4</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>\<span class="n">users</span>\<span class="n">hp</span>\<span class="n">appdata</span>\<span class="n">local</span>\<span class="n">programs</span>\<span class="n">python</span>\<span class="n">python311</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span> <span class="p">(</span><span class="mf">4.13.4</span><span class="p">)</span>
-<span class="n">Requirement</span> <span class="n">already</span> <span class="n">satisfied</span><span class="p">:</span> <span class="n">lxml</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>\<span class="n">users</span>\<span class="n">hp</span>\<span class="n">appdata</span>\<span class="n">local</span>\<span class="n">programs</span>\<span class="n">python</span>\<span class="n">python311</span>\<span class="n">lib</span>\<span class="n">site</span><span class="o">-</span><span class="n">packages</span> <span class="p">(</span><span class="mf">5.3.0</span><span class="p">)</span>
-<span class="n">Note</span><span class="p">:</span> <span class="n">you</span> <span class="n">may</span> <span class="n">need</span> <span class="n">to</span> <span class="n">restart</span> <span class="n">the</span> <span class="n">kernel</span> <span class="n">to</span> <span class="n">use</span> <span class="n">updated</span> <span class="n">packages</span><span class="o">.</span>
-</pre></div>
-</div>
-</section>
-<section id="web-scraping-pta-trunojoyo">
-<h3>Web Scraping PTA Trunojoyo<a class="headerlink" href="#web-scraping-pta-trunojoyo" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://pta.trunojoyo.ac.id/c_search/byprod&quot;</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">get_max_page</span><span class="p">(</span><span class="n">prodi_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mendapatkan jumlah halaman maksimal untuk prodi tertentu&quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">prodi_id</span><span class="si">}</span><span class="s2">/1&quot;</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
-        
-        <span class="n">pagination</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;a[href*=&quot;byprod&quot;]&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">pagination</span><span class="p">:</span>
-            <span class="n">last_page</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">pagination</span><span class="p">:</span>
-                <span class="n">href</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="sa">f</span><span class="s1">&#39;/byprod/</span><span class="si">{</span><span class="n">prodi_id</span><span class="si">}</span><span class="s1">/&#39;</span> <span class="ow">in</span> <span class="n">href</span><span class="p">:</span>
-                    <span class="n">page_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;/byprod/</span><span class="si">{</span><span class="n">prodi_id</span><span class="si">}</span><span class="s1">/(\d+)&#39;</span><span class="p">,</span> <span class="n">href</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">page_match</span><span class="p">:</span>
-                        <span class="n">page_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">page_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-                        <span class="n">last_page</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">last_page</span><span class="p">,</span> <span class="n">page_num</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">last_page</span>
-        <span class="k">return</span> <span class="mi">1</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">pta</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fungsi utama untuk scraping data PTA&quot;&quot;&quot;</span>
-    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;judul&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;abstrak_id&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;abstrak_en&quot;</span><span class="p">:</span> <span class="p">[]</span>
-    <span class="p">}</span>
-    
-    <span class="n">prodi_id</span> <span class="o">=</span> <span class="mi">7</span>
-    <span class="n">prodi_name</span> <span class="o">=</span> <span class="s2">&quot;Manajemen&quot;</span>
-    
-    <span class="c1"># Get max pages</span>
-    <span class="n">max_page</span> <span class="o">=</span> <span class="n">get_max_page</span><span class="p">(</span><span class="n">prodi_id</span><span class="p">)</span>
-    
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_page</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BASE_URL</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">prodi_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-            <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
-            <span class="n">jurnals</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;li[data-cat=&quot;#luxury&quot;]&#39;</span><span class="p">)</span>
-            
-            <span class="c1"># Process setiap jurnal</span>
-            <span class="k">for</span> <span class="n">jurnal</span> <span class="ow">in</span> <span class="n">jurnals</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">link_keluar</span> <span class="o">=</span> <span class="n">jurnal</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s1">&#39;a.gray.button&#39;</span><span class="p">)[</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
-                    
-                    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">link_keluar</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-                    <span class="n">soup1</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
-                    <span class="n">isi</span> <span class="o">=</span> <span class="n">soup1</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s1">&#39;div#content_journal&#39;</span><span class="p">)</span>
-                    
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">isi</span><span class="p">:</span>
-                        <span class="k">continue</span>
-                    
-                    <span class="c1"># Extract data</span>
-                    <span class="n">judul</span> <span class="o">=</span> <span class="n">isi</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s1">&#39;a.title&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                    
-                    <span class="c1"># Extract abstrak</span>
-                    <span class="n">paragraf</span> <span class="o">=</span> <span class="n">isi</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p[align=&quot;justify&quot;]&#39;</span><span class="p">)</span>
-                    <span class="n">abstrak_id</span> <span class="o">=</span> <span class="n">paragraf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">paragraf</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;N/A&quot;</span>
-                    <span class="n">abstrak_en</span> <span class="o">=</span> <span class="n">paragraf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">paragraf</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;N/A&quot;</span>
-                    
-                    <span class="c1"># Clean abstrak Indonesia</span>
-                    <span class="k">if</span> <span class="n">abstrak_id</span> <span class="o">!=</span> <span class="s2">&quot;N/A&quot;</span> <span class="ow">and</span> <span class="n">abstrak_id</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;ABSTRAK&#39;</span><span class="p">):</span>
-                        <span class="n">abstrak_id</span> <span class="o">=</span> <span class="n">abstrak_id</span><span class="p">[</span><span class="mi">7</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                    
-                    <span class="c1"># Append data</span>
-                    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;judul&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">judul</span><span class="p">)</span>
-                    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;abstrak_id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">abstrak_id</span><span class="p">)</span>
-                    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;abstrak_en&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">abstrak_en</span><span class="p">)</span>
-                    
-                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-                    
-                <span class="k">except</span><span class="p">:</span>
-                    <span class="k">continue</span>
-            
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">continue</span>
-    
-    <span class="c1"># Buat DataFrame</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    
-    <span class="c1"># Summary</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total data dikumpulkan: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">df</span>
-
-<span class="c1"># Jalankan scraping</span>
-<span class="n">result_df</span> <span class="o">=</span> <span class="n">pta</span><span class="p">()</span>
-
-<span class="c1"># Ambil abstrak Indonesia untuk corpus</span>
-<span class="n">corpus</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">[</span><span class="n">result_df</span><span class="p">[</span><span class="s1">&#39;abstrak_id&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;N/A&#39;</span><span class="p">][</span><span class="s1">&#39;abstrak_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-
-<span class="c1"># Tampilkan dalam bentuk DataFrame (semua data)</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="n">df_sample</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s1">&#39;No&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="s1">&#39;Abstrak&#39;</span><span class="p">:</span> <span class="n">corpus</span>
-<span class="p">})</span>
-
-<span class="n">df_sample</span>
-</pre></div>
-</div>
-<p>Output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Total</span> <span class="n">data</span> <span class="n">dikumpulkan</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="mi">031</span>
-</pre></div>
-</div>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p></p></th>
-<th class="head"><p>No</p></th>
-<th class="head"><p>Abstrak</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>1</p></td>
-<td><p>Satiyah, Pengaruh Faktor-faktor Pelatihan dan …</p></td>
-</tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>2</p></td>
-<td><p>Tujuan penelitian ini adalah untuk mengetahui …</p></td>
-</tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>3</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>4</p></td>
-<td><p>Aplikasi nyata pemanfaatan teknologi informasi…</p></td>
-</tr>
-<tr class="row-even"><td><p>4</p></td>
-<td><p>5</p></td>
-<td><p>Penelitian ini menggunakan metode kuantitatif,…</p></td>
-</tr>
-<tr class="row-odd"><td><p>…</p></td>
-<td><p>…</p></td>
-<td><p>…</p></td>
-</tr>
-<tr class="row-even"><td><p>1026</p></td>
-<td><p>1027</p></td>
-<td><p>Penelitian ini bertujuan untuk mengetahui perh…</p></td>
-</tr>
-<tr class="row-odd"><td><p>1027</p></td>
-<td><p>1028</p></td>
-<td><p>Uswatun Hasanah, 160211100291, Pengaruh Pelati…</p></td>
-</tr>
-<tr class="row-even"><td><p>1028</p></td>
-<td><p>1029</p></td>
-<td><p>Tujuan dari penelitian ini adalah untuk menget…</p></td>
-</tr>
-<tr class="row-odd"><td><p>1029</p></td>
-<td><p>1030</p></td>
-<td><p>Penelitian ini bertujuan: (1) Untuk mengetahui…</p></td>
-</tr>
-<tr class="row-even"><td><p>1030</p></td>
-<td><p>1031</p></td>
-<td><p>Penelitian ini bertujuan untuk dapat mengetahu…</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>1031 rows × 2 columns</p>
-<p>Data berhasil di-crawl dan disimpan dengan total 1,031 dokumen abstrak dari program studi Manajemen.</p>
-</section>
-</section>
-<section id="text-cleaning">
-<h2>1. Text Cleaning<a class="headerlink" href="#text-cleaning" title="Link to this heading">#</a></h2>
-<p><strong>Pembersihan teks</strong> adalah tahap preprocessing untuk menormalkan data teks agar konsisten dan siap dianalisis. Proses ini meliputi: mengubah teks ke huruf kecil (lowercasing), menghapus angka, menghilangkan tanda baca, dan membersihkan spasi berlebih. Tujuannya adalah mengurangi variasi yang tidak perlu dan memfokuskan analisis pada konten tekstual yang bermakna.</p>
-<section id="pembersihan-teks">
-<h3>Pembersihan Teks<a class="headerlink" href="#pembersihan-teks" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pembersihan teks</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">clean_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-    <span class="c1"># Ubah ke huruf kecil</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="c1"># Hapus angka</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="c1"># Hapus tanda baca</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^\w\s]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="c1"># Hapus spasi berlebih</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">text</span>
-
-<span class="c1"># Terapkan pembersihan teks</span>
-<span class="n">cleaned_corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">clean_text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">corpus</span><span class="p">]</span>
-
-<span class="c1"># Tampilkan hasil pembersihan teks dalam format DataFrame</span>
-<span class="n">comparison_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s1">&#39;abstrak_asli&#39;</span><span class="p">:</span> <span class="n">corpus</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span>
-    <span class="s1">&#39;abstrak_bersih&#39;</span><span class="p">:</span> <span class="n">cleaned_corpus</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
-<span class="p">})</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Hasil Pembersihan Teks:&quot;</span><span class="p">)</span>
-<span class="n">comparison_df</span>
-</pre></div>
-</div>
-<p>Output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Hasil</span> <span class="n">Pembersihan</span> <span class="n">Teks</span><span class="p">:</span>
-</pre></div>
-</div>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p></p></th>
-<th class="head"><p>abstrak_asli</p></th>
-<th class="head"><p>abstrak_bersih</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>Satiyah, Pengaruh Faktor-faktor Pelatihan dan …</p></td>
-<td><p>satiyah pengaruh faktorfaktor pelatihan dan pe…</p></td>
-</tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>Tujuan penelitian ini adalah untuk mengetahui …</p></td>
-<td><p>tujuan penelitian ini adalah untuk mengetahui …</p></td>
-</tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>Aplikasi nyata pemanfaatan teknologi informasi…</p></td>
-<td><p>aplikasi nyata pemanfaatan teknologi informasi…</p></td>
-</tr>
-<tr class="row-even"><td><p>4</p></td>
-<td><p>Penelitian ini menggunakan metode kuantitatif,…</p></td>
-<td><p>penelitian ini menggunakan metode kuantitatif …</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Text cleaning berhasil membersihkan teks dengan menghapus tanda baca, angka, dan mengubah ke huruf kecil.</p>
-</section>
-</section>
-<section id="tokenization">
-<h2>2. Tokenization<a class="headerlink" href="#tokenization" title="Link to this heading">#</a></h2>
-<p><strong>Tokenisasi</strong> adalah proses memecah teks menjadi unit-unit yang lebih kecil seperti kata atau token. Pada tahap ini, setiap kalimat dalam abstrak dipecah menjadi kata-kata individual menggunakan <code class="docutils literal notranslate"><span class="pre">word_tokenize</span></code> dari NLTK. Contoh: kalimat “Penelitian ini menganalisis data” → [‘Penelitian’, ‘ini’, ‘menganalisis’, ‘data’]</p>
-<section id="tokenisasi-dengan-nltk">
-<h3>Tokenisasi dengan NLTK<a class="headerlink" href="#tokenisasi-dengan-nltk" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nltk.tokenize</span><span class="w"> </span><span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span> <span class="c1">#untuk memisahkan teks yang ingin diambil dengan struktur html</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">nltk</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>
 
-<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;punkt_tab&#39;</span><span class="p">)</span>
-
-<span class="c1"># Tokenisasi untuk PTA</span>
-<span class="c1"># Buat DataFrame dari corpus yang sudah dibersihkan</span>
-<span class="n">pta_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s1">&#39;abstrak_id_clean&#39;</span><span class="p">:</span> <span class="n">cleaned_corpus</span>
-<span class="p">})</span>
-
-<span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_tokens&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_clean&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PTA (abstrak_id_tokens):&quot;</span><span class="p">)</span>
-<span class="n">pta_df</span><span class="p">[[</span><span class="s2">&quot;abstrak_id_clean&quot;</span><span class="p">,</span> <span class="s2">&quot;abstrak_id_tokens&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package punkt_tab to
-[nltk_data]     C:\Users\hp\AppData\Roaming\nltk_data...
-[nltk_data]   Package punkt_tab is already up-to-date!
-
-PTA (abstrak_id_tokens):
-</pre></div>
-</div>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p></p></th>
-<th class="head"><p>abstrak_id_clean</p></th>
-<th class="head"><p>abstrak_id_tokens</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>satiyah pengaruh faktorfaktor pelatihan dan pe…</p></td>
-<td><p>[satiyah, pengaruh, faktorfaktor, pelatihan, d…]</p></td>
-</tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>tujuan penelitian ini adalah untuk mengetahui …</p></td>
-<td><p>[tujuan, penelitian, ini, adalah, untuk, menge…]</p></td>
-</tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p></p></td>
-<td><p>[]</p></td>
-</tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>aplikasi nyata pemanfaatan teknologi informasi…</p></td>
-<td><p>[aplikasi, nyata, pemanfaatan, teknologi, info…]</p></td>
-</tr>
-<tr class="row-even"><td><p>4</p></td>
-<td><p>penelitian ini menggunakan metode kuantitatif …</p></td>
-<td><p>[penelitian, ini, menggunakan, metode, kuantit…]</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Tokenisasi berhasil memecah teks menjadi token-token kata individual.</p>
-</section>
-</section>
-<section id="stopwords-removal">
-<h2>3. Stopwords Removal<a class="headerlink" href="#stopwords-removal" title="Link to this heading">#</a></h2>
-<p><strong>Stop Words</strong> adalah kata-kata umum yang sering muncul dalam bahasa namun tidak memberikan makna signifikan untuk analisis teks, seperti “dan”, “atau”, “di”, “ke”, “yang”. Penghapusan stopwords bertujuan untuk mengurangi noise dan fokus pada kata-kata yang lebih bermakna untuk analisis. NLTK menyediakan daftar stopwords bahasa Indonesia yang sudah siap pakai.</p>
-<section id="penghapusan-stopwords-bahasa-indonesia">
-<h3>Penghapusan Stopwords Bahasa Indonesia<a class="headerlink" href="#penghapusan-stopwords-bahasa-indonesia" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">nltk</span>
-
-<span class="c1"># Download stopwords untuk bahasa Indonesia</span>
-<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
-
-<span class="c1"># Stopwords untuk bahasa Indonesia</span>
-<span class="n">stop_words_id</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;indonesian&#39;</span><span class="p">))</span>
-
-<span class="c1"># Filter stopwords di PTA</span>
-<span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_tokens&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-    <span class="k">lambda</span> <span class="n">tokens</span><span class="p">:</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words_id</span><span class="p">]</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PTA (abstrak_id_filtered):&quot;</span><span class="p">)</span>
-<span class="n">pta_df</span><span class="p">[[</span><span class="s2">&quot;abstrak_id_tokens&quot;</span><span class="p">,</span> <span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package stopwords to
-[nltk_data]     C:\Users\hp\AppData\Roaming\nltk_data...
-[nltk_data]   Package stopwords is already up-to-date!
-
-PTA (abstrak_id_filtered):
-</pre></div>
-</div>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p></p></th>
-<th class="head"><p>abstrak_id_tokens</p></th>
-<th class="head"><p>abstrak_id_filtered</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>0</p></td>
-<td><p>[satiyah, pengaruh, faktorfaktor, pelatihan, d…]</p></td>
-<td><p>[satiyah, pengaruh, faktorfaktor, pelatihan, p…]</p></td>
-</tr>
-<tr class="row-odd"><td><p>1</p></td>
-<td><p>[tujuan, penelitian, ini, adalah, untuk, menge…]</p></td>
-<td><p>[tujuan, penelitian, persepsi, brand, associat…]</p></td>
-</tr>
-<tr class="row-even"><td><p>2</p></td>
-<td><p>[]</p></td>
-<td><p>[]</p></td>
-</tr>
-<tr class="row-odd"><td><p>3</p></td>
-<td><p>[aplikasi, nyata, pemanfaatan, teknologi, info…]</p></td>
-<td><p>[aplikasi, nyata, pemanfaatan, teknologi, info…]</p></td>
-</tr>
-<tr class="row-even"><td><p>4</p></td>
-<td><p>[penelitian, ini, menggunakan, metode, kuantit…]</p></td>
-<td><p>[penelitian, metode, kuantitatif, menekankan, …]</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Stopwords removal berhasil menghapus kata-kata umum bahasa Indonesia yang tidak membawa informasi penting.</p>
-</section>
-</section>
-<section id="stemming-dan-lemmatization">
-<h2>4. Stemming dan Lemmatization<a class="headerlink" href="#stemming-dan-lemmatization" title="Link to this heading">#</a></h2>
-<p><strong>Stemming</strong> adalah proses mengubah kata-kata menjadi bentuk dasar (root/stem) dengan menghilangkan imbuhan seperti awalan, akhiran, dan sisipan. Contoh: “penelitian” → “teliti”, “menganalisis” → “analisis”. <strong>Lematisasi</strong> serupa dengan stemming namun menghasilkan kata dasar yang lebih bermakna secara linguistik. Pada kode ini menggunakan library Sastrawi untuk stemming bahasa Indonesia dan TF-IDF untuk mengukur kepentingan kata dalam dokumen.</p>
-<section id="stemming-dengan-sastrawi">
-<h3>Stemming dengan Sastrawi<a class="headerlink" href="#stemming-dengan-sastrawi" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">Sastrawi</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">Sastrawi</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.Stemmer.StemmerFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StemmerFactory</span>
+
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">plotly</span>
+<span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">gensim</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gensim.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Word2Vec</span><span class="p">,</span> <span class="n">FastText</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+</section>
+<section id="scraping-kompas">
+<h2>scraping (Kompas)<a class="headerlink" href="#scraping-kompas" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Cell ini mengambil contoh halaman web dan mengekstrak teks mentah sebagai data input untuk pipeline.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">web</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://kompas.com&quot;</span><span class="p">)</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">web</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">soup</span><span class="p">([</span><span class="s1">&#39;script&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">]):</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">stripped_strings</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="penjelasan-singkat">
+<h2>Penjelasan singkat<a class="headerlink" href="#penjelasan-singkat" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Cell ini membersihkan teks mentah (lowercase, hapus angka/tanda baca, dan normalisasi spasi) agar siap diproses.</p></li>
+</ul>
+</section>
+<section id="basic-cleaning">
+<h2>Basic cleaning<a class="headerlink" href="#basic-cleaning" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">teks</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">teks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">teks</span><span class="p">)</span>
+<span class="n">teks</span> <span class="o">=</span> <span class="n">teks</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">))</span>
+<span class="n">teks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">teks</span><span class="p">)</span>
+<span class="n">teks</span> <span class="o">=</span> <span class="n">teks</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="stemming-lemmatization">
+<h2>Stemming &amp; lemmatization<a class="headerlink" href="#stemming-lemmatization" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Cell ini melakukan stemming (bahasa Indonesia) dan contoh lemmatization (bahasa Inggris) untuk menyatukan bentuk kata dasar.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Stemming</span>
 <span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
 <span class="n">stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
+<span class="n">stemmed</span> <span class="o">=</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">teks</span><span class="p">)</span>
 
-<span class="c1"># Test stemming dengan satu dokumen</span>
-<span class="n">input_stemm</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">hasil_stemm</span> <span class="o">=</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">input_stemm</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">hasil_stemm</span><span class="p">)</span>
+<span class="c1"># Lemmatization (menggunakan stemming hasil Sastrawi, karena lemmatizer khusus Indonesia belum tersedia)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">stemmed</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
+<span class="n">stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">teks</span><span class="p">)</span>
 
-<span class="c1"># Stemming untuk semua dokumen</span>
-<span class="n">hasil_stemm</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">pta_df</span><span class="p">[</span><span class="s2">&quot;abstrak_id_filtered&quot;</span><span class="p">]:</span>
-    <span class="n">stemmed_doc</span> <span class="o">=</span> <span class="p">[</span><span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">]</span>
-    <span class="n">hasil_stemm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stemmed_doc</span><span class="p">)</span>
-
-<span class="c1"># Konversi hasil stemming ke string untuk TF-IDF</span>
-<span class="n">stemmed_texts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">hasil_stemm</span><span class="p">]</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
-<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">stemmed_texts</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hasil stemming/lemmatization (Bahasa Indonesia):&quot;</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;satiyah&#39;</span><span class="p">,</span> <span class="s1">&#39;pengaruh&#39;</span><span class="p">,</span> <span class="s1">&#39;faktor&#39;</span><span class="p">,</span> <span class="s1">&#39;latih&#39;</span><span class="p">,</span> <span class="s1">&#39;produkti&#39;</span><span class="p">,</span> <span class="s1">&#39;karya&#39;</span><span class="p">,</span> <span class="s1">&#39;studi&#39;</span><span class="p">,</span> <span class="s1">&#39;kasus&#39;</span><span class="p">,</span> <span class="s1">&#39;pt&#39;</span><span class="p">,</span> <span class="s1">&#39;tugu&#39;</span><span class="p">,</span> <span class="s1">&#39;pratama&#39;</span><span class="p">,</span> <span class="s1">&#39;indonesia&#39;</span><span class="p">,</span> <span class="s1">&#39;cabang&#39;</span><span class="p">,</span> <span class="s1">&#39;bangkalan&#39;</span><span class="p">]</span>
-
-  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6842</span><span class="p">)</span>     <span class="mf">0.223607</span>
-  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3654</span><span class="p">)</span>     <span class="mf">0.223607</span>
-  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3045</span><span class="p">)</span>     <span class="mf">0.223607</span>
-  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2588</span><span class="p">)</span>     <span class="mf">0.223607</span>
-  <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2517</span><span class="p">)</span>     <span class="mf">0.134164</span>
-  <span class="p">:</span>
-  <span class="p">(</span><span class="mi">1030</span><span class="p">,</span> <span class="mi">1969</span><span class="p">)</span>  <span class="mf">0.301511</span>
-  <span class="p">(</span><span class="mi">1030</span><span class="p">,</span> <span class="mi">4208</span><span class="p">)</span>  <span class="mf">0.301511</span>
-  <span class="p">(</span><span class="mi">1030</span><span class="p">,</span> <span class="mi">6579</span><span class="p">)</span>  <span class="mf">0.301511</span>
-  <span class="p">(</span><span class="mi">1030</span><span class="p">,</span> <span class="mi">6842</span><span class="p">)</span>  <span class="mf">0.301511</span>
-
-<span class="n">Shape</span><span class="p">:</span> <span class="p">(</span><span class="mi">1031</span><span class="p">,</span> <span class="mi">7184</span><span class="p">)</span>
+</section>
+<section id="tokenizing">
+<h2>Tokenizing<a class="headerlink" href="#tokenizing" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Cell ini memecah teks menjadi token/kata agar dapat dihitung frekuensi dan diproses lebih lanjut.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#tokenizing</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Stemming berhasil mengubah kata-kata ke bentuk dasar dan menghasilkan TF-IDF matrix berukuran (1031, 7184).</p>
+</section>
+<section id="stopwords-removal">
+<h2>Stopwords removal<a class="headerlink" href="#stopwords-removal" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Cell ini menghapus stopword (kata umum yang kurang informatif) dari daftar token.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># menghapus stopwords dari tokens</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
+<span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;indonesian&#39;</span><span class="p">))</span>
+<span class="n">filtered_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">filtered_tokens</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="tf-idf-markdown-explanation">
+<h2>TF-IDF (markdown explanation)<a class="headerlink" href="#tf-idf-markdown-explanation" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Cell ini menjelaskan konsep TF‑IDF dan mengapa metrik tersebut berguna untuk menilai pentingnya kata dalam dokumen.</p></li>
+</ul>
+<section id="tf-idf">
+<h3>tf-idf<a class="headerlink" href="#tf-idf" title="Link to this heading">#</a></h3>
+<p>TF-IDF (Term Frequency-Inverse Document Frequency): TF-IDF menghitung seberapa penting sebuah kata dalam sebuah dokumen relatif terhadap seluruh koleksi dokumen. Outputnya adalah matriks di mana setiap baris mewakili dokumen dan setiap kolom mewakili kata unik dalam seluruh koleksi. Nilai di dalam sel menunjukkan skor TF-IDF kata tersebut dalam dokumen. Karena setiap kolom mewakili sebuah kata, maka header kolomnya adalah kata-kata itu sendiri.</p>
 </section>
 </section>
-<section id="analisis-frekuensi-kata">
-<h2>5. Analisis Frekuensi Kata<a class="headerlink" href="#analisis-frekuensi-kata" title="Link to this heading">#</a></h2>
-<p><strong>Analisis Frekuensi</strong> adalah proses menghitung seberapa sering setiap kata muncul dalam corpus setelah melalui tahap preprocessing. Menggunakan <code class="docutils literal notranslate"><span class="pre">FreqDist</span></code> dari NLTK untuk menghitung distribusi frekuensi kata dan mengidentifikasi kata-kata yang paling sering muncul. Hasil analisis ini disimpan dalam format CSV untuk analisis lebih lanjut dan memberikan insight tentang tema-tema utama dalam dokumen.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nltk</span><span class="w"> </span><span class="kn">import</span> <span class="n">FreqDist</span>
+<section id="tf-idf-code">
+<h2>TF-IDF code<a class="headerlink" href="#tf-idf-code" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Cell ini menghitung matriks TF‑IDF dari korpus dan menyimpan hasilnya ke CSV untuk analisis lebih lanjut.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="c1"># Gabungkan semua kata dari hasil stemming</span>
-<span class="n">all_words</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">hasil_stemm</span><span class="p">:</span>
-    <span class="n">all_words</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">filtered_tokens</span><span class="p">)</span>
 
-<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">all_words</span><span class="p">)</span>
-
-<span class="n">frequency_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-    <span class="n">fdist</span><span class="o">.</span><span class="n">most_common</span><span class="p">(),</span>
-    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Word&#39;</span><span class="p">,</span> <span class="s1">&#39;Frequency&#39;</span><span class="p">]</span>
+<span class="c1"># ubah ke DataFrame biar keliatan</span>
+<span class="n">tfidf_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
 <span class="p">)</span>
 
-<span class="n">frequency_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;Management_dataHasilPreprocessing.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File disimpan sebagai Management_dataHasilPreprocessing.csv&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total unique words: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">frequency_df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Top 10 most frequent words:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">frequency_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>Output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">File</span> <span class="n">disimpan</span> <span class="n">sebagai</span> <span class="n">Management_dataHasilPreprocessing</span><span class="o">.</span><span class="n">csv</span>
-<span class="n">Total</span> <span class="n">unique</span> <span class="n">words</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span><span class="mi">184</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">TF-IDF shape:&quot;</span><span class="p">,</span> <span class="n">tfidf_df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tfidf_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 
-<span class="n">Top</span> <span class="mi">10</span> <span class="n">kata</span> <span class="n">terfrequen</span><span class="p">:</span>
-</pre></div>
-</div>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Word</p></th>
-<th class="head"><p>Frequency</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>teliti</p></td>
-<td><p>865</p></td>
-</tr>
-<tr class="row-odd"><td><p>pengaruh</p></td>
-<td><p>421</p></td>
-</tr>
-<tr class="row-even"><td><p>tuju</p></td>
-<td><p>387</p></td>
-</tr>
-<tr class="row-odd"><td><p>hasil</p></td>
-<td><p>345</p></td>
-</tr>
-<tr class="row-even"><td><p>manajemen</p></td>
-<td><p>298</p></td>
-</tr>
-<tr class="row-odd"><td><p>kerja</p></td>
-<td><p>287</p></td>
-</tr>
-<tr class="row-even"><td><p>analisis</p></td>
-<td><p>245</p></td>
-</tr>
-<tr class="row-odd"><td><p>data</p></td>
-<td><p>232</p></td>
-</tr>
-<tr class="row-even"><td><p>metode</p></td>
-<td><p>215</p></td>
-</tr>
-<tr class="row-odd"><td><p>faktor</p></td>
-<td><p>198</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="ringkasan-text-preprocessing-pipeline">
-<h2>Ringkasan Text Preprocessing Pipeline<a class="headerlink" href="#ringkasan-text-preprocessing-pipeline" title="Link to this heading">#</a></h2>
-<p>Program berhasil melakukan text preprocessing untuk 1,031 dokumen abstrak dengan tahapan:</p>
-<ol class="arabic simple">
-<li><p><strong>Data Collection</strong>: Mengambil 1,031 abstrak dari program studi Manajemen PTA Trunojoyo</p></li>
-<li><p><strong>Text Cleaning</strong>: Membersihkan teks dengan menghapus tanda baca, angka, dan normalisasi huruf</p></li>
-<li><p><strong>Tokenization</strong>: Memecah teks menjadi token menggunakan NLTK word tokenizer</p></li>
-<li><p><strong>Stopwords Removal</strong>: Menghapus 359 stopwords bahasa Indonesia</p></li>
-<li><p><strong>Stemming</strong>: Mengubah kata ke bentuk dasar menggunakan Sastrawi stemmer</p></li>
-</ol>
-<p><strong>Output</strong>: TF-IDF Matrix (1031 × 7184), Frequency Analysis CSV dengan 7,184 kata unik, dan Processed DataFrame siap untuk machine learning dan text mining lebih lanjut.</p>
-</section>
-<section id="word-embeddings-dengan-cbow-continuous-bag-of-words">
-<h2>6. Word Embeddings dengan CBOW (Continuous Bag of Words)<a class="headerlink" href="#word-embeddings-dengan-cbow-continuous-bag-of-words" title="Link to this heading">#</a></h2>
-<p><strong>CBOW</strong> adalah salah satu arsitektur Word2Vec yang memprediksi kata target berdasarkan konteks di sekitarnya. Berbeda dengan TF-IDF yang menghasilkan sparse vectors, CBOW menghasilkan dense vectors yang dapat menangkap hubungan semantik antar kata. Model ini berguna untuk analisis similarity dan clustering dokumen berdasarkan makna kontekstual.</p>
-<section id="training-model-cbow">
-<h3>Training Model CBOW<a class="headerlink" href="#training-model-cbow" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install dan konfigurasi libraries untuk CBOW dengan versi kompatibel</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">install_package</span><span class="p">(</span><span class="n">package</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Install package dengan handling error&quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="n">package</span><span class="p">])</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-<span class="c1"># Install packages dengan versi yang kompatibel</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📦 Installing compatible packages...&quot;</span><span class="p">)</span>
-
-<span class="n">packages</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;numpy==1.24.4&quot;</span><span class="p">,</span>  <span class="c1"># Versi yang lebih kompatibel</span>
-    <span class="s2">&quot;scipy==1.10.1&quot;</span><span class="p">,</span>   <span class="c1"># Versi yang lebih stabil</span>
-    <span class="s2">&quot;gensim==4.3.0&quot;</span>    <span class="c1"># Versi gensim yang stabil</span>
-<span class="p">]</span>
-
-<span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">packages</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Installing </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">install_package</span><span class="p">(</span><span class="n">package</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✅ </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2"> installed successfully&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ⚠️ Failed to install </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2">, trying alternative...&quot;</span><span class="p">)</span>
-
-<span class="c1"># Import libraries dengan error handling yang lebih baik</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔄 Importing libraries...&quot;</span><span class="p">)</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics.pairwise</span><span class="w"> </span><span class="kn">import</span> <span class="n">cosine_similarity</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">gensim.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Word2Vec</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Semua libraries berhasil diimport!&quot;</span><span class="p">)</span>
-    <span class="n">gensim_available</span> <span class="o">=</span> <span class="kc">True</span>
-        
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Critical import error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💡 Silakan restart kernel dan coba lagi&quot;</span><span class="p">)</span>
-    <span class="n">gensim_available</span> <span class="o">=</span> <span class="kc">False</span>
-
-<span class="c1"># Training Word2Vec dengan arsitektur CBOW</span>
-<span class="k">if</span> <span class="n">gensim_available</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== ANALISIS WORD EMBEDDINGS DENGAN CBOW ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="n">sentences</span> <span class="o">=</span> <span class="n">hasil_stemm</span>  <span class="c1"># hasil_stemm sudah berupa list of lists (sentences)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Data untuk training CBOW:&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Total dokumen: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Rata-rata panjang dokumen: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">sent</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">sent</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">sentences</span><span class="p">])</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> kata&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Total unique words: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">word</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">sent</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">sentences</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">word</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">sent</span><span class="p">]))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="n">cbow_model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span>
-        <span class="n">sentences</span><span class="o">=</span><span class="n">sentences</span><span class="p">,</span>
-        <span class="n">vector_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>        <span class="c1"># Dimensi embedding (dense vector)</span>
-        <span class="n">window</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>              <span class="c1"># Ukuran context window</span>
-        <span class="n">min_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>           <span class="c1"># Minimum frekuensi kata untuk dimasukkan</span>
-        <span class="n">sg</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>                  <span class="c1"># sg=0 untuk CBOW, sg=1 untuk Skip-gram</span>
-        <span class="n">workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>             <span class="c1"># Jumlah thread untuk training</span>
-        <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>            <span class="c1"># Jumlah iterasi training</span>
-        <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>                <span class="c1"># Untuk reproducibility</span>
-    <span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Model CBOW berhasil dilatih!&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Vocabulary size: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cbow_model</span><span class="o">.</span><span class="n">wv</span><span class="p">)</span><span class="si">}</span><span class="s2"> kata&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Vector dimensions: </span><span class="si">{</span><span class="n">cbow_model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vector_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Training epochs: </span><span class="si">{</span><span class="n">cbow_model</span><span class="o">.</span><span class="n">epochs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>📦 Installing compatible packages...
-   Installing numpy==1.24.4...
-   ✅ numpy==1.24.4 installed successfully
-   Installing scipy==1.10.1...
-   ✅ scipy==1.10.1 installed successfully
-   Installing gensim==4.3.0...
-   ✅ gensim==4.3.0 installed successfully
-
-🔄 Importing libraries...
-✅ Semua libraries berhasil diimport!
-
-=== ANALISIS WORD EMBEDDINGS DENGAN CBOW ===
-
-📊 Data untuk training CBOW:
-   • Total dokumen: 1,031
-   • Rata-rata panjang dokumen: 28.4 kata
-   • Total unique words: 6,475
-
-✅ Model CBOW berhasil dilatih!
-   • Vocabulary size: 3,247 kata
-   • Vector dimensions: 100
-   • Training epochs: 100
+<span class="c1"># Simpan hasil TF-IDF ke CSV</span>
+<span class="c1"># Jika Anda ingin menyimpan dokumen x fitur, indeks baris mewakili dokumen yang diberikan ke fit_transform</span>
+<span class="n">tfidf_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;tfidf.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.6f</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="analisis-semantic-similarity">
-<h3>Analisis Semantic Similarity<a class="headerlink" href="#analisis-semantic-similarity" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Analisis kata-kata terdekat</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔍 ANALISIS SEMANTIC SIMILARITY:&quot;</span><span class="p">)</span>
-
-<span class="c1"># Pilih beberapa kata kunci untuk analisis</span>
-<span class="n">sample_words</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">vocab_words</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cbow_model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">key_to_index</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-
-<span class="c1"># Ambil kata-kata yang relevan dengan domain manajemen</span>
-<span class="n">target_keywords</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;manaj&#39;</span><span class="p">,</span> <span class="s1">&#39;perusaha&#39;</span><span class="p">,</span> <span class="s1">&#39;kinerja&#39;</span><span class="p">,</span> <span class="s1">&#39;strategi&#39;</span><span class="p">,</span> <span class="s1">&#39;analisis&#39;</span><span class="p">,</span> <span class="s1">&#39;peneliti&#39;</span><span class="p">,</span> <span class="s1">&#39;hasil&#39;</span><span class="p">,</span> <span class="s1">&#39;faktor&#39;</span><span class="p">]</span>
-<span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">target_keywords</span><span class="p">:</span>
-    <span class="c1"># Cari kata yang mengandung keyword</span>
-    <span class="n">matching_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">vocab_words</span> <span class="k">if</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">word</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">matching_words</span><span class="p">:</span>
-        <span class="n">sample_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matching_words</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># Ambil yang pertama</span>
-
-<span class="c1"># Tampilkan analisis similarity untuk beberapa kata</span>
-<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sample_words</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>  <span class="c1"># Ambil 5 kata pertama</span>
-    <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">cbow_model</span><span class="o">.</span><span class="n">wv</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">similar_words</span> <span class="o">=</span> <span class="n">cbow_model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">most_similar</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">topn</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📝 Kata mirip dengan &#39;</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">&#39;:&quot;</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">similar_word</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">similar_words</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      </span><span class="si">{</span><span class="n">similar_word</span><span class="si">:</span><span class="s2">15s</span><span class="si">}</span><span class="s2"> | Similarity: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Tidak bisa mencari kata mirip untuk &#39;</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>🔍 ANALISIS SEMANTIC SIMILARITY:
-
-📝 Kata mirip dengan &#39;manajemen&#39;:
-      organisasi      | Similarity: 0.7892
-      perusahaan      | Similarity: 0.7654
-      kinerja         | Similarity: 0.7321
-      strategi        | Similarity: 0.7156
-      kepemimpinan    | Similarity: 0.6987
-
-📝 Kata mirip dengan &#39;perusahaan&#39;:
-      organisasi      | Similarity: 0.8123
-      manajemen       | Similarity: 0.7654
-      bisnis          | Similarity: 0.7234
-      industri        | Similarity: 0.6876
-      ekonomi         | Similarity: 0.6543
-
-📝 Kata mirip dengan &#39;kinerja&#39;:
-      produktivitas   | Similarity: 0.8456
-      efektifitas     | Similarity: 0.8123
-      hasil           | Similarity: 0.7890
-      manajemen       | Similarity: 0.7321
-      efisiensi       | Similarity: 0.7156
-</pre></div>
-</div>
-</section>
-<section id="document-embeddings-dan-similarity-analysis">
-<h3>Document Embeddings dan Similarity Analysis<a class="headerlink" href="#document-embeddings-dan-similarity-analysis" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membuat Document Embeddings dengan rata-rata Word Vectors</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔢 PEMBUATAN DOCUMENT EMBEDDINGS&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">create_document_embedding</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Membuat embedding dokumen dengan rata-rata word vectors&quot;&quot;&quot;</span>
-    <span class="n">vectors</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">valid_words</span> <span class="o">=</span> <span class="mi">0</span>
-    
-    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">:</span>
-            <span class="n">vectors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="n">word</span><span class="p">])</span>
-            <span class="n">valid_words</span> <span class="o">+=</span> <span class="mi">1</span>
-    
-    <span class="k">if</span> <span class="n">vectors</span><span class="p">:</span>
-        <span class="c1"># Rata-rata dari semua word vectors dalam dokumen</span>
-        <span class="n">doc_embedding</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">doc_embedding</span><span class="p">,</span> <span class="n">valid_words</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># Jika tidak ada kata yang valid, return zero vector</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vector_size</span><span class="p">),</span> <span class="mi">0</span>
-
-<span class="c1"># Buat embeddings untuk semua dokumen</span>
-<span class="n">document_embeddings</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">valid_words_count</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">doc_info</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sentences</span><span class="p">):</span>
-    <span class="n">embedding</span><span class="p">,</span> <span class="n">valid_count</span> <span class="o">=</span> <span class="n">create_document_embedding</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">cbow_model</span><span class="p">)</span>
-    <span class="n">document_embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span>
-    <span class="n">valid_words_count</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">valid_count</span><span class="p">)</span>
-    
-    <span class="c1"># Simpan informasi dokumen</span>
-    <span class="n">original_text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokens</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>  <span class="c1"># 10 kata pertama sebagai preview</span>
-    <span class="n">doc_info</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-        <span class="s1">&#39;doc_id&#39;</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
-        <span class="s1">&#39;preview&#39;</span><span class="p">:</span> <span class="n">original_text</span> <span class="o">+</span> <span class="p">(</span><span class="s1">&#39;...&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
-        <span class="s1">&#39;total_words&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span>
-        <span class="s1">&#39;valid_words&#39;</span><span class="p">:</span> <span class="n">valid_count</span><span class="p">,</span>
-        <span class="s1">&#39;coverage&#39;</span><span class="p">:</span> <span class="n">valid_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
-    <span class="p">})</span>
-
-<span class="c1"># Convert ke numpy array</span>
-<span class="n">document_embeddings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">document_embeddings</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Document embeddings berhasil dibuat!&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Shape: </span><span class="si">{</span><span class="n">document_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Rata-rata kata valid per dokumen: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">valid_words_count</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Coverage rata-rata: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;coverage&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">doc_info</span><span class="p">])</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Hitung Document Similarity Matrix menggunakan Cosine Similarity</span>
-<span class="n">doc_similarity_matrix</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">document_embeddings</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Similarity matrix berhasil dibuat!&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Shape: </span><span class="si">{</span><span class="n">doc_similarity_matrix</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Rata-rata similarity: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">doc_similarity_matrix</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">triu_indices_from</span><span class="p">(</span><span class="n">doc_similarity_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)])</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Analisis dokumen paling mirip</span>
-<span class="n">upper_triangle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">triu_indices_from</span><span class="p">(</span><span class="n">doc_similarity_matrix</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">similarities</span> <span class="o">=</span> <span class="n">doc_similarity_matrix</span><span class="p">[</span><span class="n">upper_triangle</span><span class="p">]</span>
-<span class="n">sorted_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">similarities</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Top 5 pasangan dokumen paling mirip:&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_indices</span><span class="p">))):</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">sorted_indices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">doc_i</span><span class="p">,</span> <span class="n">doc_j</span> <span class="o">=</span> <span class="n">upper_triangle</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">idx</span><span class="p">],</span> <span class="n">upper_triangle</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
-    <span class="n">similarity_score</span> <span class="o">=</span> <span class="n">similarities</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">. Dokumen </span><span class="si">{</span><span class="n">doc_i</span><span class="si">}</span><span class="s2"> ↔ Dokumen </span><span class="si">{</span><span class="n">doc_j</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   📈 Similarity Score: </span><span class="si">{</span><span class="n">similarity_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   📝 Preview Doc </span><span class="si">{</span><span class="n">doc_i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">doc_info</span><span class="p">[</span><span class="n">doc_i</span><span class="p">][</span><span class="s1">&#39;preview&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   📝 Preview Doc </span><span class="si">{</span><span class="n">doc_j</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">doc_info</span><span class="p">[</span><span class="n">doc_j</span><span class="p">][</span><span class="s1">&#39;preview&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>🔢 PEMBUATAN DOCUMENT EMBEDDINGS
-==================================================
-
-✅ Document embeddings berhasil dibuat!
-   • Shape: (1031, 100)
-   • Rata-rata kata valid per dokumen: 18.7
-   • Coverage rata-rata: 0.658
-
-✅ Similarity matrix berhasil dibuat!
-   • Shape: (1031, 1031)
-   • Rata-rata similarity: 0.3425
-
-📊 Top 5 pasangan dokumen paling mirip:
-
-1. Dokumen 234 ↔ Dokumen 567
-   📈 Similarity Score: 0.8934
-   📝 Preview Doc 234: teliti tuju pengaruh gaya kepemimpin transformasi...
-   📝 Preview Doc 567: teliti tuju pengaruh kepemimpin transformasi kerja...
-
-2. Dokumen 123 ↔ Dokumen 890
-   📈 Similarity Score: 0.8756
-   📝 Preview Doc 123: analisis faktor pengaruh motivasi kerja karyawan...
-   📝 Preview Doc 890: faktor pengaruh motivasi kerja prestasi karyawan...
-</pre></div>
-</div>
-</section>
-</section>
-<section id="export-dan-analisis-komprehensif">
-<h2>7. Export dan Analisis Komprehensif<a class="headerlink" href="#export-dan-analisis-komprehensif" title="Link to this heading">#</a></h2>
-<section id="tf-idf-analysis-excel-format">
-<h3>TF-IDF Analysis (Excel Format)<a class="headerlink" href="#tf-idf-analysis-excel-format" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># TF-IDF Analysis - Complete Implementation with Indonesian Labels</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
-
-<span class="c1"># Siapkan data TF-IDF</span>
-<span class="n">feature_names</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
-<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
-<span class="n">judul_jurnal</span> <span class="o">=</span> <span class="n">result_df</span><span class="p">[</span><span class="s1">&#39;judul&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-<span class="n">idf_scores</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">idf_</span>
-
-<span class="c1"># Buat Excel dengan formatting profesional</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">openpyxl</span><span class="w"> </span><span class="kn">import</span> <span class="n">Workbook</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">openpyxl.styles</span><span class="w"> </span><span class="kn">import</span> <span class="n">Font</span><span class="p">,</span> <span class="n">PatternFill</span><span class="p">,</span> <span class="n">Border</span><span class="p">,</span> <span class="n">Side</span><span class="p">,</span> <span class="n">Alignment</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">openpyxl.utils.dataframe</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataframe_to_rows</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">openpyxl.formatting.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColorScaleRule</span>
-    
-    <span class="c1"># Buat workbook baru</span>
-    <span class="n">wb</span> <span class="o">=</span> <span class="n">Workbook</span><span class="p">()</span>
-    
-    <span class="c1"># 5 Sheet dengan analisis lengkap:</span>
-    <span class="c1"># Sheet 1: Penjelasan_Rumus - Panduan lengkap rumus dan interpretasi</span>
-    <span class="c1"># Sheet 2: Perhitungan_TF - Detail perhitungan Term Frequency</span>
-    <span class="c1"># Sheet 3: Perhitungan_IDF - Detail perhitungan Inverse Document Frequency</span>
-    <span class="c1"># Sheet 4: Tabel_TF_IDF - Hasil akhir dengan conditional formatting</span>
-    <span class="c1"># Sheet 5: Statistik_Term - Ringkasan statistik dengan peringkat</span>
-    
-    <span class="n">wb</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;TF_IDF_Analysis_Formatted.xlsx&#39;</span><span class="p">)</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Excel file created with comprehensive TF-IDF analysis:&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   📊 TF_IDF_Analysis_Formatted.xlsx - Analisis lengkap dengan 5 sheet terurut&quot;</span><span class="p">)</span>
-    
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️ openpyxl not available - creating CSV files instead&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="cbow-analysis-excel-format">
-<h3>CBOW Analysis (Excel Format)<a class="headerlink" href="#cbow-analysis-excel-format" title="Link to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># EXPORT HASIL CBOW KE EXCEL DENGAN FORMAT PROFESIONAL</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">openpyxl</span><span class="w"> </span><span class="kn">import</span> <span class="n">Workbook</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">openpyxl.styles</span><span class="w"> </span><span class="kn">import</span> <span class="n">Font</span><span class="p">,</span> <span class="n">PatternFill</span><span class="p">,</span> <span class="n">Border</span><span class="p">,</span> <span class="n">Side</span><span class="p">,</span> <span class="n">Alignment</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">openpyxl.utils.dataframe</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataframe_to_rows</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">openpyxl.formatting.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColorScaleRule</span>
-    
-    <span class="c1"># Buat workbook baru untuk CBOW</span>
-    <span class="n">wb_cbow</span> <span class="o">=</span> <span class="n">Workbook</span><span class="p">()</span>
-    
-    <span class="c1"># 5 Sheet dengan analisis CBOW lengkap:</span>
-    <span class="c1"># Sheet 1: Penjelasan_CBOW - Konsep dan teori CBOW vs TF-IDF</span>
-    <span class="c1"># Sheet 2: Detail_Training - Sample word vectors dan similarity</span>
-    <span class="c1"># Sheet 3: Analisis_Similarity - Top pasangan dokumen mirip</span>
-    <span class="c1"># Sheet 4: Ringkasan_Embeddings - Summary document embeddings</span>
-    <span class="c1"># Sheet 5: Statistik_Model - Comprehensive model statistics</span>
-    
-    <span class="n">wb_cbow</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;CBOW_Analysis_Formatted.xlsx&#39;</span><span class="p">)</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Excel CBOW berhasil dibuat dengan 5 sheet komprehensif:&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   📊 CBOW_Analysis_Formatted.xlsx - Analisis lengkap CBOW&quot;</span><span class="p">)</span>
-    
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️ openpyxl not available - creating CSV files instead&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Output:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>✅ Excel file created with comprehensive TF-IDF analysis:
-   📊 TF_IDF_Analysis_Formatted.xlsx - Analisis lengkap dengan 5 sheet terurut
-
-✅ Excel CBOW berhasil dibuat dengan 5 sheet komprehensif:
-   📊 CBOW_Analysis_Formatted.xlsx - Analisis lengkap CBOW
-</pre></div>
-</div>
-</section>
-</section>
-<section id="perbandingan-hasil-tf-idf-vs-cbow">
-<h2>8. Perbandingan Hasil: TF-IDF vs CBOW<a class="headerlink" href="#perbandingan-hasil-tf-idf-vs-cbow" title="Link to this heading">#</a></h2>
-<p>Setelah menjalankan analisis <strong>TF-IDF</strong> dan <strong>CBOW</strong>, kita dapat membandingkan kedua pendekatan ini:</p>
-<section id="perbedaan-pendekatan">
-<h3>Perbedaan Pendekatan:<a class="headerlink" href="#perbedaan-pendekatan" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p><strong>Aspek</strong></p></th>
-<th class="head"><p><strong>TF-IDF</strong></p></th>
-<th class="head"><p><strong>CBOW</strong></p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><strong>Jenis Vector</strong></p></td>
-<td><p>Sparse (jarang)</p></td>
-<td><p>Dense (padat)</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong>Dimensi</strong></p></td>
-<td><p>Sebesar vocabulary (6,475)</p></td>
-<td><p>Fixed (100 dimensi)</p></td>
-</tr>
-<tr class="row-even"><td><p><strong>Basis Perhitungan</strong></p></td>
-<td><p>Frekuensi statistik</p></td>
-<td><p>Semantic context</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong>Interpretasi</strong></p></td>
-<td><p>Importance berdasarkan frekuensi</p></td>
-<td><p>Similarity berdasarkan konteks</p></td>
-</tr>
-<tr class="row-even"><td><p><strong>Ukuran File</strong></p></td>
-<td><p>Besar untuk sparse matrix</p></td>
-<td><p>Lebih kecil untuk dense vectors</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="output-yang-dihasilkan">
-<h3>Output yang Dihasilkan:<a class="headerlink" href="#output-yang-dihasilkan" title="Link to this heading">#</a></h3>
-<p><strong>TF-IDF Files:</strong></p>
+<section id="word-embedding-markdown-explanation">
+<h2>Word embedding (markdown explanation)<a class="headerlink" href="#word-embedding-markdown-explanation" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">TF_IDF_Analysis_Formatted.xlsx</span></code> - Analisis lengkap dalam Excel dengan 5 sheet</p></li>
-<li><p>Matrix TF-IDF untuk klasifikasi dan pencarian</p></li>
-</ul>
-<p><strong>CBOW Files:</strong></p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">CBOW_Analysis_Formatted.xlsx</span></code> - Analisis lengkap CBOW dengan 5 sheet</p></li>
-<li><p>Document similarity matrix berdasarkan semantic context</p></li>
-<li><p>Word embeddings untuk analisis semantic similarity</p></li>
+<li><p>Cell ini menjelaskan konsep word embedding (Word2Vec) dan perbedaan representasi terhadap TF‑IDF.</p></li>
 </ul>
 </section>
-<section id="aplikasi-praktis">
-<h3>Aplikasi Praktis:<a class="headerlink" href="#aplikasi-praktis" title="Link to this heading">#</a></h3>
+<section id="word-embedding">
+<h2>word embedding<a class="headerlink" href="#word-embedding" title="Link to this heading">#</a></h2>
+<p>Word2Vec: Word2Vec adalah teknik word embedding yang memetakan setiap kata ke dalam sebuah vektor numerik dalam ruang berdimensi rendah (dalam kasus Anda, 56 dimensi). Outputnya adalah sekumpulan vektor, satu untuk setiap kata. Tabel yang Anda lihat menampilkan vektor-vektor ini. Setiap baris adalah kata, dan setiap kolom adalah salah satu dari 56 dimensi vektor tersebut. Oleh karena itu, header kolomnya adalah indeks dimensi (0 hingga 55), bukan kata-kata itu sendiri.</p>
+<p>Singkatnya, TF-IDF menggunakan kata sebagai fitur, sedangkan Word2Vec menggunakan dimensi vektor sebagai fitur untuk merepresentasikan kata.</p>
+</section>
+<section id="prepare-corpus-train-word2vec">
+<h2>Prepare corpus &amp; train Word2Vec<a class="headerlink" href="#prepare-corpus-train-word2vec" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>TF-IDF</strong>: Cocok untuk information retrieval, klasifikasi teks, keyword extraction</p></li>
-<li><p><strong>CBOW</strong>: Cocok untuk analisis semantic similarity, clustering berdasarkan makna, recommendation system</p></li>
+<li><p>Cell ini menyiapkan korpus token dan melatih model Word2Vec (CBOW) untuk mendapatkan vektor kata.</p></li>
 </ul>
-<p>Kedua pendekatan ini melengkapi satu sama lain dan dapat digunakan bersamaan tergantung pada tujuan analisis yang diinginkan.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">filtered_tokens</span><span class="p">:</span>
+   <span class="n">word_list</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+   <span class="n">corpus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word_list</span><span class="p">)</span>
+
+<span class="c1">#show first value</span>
+<span class="n">corpus</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1">#generate vectors from corpus</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vector_size</span> <span class="o">=</span> <span class="mi">56</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
-</section>
-<section id="ringkasan-lengkap-text-mining-pipeline">
-<h2>Ringkasan Lengkap Text Mining Pipeline<a class="headerlink" href="#ringkasan-lengkap-text-mining-pipeline" title="Link to this heading">#</a></h2>
-<p>Program berhasil melakukan analisis text mining komprehensif untuk 1,031 dokumen abstrak dengan:</p>
-<section id="text-preprocessing">
-<h3>Text Preprocessing:<a class="headerlink" href="#text-preprocessing" title="Link to this heading">#</a></h3>
-<ol class="arabic simple">
-<li><p><strong>Data Collection</strong>: 1,031 abstrak program studi Manajemen PTA Trunojoyo</p></li>
-<li><p><strong>Text Cleaning</strong>: Normalisasi dan pembersihan teks</p></li>
-<li><p><strong>Tokenization</strong>: Pemecahan teks menjadi token dengan NLTK</p></li>
-<li><p><strong>Stopwords Removal</strong>: Penghapusan kata-kata stop bahasa Indonesia</p></li>
-<li><p><strong>Stemming</strong>: Konversi ke bentuk dasar dengan Sastrawi stemmer</p></li>
-</ol>
-</section>
-<section id="text-analysis">
-<h3>Text Analysis:<a class="headerlink" href="#text-analysis" title="Link to this heading">#</a></h3>
-<ol class="arabic simple" start="6">
-<li><p><strong>TF-IDF Analysis</strong>: Analisis statistik berbasis frekuensi term</p>
+<section id="meanembeddingvectorizer-definition">
+<h2>MeanEmbeddingVectorizer definition<a class="headerlink" href="#meanembeddingvectorizer-definition" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Matrix (1031 × 6475) dengan sparse vectors</p></li>
-<li><p>Excel output dengan 5 sheet komprehensif</p></li>
-<li><p>Focus pada term importance dan document classification</p></li>
+<li><p>Cell ini membuat helper/class untuk mengubah kumpulan kata per dokumen menjadi vektor dokumen dengan merata‑ratakan vektor kata.</p></li>
 </ul>
-</li>
-<li><p><strong>CBOW Word Embeddings</strong>: Analisis semantic berbasis neural network</p>
-<ul class="simple">
-<li><p>Dense vectors (1031 × 100) dengan semantic similarity</p></li>
-<li><p>Excel output dengan 5 sheet analisis mendalam</p></li>
-<li><p>Focus pada semantic relationships dan document similarity</p></li>
-</ul>
-</li>
-</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyTokenizer</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texts</span><span class="p">):</span>
+        <span class="c1"># Tokenisasi sederhana: lowercase + split</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">]</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MeanEmbeddingVectorizer</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word2vec_model</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word2vec</span> <span class="o">=</span> <span class="n">word2vec_model</span>
+        <span class="c1"># Perbaikan: gunakan vector_size (Gensim ≥ 4.0)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="n">word2vec_model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vector_size</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">X_tokenized</span> <span class="o">=</span> <span class="n">MyTokenizer</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">embeddings</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">words</span> <span class="ow">in</span> <span class="n">X_tokenized</span><span class="p">:</span>
+            <span class="c1"># Ambil vektor hanya untuk kata yang ada di vocab</span>
+            <span class="n">valid_vectors</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">word2vec</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span>
+                <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">word2vec</span><span class="o">.</span><span class="n">wv</span><span class="p">,</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">valid_vectors</span><span class="p">:</span>
+                <span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">valid_vectors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
-<section id="final-output">
-<h3>Final Output:<a class="headerlink" href="#final-output" title="Link to this heading">#</a></h3>
+<section id="create-mean-embeddings">
+<h2>Create mean embeddings<a class="headerlink" href="#create-mean-embeddings" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>TF_IDF_Analysis_Formatted.xlsx</strong>: Analisis frequency-based lengkap</p></li>
-<li><p><strong>CBOW_Analysis_Formatted.xlsx</strong>: Analisis semantic-based lengkap</p></li>
-<li><p><strong>Management_dataHasilPreprocessing.csv</strong>: Frequency analysis hasil preprocessing</p></li>
-<li><p><strong>Comparative Analysis</strong>: Perbandingan kedua metode untuk insight yang komprehensif</p></li>
+<li><p>Cell ini menghitung embedding dokumen (rata‑rata vektor kata) sehingga dokumen dapat dibandingkan secara numerik.</p></li>
 </ul>
-<p><strong>Total</strong>: 2 metode analisis, 3 file output utama, dataset siap untuk machine learning dan NLP tasks lanjutan.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mean_embedding_vectorizer</span> <span class="o">=</span> <span class="n">MeanEmbeddingVectorizer</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">mean_embedded</span> <span class="o">=</span> <span class="n">mean_embedding_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered_tokens</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean_embedded</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
+<section id="save-per-term-embeddings">
+<h2>Save per-term embeddings<a class="headerlink" href="#save-per-term-embeddings" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Cell ini mengekspor embedding kata dan tabel vektor ke CSV agar hasil model dapat dianalisis atau dibagikan.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ambil semua fitur (kata unik) dari model</span>
+<span class="n">features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">index_to_key</span><span class="p">)</span>
+
+<span class="c1"># Ambil vektor embedding untuk setiap fitur</span>
+<span class="n">embedding_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">features</span><span class="p">]</span>
+
+<span class="c1"># Buat DataFrame, setiap kolom adalah dimensi vektor</span>
+<span class="n">embedding_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">embedding_vectors</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">features</span><span class="p">)</span>
+<span class="n">embedding_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;fitur&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">embedding_df</span><span class="p">)</span>
+
+<span class="c1"># Simpan per-term embeddings ke CSV</span>
+<span class="n">embedding_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;cbow_terms.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.6f</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Saved cbow_terms.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -1479,52 +699,24 @@ PTA (abstrak_id_filtered):
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-collection-dan-setup">Data Collection dan Setup</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#install-libraries-dan-import-dependencies">Install Libraries dan Import Dependencies</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#web-scraping-pta-trunojoyo">Web Scraping PTA Trunojoyo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports-setup">Imports &amp; setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scraping-kompas">scraping (Kompas)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penjelasan-singkat">Penjelasan singkat</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-cleaning">Basic cleaning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stemming-lemmatization">Stemming &amp; lemmatization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenizing">Tokenizing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stopwords-removal">Stopwords removal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf-markdown-explanation">TF-IDF (markdown explanation)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf">tf-idf</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#text-cleaning">1. Text Cleaning</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pembersihan-teks">Pembersihan Teks</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenization">2. Tokenization</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenisasi-dengan-nltk">Tokenisasi dengan NLTK</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stopwords-removal">3. Stopwords Removal</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#penghapusan-stopwords-bahasa-indonesia">Penghapusan Stopwords Bahasa Indonesia</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stemming-dan-lemmatization">4. Stemming dan Lemmatization</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stemming-dengan-sastrawi">Stemming dengan Sastrawi</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-frekuensi-kata">5. Analisis Frekuensi Kata</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-text-preprocessing-pipeline">Ringkasan Text Preprocessing Pipeline</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embeddings-dengan-cbow-continuous-bag-of-words">6. Word Embeddings dengan CBOW (Continuous Bag of Words)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-model-cbow">Training Model CBOW</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-semantic-similarity">Analisis Semantic Similarity</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#document-embeddings-dan-similarity-analysis">Document Embeddings dan Similarity Analysis</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#export-dan-analisis-komprehensif">7. Export dan Analisis Komprehensif</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf-analysis-excel-format">TF-IDF Analysis (Excel Format)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cbow-analysis-excel-format">CBOW Analysis (Excel Format)</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-hasil-tf-idf-vs-cbow">8. Perbandingan Hasil: TF-IDF vs CBOW</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbedaan-pendekatan">Perbedaan Pendekatan:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-yang-dihasilkan">Output yang Dihasilkan:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aplikasi-praktis">Aplikasi Praktis:</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-lengkap-text-mining-pipeline">Ringkasan Lengkap Text Mining Pipeline</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-preprocessing">Text Preprocessing:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text-analysis">Text Analysis:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-output">Final Output:</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf-code">TF-IDF code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embedding-markdown-explanation">Word embedding (markdown explanation)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embedding">word embedding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-corpus-train-word2vec">Prepare corpus &amp; train Word2Vec</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meanembeddingvectorizer-definition">MeanEmbeddingVectorizer definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-mean-embeddings">Create mean embeddings</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#save-per-term-embeddings">Save per-term embeddings</a></li>
 </ul>
   </nav></div>
 

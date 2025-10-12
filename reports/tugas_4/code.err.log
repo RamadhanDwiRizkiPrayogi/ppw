@@ -31,8 +31,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['BASE_URL = "https://pta.trunojoyo.ac.id/c_search/byprod"', '', 'def get_max_page(prodi_id):', '    """Mendapatkan jumlah halaman maksimal untuk prodi tertentu"""', '    try:']
+['# stemming/lemmatization (mengembalikan kata ke bentuk dasar) untuk Bahasa Indonesia', '', '# Stemming', 'factory = StemmerFactory()', 'stemmer = factory.create_stemmer()']
 ...
-["    'No': range(1, len(corpus) + 1),", "    'Abstrak': corpus", '})', '', 'df_sample']
+['factory = StemmerFactory()', 'stemmer = factory.create_stemmer()', 'output = stemmer.stem(teks)', '', 'print("Hasil stemming/lemmatization (Bahasa Indonesia):", output)']
 -------------------
 
