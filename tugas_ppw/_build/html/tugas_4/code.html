@@ -1,0 +1,853 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>tf-idf &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tugas_4/code';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/foto_profil.jpg" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="../_static/foto_profil.jpg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Profile
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tugas_1/pengantar_ppw.html">Pengantar Web Mining</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tugas_2/web_crawling.html">web crawling - tugas 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tugas_3/web_crawling.html">Web Crawling - Tugas 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="web_crawling.html">preprocessing, tf-idf dan cbow</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Ftugas_4/code.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tugas_4/code.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>tf-idf</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">tf-idf</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embedding">word embedding</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span> <span class="c1">#untuk memisahkan teks yang ingin diambil dengan struktur html</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nltk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>
+
+<span class="o">%</span><span class="k">pip</span> install Sastrawi
+<span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.Stemmer.StemmerFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StemmerFactory</span>
+
+<span class="o">%</span><span class="k">pip</span> install plotly
+<span class="o">%</span><span class="k">pip</span> install --upgrade gensim
+<span class="kn">from</span><span class="w"> </span><span class="nn">gensim.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Word2Vec</span><span class="p">,</span> <span class="n">FastText</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: Sastrawi in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (1.0.1)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: plotly in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (6.3.1)
+Requirement already satisfied: narwhals&gt;=1.15.1 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from plotly) (2.7.0)
+Requirement already satisfied: packaging in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from plotly) (24.2)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: gensim in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (4.3.3)
+Requirement already satisfied: numpy&lt;2.0,&gt;=1.18.5 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from gensim) (1.24.4)
+Requirement already satisfied: scipy&lt;1.14.0,&gt;=1.7.0 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from gensim) (1.10.1)
+Requirement already satisfied: smart-open&gt;=1.8.1 in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from gensim) (7.3.1)
+Requirement already satisfied: wrapt in c:\users\hp\appdata\local\programs\python\python311\lib\site-packages (from smart-open&gt;=1.8.1-&gt;gensim) (1.17.3)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">web</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://kompas.com&quot;</span><span class="p">)</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">web</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">soup</span><span class="p">([</span><span class="s1">&#39;script&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">]):</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">stripped_strings</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Berita Terkini Hari Ini, Kabar Akurat Terpercaya - Kompas.com Otomatis Mode Gelap Mode Terang Login Gabung KOMPAS.com+ Konten yang disimpan Konten yang disukai Atur Minat Berikan Masukanmu Langganan Kompas One News Nasional Global Megapolitan Regional Pemilu Hype Konsultasi Hukum Cek Fakta Surat Pembaca Indeks Kilas Daerah Kilas Korporasi Kilas Kementerian Sorot Politik Kilas Badan Negara Kelana Indonesia Kalbe Health Corner Kilas Parlemen Kilas BUMN Nusaraya Sumatera Utara Sumatera Selatan Sumatera Barat Riau Lampung Banten Yogyakarta Jawa Barat Jawa Tengah Jawa Timur Kalimantan Barat Kalimantan Timur Sulawesi Selatan Bali Indeks Jagat Literasi Artikel Foto Video Rolls Donasi STEM Cahaya Aktual Doa dan Niat Jadwal Sholat Tekno Apps &amp; OS Gadget Internet Hardware Business Game Galeri Indeks Tech Innovation Kilas Internet Otomotif Motor Mobil Sport Niaga Komunitas Otopedia Merapah EV Leadership Elektrifikasi Pameran Bola Timnas Indonesia Liga Indonesia Liga Inggris Liga Italia Liga Champions Klasemen Sports Motogp Badminton Indeks Lifestyle Wellness Fashion Relationship Parenting Beauty &amp; Grooming Buku Indeks Sadar Stunting Kilas Lifestyle Tren Lestari Health Penyakit A-Z Kilas Kesehatan Money Ekbis Keuangan Syariah Industri Energi Karier Cuan Belanja Tanya Pajak Indeks Kilas Badan Kilas Transportasi Kilas Fintech Kilas Perbankan Kilas Investasi Transaksi Digital Jejak UMKM Properti News Listing Properti Arsitektur Konstruksi Tips Properti IKN Homey Indeks Sorot Properti Edukasi Sekolah Edu News Perguruan Tinggi Pendidikan Khusus Beasiswa Literasi Skola Kilas Pendidikan IdeAksi Travel Travel News Travel Ideas Hotel Story Travelpedia Food Ohayo Jepang Indeks Video Parapuan Kolom Sains JEO Foto VIK Kata Netizen Warta Membership KOMPAS.com+ Pemerintah Swasta LSM/Figur BUMN UMKM Nusatirta Mulai Dari Kamu Kesehatan Kehidupan sehat dan sejahtera Air bersih dan sanitasi layak Pendidikan Pendidikan Berkualitas Lingkungan Energi Bersih dan Terjangkau Penanganan Perubahan Iklim Ekosistem Lautan Ekosistem Daratan Ekonomi dan UMKM Tanpa Kemiskinan Tanpa Kelaparan Kesetaraan Gender Pekerjaan Layak dan Pertumbuhan ekonomi Industri, Inovasi &amp; Infrastruktur Berkurangnya Kesenjangan Kota &amp; Pemukiman yang Berkelanjutan Konsumsi &amp; Produksi yang bertanggungjawab PROGRAM LESTARI Lihat semua Baca berita tanpa iklan. Gabung Kompas.com+ Trending: Timnas Indonesia Ponpes Al Khoziny Donald Trump Gencatan Senjata Grand Mall Bekasi Etanol Pada BBM Timnas Indonesia Irak pelat nomor Indonesia Living Assistance - - °C Kualitas Udara - - Harga Beli Emas 0 Jt /gr (0%) Jadwal Sholat - - -:- Headline Usai BATA Stop Produksi Sepatu, Menaker Akan Monitor Potensi PHK Menlu RI Sambangi Korea Utara, Apa yang Disepakati? Tren Usai Gaza Tenang, Zelensky Minta Trump Hentikan Perang di Ukraina Global Siswa SMP di Grobogan Tewas Diduga akibat &quot;Bullying&quot;, Ada Luka Serius di Kepala Regional Khofifah: Produksi Padi Jatim 2025 Lebih dari 12 Juta Ton, Tertinggi se-Indonesia Money Mendikdasmen: Mulai Tahun 2027, Bahasa Inggris Jadi Mapel Wajib Edukasi Dinkes Ungkap SPPG Penyalur MBG yang Bikin Murid SDN 6 Matangkuli Muntah Belum Laik Higiene Regional Terpopuler 1 Warganet Menangis Minta Maaf ke Ruben Onsu Usai Sebut Orang Terbodoh karena Tinggalkan Sarwendah Hype 2 “Gak Mau Sekolah…” Isyarat Terakhir Angga Sebelum Tewas Dibully Teman-temannya Regional 3 Stafsus Kemenko Infrastruktur Bantah Rombongan AHY Susul Sultan HB X Pakai “Tot Tot Wuk Wuk” di Jalan Regional 4 Israel Siapkan Operasi Hancurkan Terowongan Hamas di Bawah Gaza Global 5 Usai BATA Stop Produksi Sepatu, Menaker Akan Monitor Potensi PHK Money Terpopuler Lainnya Sorotan BMKG Ungkap Penyebab Cuaca Panas Ekstrem di Semarang yang Tembus 35 Derajat Jateng Momen Jay Idzes Tenangkan Suporter Timnas Indonesia yang Lempar Botol ke Lapangan Kalbar Deteksi Dini Masalah Mesin Mobil Lewat Asap Knalpot Otomotif Belajar dari Sipadan dan Ligitan, Saat Pulau di Indonesia Lepas karena Tak Ada Peredaran Rupiah… Money Jika Lolos Seleksi, Pendaftar Magang Fresh Graduate Bisa Mulai Kerja 20 Oktober 2025 Money Atur pilihan kontenmu Money 3 menit lalu Anak Usaha Lautan Luas (LTLS) Perkuat Layanan Logistik Terintegrasi untuk Dukung Efisiensi Regional 4 menit lalu Dari Hobi Jadi Bisnis, Perakit RC asal Malang Bikin Rubicon hingga Land Rover Regional 5 menit lalu Hiace Rombongan Takziah dari Garut Tabrak Truk di Jalur Gelap Pansela, Dua Tewas News 6 menit lalu Blok M Hub Mulai Ramai, Pengunjung: Lebih Luas dan Banyak Tempat Duduk Tren 7 menit lalu Warganet Cerita Kucingnya Suka Makan Sayur, Kok Bisa? Ini Kata Dosen UGM Pertemuan Langka di PBB, Dunia Bahas Kelakuan AS 1 jam lalu 02:30 Reaksi Patrick Kluivert Usai Timnas Indonesia Kalah dari Irak dan Tak Lolos Piala Dunia Video 2 jam lalu 02:01 Prabowo Rapat Bareng Ketua MPR dan Kepala BIN di Hambalang, Bahas Apa? Video 3 jam lalu 05:09 Hamas Absen dari Perjanjian Damai Gaza, Mesir Tetap Siap Gelar KTT Video 3 jam lalu 02:33 Banyak Santri Ponpes Al Khoziny Diamputasi, Pemerintah Siapkan Santunan dan Beasiswa Video 4 jam lalu 03:30 Parade Militer Korut Pamerkan Nuklir Tercanggih, Warga Bersorak-sorai Video 4 jam lalu 03:03 Sepakat dengan Israel, Besok Hamas Akan Bebaskan Sandera Video 4 jam lalu 06:10 Babak Baru Perang Dagang Dimulai, Hubungan AS-China Retak Lagi? Video 4 jam lalu Travel 7 menit lalu Malam Mingguan di Jakarta Kini Bisa ke Ragunan, Begini Caranya Tekno 8 menit lalu Cisco 8223 Resmi Rilis, Router 51,2 Tbps untuk Data Center AI Regional 15 menit lalu “Buat Nambah Biaya di Rumah”, Dua Bocah Mengemis di Tengah Kota Pekanbaru Money 17 menit lalu BPBP Bawa UMKM Kriya Produk Turunan Kelapa Sawit ke Inacraft 2025 Regional 19 menit lalu VW Karmann Ghia Era Presiden Soekarno Curi Perhatian di Rampal Malang Baca berita tanpa iklan. Gabung Kompas.com+ Unduh Kompas.com App untuk berita terkini, akurat, dan tepercaya setiap saat Arahkan kamera ke kode QR ini untuk download app Follow us: Kompas.id Premium China Hukum Mati Satu Keluarga Mafia Penipu Asal China di Myanmar Baca selengkapnya di Kompas.id. Dapatkan akses penuh berita Kompas.id dengan berlangganan. Baca berita tanpa iklan. Gabung Kompas.com+ Kilas Menaker Yassierli: Transisi Hijau Momentum Transformasi Ketenagakerjaan Nasional Layani 18,23 Juta Penumpang, Bandara I Gusti Ngurah Rai Sukseskan Bali Jadi Pulau Terindah Asia 2025 Wujud Pertanggungjawaban dan Keterbukaan Publik, Kementrans Akan &quot;Open House&quot; Dengan &quot;Live&quot; Media Sosial 24 Jam Kolom Kegagalan Timnas ke Piala Dunia 2026 dan Kisah Bodoh Penambang Emas Abdullah Sammy Peneliti dan Pengamat Barus: Rempah Nusantara yang Terlupakan Kuntoro Boga Direktur Hilirisasi Hasil Perkebunan, Kementan Tak Perlu Disesali, Toh Pemainnya Juga Naturalisasi Silahudin Dosen Fenomena &quot;Dead Horse&quot; PT Sepatu Bata Tbk. Mochammad Mukti Ali Rektor dan Wirausahawan Politik Olahraga, Naturalisasi, dan Disorientasi Tujuan Bernegara Dwi Munthaha Peneliti, Konsultan Lihat lainnya Mewujudkan Kota/Kabupaten HAM Sepantasnya kota bisa menjadi ruang aman bagi siapa pun. Apa bisa mencapai kota HAM? 09/10/2024, 12:04 WIB Bertualang Menjelajahi Hidden Gems di Hong Kong Hong Kong memiliki banyak spot wisata menarik. Jelajahi hidden gems di Hong Kong rekomendasi HKTB dan dapatkan pengalaman liburan tak terlupakan. 03/11/2024, 10:23 WIB Cerita Niko Kisah perjalanan nikel, mineral esensial yang membentuk peradaban modern. Dari penambangan jauh di dalam bumi hingga menjadi komponen vital dalam berbagai produk sehari-hari. 15/07/2025, 11:06 WIB Merapah Trans-Jawa 2024 Eksplorasi 2.290 km Jalur Pansela. Rekaman pesona mudik dari Jakarta ke Banyuwangi, menikmati panorama alam dan budaya di jalur Trans-Jawa. 17/07/2024, 15:56 WIB Otomotif 21 menit lalu Deteksi Dini Masalah Mesin Mobil Lewat Asap Knalpot Tekno 22 menit lalu 3 Cara Blokir Nomor Tidak Dikenal di iPhone dengan Mudah dan Cepat Bola 23 menit lalu Pelatih Irak Mulai Mainkan Mental Arab Saudi Usai Sukses Kubur Mimpi Timnas Indonesia Tekno 35 menit lalu Motherboard Gigabyte X870E Aorus X3D Masuk Indonesia, Harga mulai Rp 6 Jutaan Regional 35 menit lalu Siswa SMP di Grobogan Tewas Diduga akibat &quot;Bullying&quot;, Ada Luka Serius di Kepala Apa yang Masih Jadi &quot;PR&quot; dalam Kesepakatan Gencatan Senjata Gaza? 06:34 Advertorial 36 menit lalu Bandara I Gusti Ngurah Rai Bali Tunjukkan Tren Pertumbuhan Positif Kuartal III 2025 Tren 37 menit lalu Menlu RI Sambangi Korea Utara, Apa yang Disepakati? Global 40 menit lalu Usai Gaza Tenang, Zelensky Minta Trump Hentikan Perang di Ukraina Money 42 menit lalu Jika Lolos Seleksi, Pendaftar Magang Fresh Graduate Bisa Mulai Kerja 20 Oktober 2025 Otomotif 45 menit lalu Skema Kredit Honda ADV160 RoadSync, Cicilan mulai Rp 2 Jutaan Menjajal Bus Trans Jatim Koridor 7 Rute Lamongan-Paciran Sembari Memaknai Ajaran Sunan Drajat Viral di TikTok, Lagu “Timing” Jadi Cara Asyik Belajar Kata Jepang Sukkari Kini Tak Berdaya, Pedagang Buku Bekas Pasar Blauran Surabaya Ditinggal Pembeli Meraba Masa Depan dengan AI sebagai Copilot Close Ads Baca berita tanpa iklan. Gabung Kompas.com+ Otomotif 46 menit lalu Faktor yang Bikin Harga Mobil Bekas Bisa Naik News 46 menit lalu Menaker Yassierli: Transisi Hijau Momentum Transformasi Ketenagakerjaan Nasional Otomotif 1 jam lalu Alva Sedang Sertifikasi Homologasi Cervo dan N3 untuk Ekspor Tren 1 jam lalu Potret Satu-satunya Warung yang Berjualan di Dekat Rumah Jokowi... Bola 1 jam lalu Reaksi Eks Asisten Shin Tae-yong Usai Indonesia Gagal Lolos Piala Dunia 2026 Topik Pilihan 1 Tahun Pemerintahan Prabowo-Gibran Satu Tahun Pemerintahan Prabowo-Gibran: Hukum yang Belum Berdaulat 1 Tahun Pemerintahan Prabowo, Bahlil Ungkap 2 Capaian Swasembada Energi Satu Tahun Komunikasi Publik Presiden Prabowo Lihat semua Keracunan MBG Soroti MBG, LP2K Jateng: Para Siswa Juga Konsumen karena Sebenarnya Tidak Makan Gratis Pemprov Jateng Bagikan Nomor Hotline Aduan Keracunan MBG: 08112622000 Temuan Kadinkes Kota Malang: SPPG MBG di SDN 2 Dinoyo Belum Kantongi Sertifikat Lihat semua Ponpes Al Khoziny Sidoarjo Ambruk HUT ke 80 Jatim, Khofifah Doa untuk Korban Ponpes Al Khoziny Pasca-tragedi Al Khoziny, Eri Cahyadi Bakal Cek Struktur Bangunan Ponpes di Surabaya Santri Diduga Ikut Ngecor Ponpes Al Khoziny, Pakar Hukum Unair: Pemberi Perintah Bisa Kena Sanksi Hukum Lihat semua Regional 1 jam lalu 3 Kakak Beradik Tewas Ditabrak Truk di Taput, Begini Kronologinya Regional 1 jam lalu Dinkes Ungkap SPPG Penyalur MBG yang Bikin Murid SDN 6 Matangkuli Muntah Belum Laik Higiene Regional 1 jam lalu “Gak Mau Sekolah…” Isyarat Terakhir Angga Sebelum Tewas Dibully Teman-temannya Video 1 jam lalu Pertemuan Langka di PBB, Dunia Bahas Kelakuan AS Global 1 jam lalu Gaza dari Pandangan Drone: Kota Tanpa Warna, Hanya Puing dan Debu Foto Lihat semua BERITA FOTO: Lion City Sailors Pupus Kemenangan Persib di Menit Akhir BERITA FOTO: Debut Thom Haye dan Eliano Reijnders di Persib BERITA FOTO: Unisba dan Unpas Ditembaki Gas Air Mata, Puluhan Proyektil Berserakan BERITA FOTO: Menilik Sumur Minyak Ilegal di Blora, Sumber Petaka di Tengah Permukiman BERITA FOTO: Suasana Demo Pati 13 Agustus 2025 Money 1 jam lalu Belajar dari Sipadan dan Ligitan, Saat Pulau di Indonesia Lepas karena Tak Ada Peredaran Rupiah… News 1 jam lalu Pelaku Tawuran di Rorotan Rusak Jemuran hingga Rumah Warga Hype 1 jam lalu Warganet Menangis Minta Maaf ke Ruben Onsu Usai Sebut Orang Terbodoh karena Tinggalkan Sarwendah Otomotif 1 jam lalu Rapor Penjualan Motor Listrik di Indonesia News 1 jam lalu Polisi Tangkap Eks Karyawan yang Bobol Brankas Restoran di Halim Inspirasi Modifikasi Mobil Suzuki: Dari Simpel Sampai Ekstrem 11:33 Bola 1 jam lalu Usai Indonesia Gagal, Jurnalis Malaysia Ungkit Lagi Pergantian STY ke Kluivert Tekno 2 jam lalu Cara Membatasi Pengguna WiFi agar Kecepatan Internet Stabil, Mudah Tren 2 jam lalu 10 Prompt AI Ubah Foto Jadi Animasi, Bisa di Gemini dan ChatGPT Edukasi 2 jam lalu 20 Sekolah Terbaik di Bogor, Referensi Ikut SPMB 2026 Otomotif 2 jam lalu Honda CB1000F Siap Meluncur, Harga mulai Rp 140 Jutaan 1 2 3 Next Produk Rekomendasi Baca berita tanpa iklan. Gabung Kompas.com+ Komentar Klik untuk berita terbaru Penghargaan dan sertifikat: Dapatkan informasi dan insight pilihan redaksi Kompas.com Daftarkan Email Kanal News Nasional Global Megapolitan Regional Pemilu IKN Bola Tekno Otomotif Entertainment Sains Health Money Tren Properti Lifestyle Hype Travel Homey Food UMKM Edukasi Parapuan Foto Video Kolom VIK JEO Lestari Ohayo Jepang Pesona Indonesia Play Artikel Terpopuler Artikel Terkini Topik Pilihan Artikel Headline Network Kompas.com Harian KOMPAS KompasTV Kompasiana KG Media KGNow! Pasangiklan.com Kontan Sonora Grid.ID GridOto.com BolaSport.com Parapuan Tribunnews Gramedia.com Gramedia Digital Kabar Palmerah About Us Advertise Ketentuan Penggunaan Kebijakan Data Pribadi Pedoman Media Siber Career Contact Us Copyright 2008 - 2025 PT. Kompas Cyber Media (Kompas Gramedia Digital Group). All Rights Reserved. Bagikan artikel ini melalui Facebook X Whatsapp Line Telegram Copy Link Oke Living Assistance Cuaca Emas Plus Baca Cepat Cek Kesehatan Atur Keuangan Klasemen Olahraga Jadwal Salat Game &amp; Kuis Beri Masukan Atur Minat
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">teks</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">teks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">teks</span><span class="p">)</span>
+<span class="n">teks</span> <span class="o">=</span> <span class="n">teks</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">))</span>
+<span class="n">teks</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">teks</span><span class="p">)</span>
+<span class="n">teks</span> <span class="o">=</span> <span class="n">teks</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># stemming/lemmatization (mengembalikan kata ke bentuk dasar) untuk Bahasa Indonesia</span>
+
+<span class="c1"># Stemming</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
+<span class="n">stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
+<span class="n">stemmed</span> <span class="o">=</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">teks</span><span class="p">)</span>
+
+<span class="c1"># Lemmatization (menggunakan stemming hasil Sastrawi, karena lemmatizer khusus Indonesia belum tersedia)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">stemmed</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
+<span class="n">stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">teks</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hasil stemming/lemmatization (Bahasa Indonesia):&quot;</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#tokenizing</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;berita&#39;, &#39;kini&#39;, &#39;hari&#39;, &#39;ini&#39;, &#39;kabar&#39;, &#39;akurat&#39;, &#39;percaya&#39;, &#39;kompascom&#39;, &#39;otomatis&#39;, &#39;mode&#39;, &#39;gelap&#39;, &#39;mode&#39;, &#39;terang&#39;, &#39;login&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;konten&#39;, &#39;yang&#39;, &#39;simpan&#39;, &#39;konten&#39;, &#39;yang&#39;, &#39;suka&#39;, &#39;atur&#39;, &#39;minat&#39;, &#39;ikan&#39;, &#39;masuk&#39;, &#39;langgan&#39;, &#39;kompas&#39;, &#39;one&#39;, &#39;news&#39;, &#39;nasional&#39;, &#39;global&#39;, &#39;megapolitan&#39;, &#39;regional&#39;, &#39;milu&#39;, &#39;hype&#39;, &#39;konsultasi&#39;, &#39;hukum&#39;, &#39;cek&#39;, &#39;fakta&#39;, &#39;surat&#39;, &#39;baca&#39;, &#39;indeks&#39;, &#39;kilas&#39;, &#39;daerah&#39;, &#39;kilas&#39;, &#39;korporasi&#39;, &#39;kilas&#39;, &#39;menteri&#39;, &#39;sorot&#39;, &#39;politik&#39;, &#39;kilas&#39;, &#39;badan&#39;, &#39;negara&#39;, &#39;kelana&#39;, &#39;indonesia&#39;, &#39;kalbe&#39;, &#39;health&#39;, &#39;corner&#39;, &#39;kilas&#39;, &#39;parlemen&#39;, &#39;kilas&#39;, &#39;bumn&#39;, &#39;nusaraya&#39;, &#39;sumatera&#39;, &#39;utara&#39;, &#39;sumatera&#39;, &#39;selatan&#39;, &#39;sumatera&#39;, &#39;barat&#39;, &#39;riau&#39;, &#39;lampung&#39;, &#39;banten&#39;, &#39;yogyakarta&#39;, &#39;jawa&#39;, &#39;barat&#39;, &#39;jawa&#39;, &#39;tengah&#39;, &#39;jawa&#39;, &#39;timur&#39;, &#39;kalimantan&#39;, &#39;barat&#39;, &#39;kalimantan&#39;, &#39;timur&#39;, &#39;sulawesi&#39;, &#39;selatan&#39;, &#39;bal&#39;, &#39;indeks&#39;, &#39;jagat&#39;, &#39;literasi&#39;, &#39;artikel&#39;, &#39;foto&#39;, &#39;video&#39;, &#39;rolls&#39;, &#39;donasi&#39;, &#39;stem&#39;, &#39;cahaya&#39;, &#39;aktual&#39;, &#39;doa&#39;, &#39;dan&#39;, &#39;niat&#39;, &#39;jadwal&#39;, &#39;sholat&#39;, &#39;tekno&#39;, &#39;apps&#39;, &#39;os&#39;, &#39;gadget&#39;, &#39;internet&#39;, &#39;hardware&#39;, &#39;business&#39;, &#39;game&#39;, &#39;galeri&#39;, &#39;indeks&#39;, &#39;tech&#39;, &#39;innovation&#39;, &#39;kilas&#39;, &#39;internet&#39;, &#39;otomotif&#39;, &#39;motor&#39;, &#39;mobil&#39;, &#39;sport&#39;, &#39;niaga&#39;, &#39;komunitas&#39;, &#39;otopedia&#39;, &#39;rapah&#39;, &#39;ev&#39;, &#39;leadership&#39;, &#39;elektrifikasi&#39;, &#39;pamer&#39;, &#39;bola&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;liga&#39;, &#39;indonesia&#39;, &#39;liga&#39;, &#39;inggris&#39;, &#39;liga&#39;, &#39;italia&#39;, &#39;liga&#39;, &#39;champions&#39;, &#39;klasemen&#39;, &#39;sports&#39;, &#39;motogp&#39;, &#39;badminton&#39;, &#39;indeks&#39;, &#39;lifestyle&#39;, &#39;wellness&#39;, &#39;fashion&#39;, &#39;relationship&#39;, &#39;parenting&#39;, &#39;beauty&#39;, &#39;grooming&#39;, &#39;buku&#39;, &#39;indeks&#39;, &#39;sadar&#39;, &#39;stunting&#39;, &#39;kilas&#39;, &#39;lifestyle&#39;, &#39;tren&#39;, &#39;lestari&#39;, &#39;health&#39;, &#39;sakit&#39;, &#39;az&#39;, &#39;kilas&#39;, &#39;sehat&#39;, &#39;money&#39;, &#39;ekbis&#39;, &#39;uang&#39;, &#39;syariah&#39;, &#39;industri&#39;, &#39;energi&#39;, &#39;karier&#39;, &#39;cuan&#39;, &#39;belanja&#39;, &#39;tanya&#39;, &#39;pajak&#39;, &#39;indeks&#39;, &#39;kilas&#39;, &#39;badan&#39;, &#39;kilas&#39;, &#39;transportasi&#39;, &#39;kilas&#39;, &#39;fintech&#39;, &#39;kilas&#39;, &#39;perban&#39;, &#39;kilas&#39;, &#39;investasi&#39;, &#39;transaksi&#39;, &#39;digital&#39;, &#39;jejak&#39;, &#39;umkm&#39;, &#39;properti&#39;, &#39;news&#39;, &#39;listing&#39;, &#39;properti&#39;, &#39;arsitektur&#39;, &#39;konstruksi&#39;, &#39;tips&#39;, &#39;properti&#39;, &#39;ikn&#39;, &#39;homey&#39;, &#39;indeks&#39;, &#39;sorot&#39;, &#39;properti&#39;, &#39;edukasi&#39;, &#39;sekolah&#39;, &#39;edu&#39;, &#39;news&#39;, &#39;guru&#39;, &#39;tinggi&#39;, &#39;didik&#39;, &#39;khusus&#39;, &#39;beasiswa&#39;, &#39;literasi&#39;, &#39;skola&#39;, &#39;kilas&#39;, &#39;didik&#39;, &#39;ideaksi&#39;, &#39;travel&#39;, &#39;travel&#39;, &#39;news&#39;, &#39;travel&#39;, &#39;ideas&#39;, &#39;hotel&#39;, &#39;story&#39;, &#39;travelpedia&#39;, &#39;food&#39;, &#39;ohayo&#39;, &#39;jepang&#39;, &#39;indeks&#39;, &#39;video&#39;, &#39;parapuan&#39;, &#39;kolom&#39;, &#39;sains&#39;, &#39;jeo&#39;, &#39;foto&#39;, &#39;vik&#39;, &#39;kata&#39;, &#39;netizen&#39;, &#39;warta&#39;, &#39;membership&#39;, &#39;kompascom&#39;, &#39;perintah&#39;, &#39;swasta&#39;, &#39;lsmfigur&#39;, &#39;bumn&#39;, &#39;umkm&#39;, &#39;nusatirta&#39;, &#39;mulai&#39;, &#39;dari&#39;, &#39;kamu&#39;, &#39;sehat&#39;, &#39;hidup&#39;, &#39;sehat&#39;, &#39;dan&#39;, &#39;sejahtera&#39;, &#39;air&#39;, &#39;bersih&#39;, &#39;dan&#39;, &#39;sanitasi&#39;, &#39;layak&#39;, &#39;didik&#39;, &#39;didik&#39;, &#39;kualitas&#39;, &#39;lingkung&#39;, &#39;energi&#39;, &#39;bersih&#39;, &#39;dan&#39;, &#39;jangkau&#39;, &#39;tangan&#39;, &#39;ubah&#39;, &#39;iklim&#39;, &#39;ekosistem&#39;, &#39;laut&#39;, &#39;ekosistem&#39;, &#39;darat&#39;, &#39;ekonomi&#39;, &#39;dan&#39;, &#39;umkm&#39;, &#39;tanpa&#39;, &#39;miskin&#39;, &#39;tanpa&#39;, &#39;lapar&#39;, &#39;tara&#39;, &#39;gender&#39;, &#39;kerja&#39;, &#39;layak&#39;, &#39;dan&#39;, &#39;tumbuh&#39;, &#39;ekonomi&#39;, &#39;industri&#39;, &#39;inovasi&#39;, &#39;infrastruktur&#39;, &#39;kurang&#39;, &#39;senjang&#39;, &#39;kota&#39;, &#39;mukim&#39;, &#39;yang&#39;, &#39;lanjut&#39;, &#39;konsumsi&#39;, &#39;produksi&#39;, &#39;yang&#39;, &#39;bertanggungjawab&#39;, &#39;program&#39;, &#39;lestari&#39;, &#39;lihat&#39;, &#39;semua&#39;, &#39;baca&#39;, &#39;berita&#39;, &#39;tanpa&#39;, &#39;iklan&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;trending&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;ponpes&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;donald&#39;, &#39;trump&#39;, &#39;gencat&#39;, &#39;senjata&#39;, &#39;grand&#39;, &#39;mall&#39;, &#39;bekas&#39;, &#39;etanol&#39;, &#39;pada&#39;, &#39;bbm&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;irak&#39;, &#39;pelat&#39;, &#39;nomor&#39;, &#39;indonesia&#39;, &#39;living&#39;, &#39;assistance&#39;, &#39;c&#39;, &#39;kualitas&#39;, &#39;udara&#39;, &#39;harga&#39;, &#39;beli&#39;, &#39;emas&#39;, &#39;jt&#39;, &#39;gr&#39;, &#39;jadwal&#39;, &#39;sholat&#39;, &#39;headline&#39;, &#39;usai&#39;, &#39;bata&#39;, &#39;stop&#39;, &#39;produksi&#39;, &#39;sepatu&#39;, &#39;menaker&#39;, &#39;akan&#39;, &#39;monitor&#39;, &#39;potensi&#39;, &#39;phk&#39;, &#39;seskab&#39;, &#39;serta&#39;, &#39;magang&#39;, &#39;nasional&#39;, &#39;gaji&#39;, &#39;tara&#39;, &#39;upah&#39;, &#39;minimun&#39;, &#39;jakarta&#39;, &#39;bisa&#39;, &#39;rp&#39;, &#39;juta&#39;, &#39;news&#39;, &#39;israel&#39;, &#39;siap&#39;, &#39;operasi&#39;, &#39;hancur&#39;, &#39;terowongan&#39;, &#39;hamas&#39;, &#39;di&#39;, &#39;bawah&#39;, &#39;gaza&#39;, &#39;global&#39;, &#39;ammar&#39;, &#39;zoni&#39;, &#39;edar&#39;, &#39;narkoba&#39;, &#39;di&#39;, &#39;rutan&#39;, &#39;ditjen&#39;, &#39;pas&#39;, &#39;pasti&#39;, &#39;napi&#39;, &#39;yang&#39;, &#39;libat&#39;, &#39;sanksi&#39;, &#39;news&#39;, &#39;ole&#39;, &#39;romeny&#39;, &#39;sulit&#39;, &#39;gambar&#39;, &#39;rasa&#39;, &#39;sakit&#39;, &#39;gagal&#39;, &#39;ke&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;bola&#39;, &#39;mendikdasmen&#39;, &#39;mulai&#39;, &#39;tahun&#39;, &#39;bahasa&#39;, &#39;inggris&#39;, &#39;jadi&#39;, &#39;mapel&#39;, &#39;wajib&#39;, &#39;edukasi&#39;, &#39;saksi&#39;, &#39;warga&#39;, &#39;soal&#39;, &#39;tawur&#39;, &#39;remaja&#39;, &#39;tiap&#39;, &#39;pekan&#39;, &#39;di&#39;, &#39;rorotan&#39;, &#39;bawa&#39;, &#39;parang&#39;, &#39;dan&#39;, &#39;saling&#39;, &#39;kejar&#39;, &#39;news&#39;, &#39;populer&#39;, &#39;stafsus&#39;, &#39;kemenko&#39;, &#39;infrastruktur&#39;, &#39;bantah&#39;, &#39;rombong&#39;, &#39;ahy&#39;, &#39;susul&#39;, &#39;sultan&#39;, &#39;hb&#39;, &#39;x&#39;, &#39;pakai&#39;, &#39;tot&#39;, &#39;tot&#39;, &#39;wuk&#39;, &#39;wuk&#39;, &#39;di&#39;, &#39;jalan&#39;, &#39;regional&#39;, &#39;mendikdasmen&#39;, &#39;mulai&#39;, &#39;tahun&#39;, &#39;bahasa&#39;, &#39;inggris&#39;, &#39;jadi&#39;, &#39;mapel&#39;, &#39;wajib&#39;, &#39;edukasi&#39;, &#39;gak&#39;, &#39;mau&#39;, &#39;sekolah&#39;, &#39;isyarat&#39;, &#39;akhir&#39;, &#39;angga&#39;, &#39;belum&#39;, &#39;tewas&#39;, &#39;dibully&#39;, &#39;temantemannya&#39;, &#39;regional&#39;, &#39;israel&#39;, &#39;siap&#39;, &#39;operasi&#39;, &#39;hancur&#39;, &#39;terowongan&#39;, &#39;hamas&#39;, &#39;di&#39;, &#39;bawah&#39;, &#39;gaza&#39;, &#39;global&#39;, &#39;usai&#39;, &#39;bata&#39;, &#39;stop&#39;, &#39;produksi&#39;, &#39;sepatu&#39;, &#39;menaker&#39;, &#39;akan&#39;, &#39;monitor&#39;, &#39;potensi&#39;, &#39;phk&#39;, &#39;money&#39;, &#39;populer&#39;, &#39;lain&#39;, &#39;sorot&#39;, &#39;cek&#39;, &#39;tanah&#39;, &#39;kini&#39;, &#39;bisa&#39;, &#39;lewat&#39;, &#39;aplikasi&#39;, &#39;sentuh&#39;, &#39;tanah&#39;, &#39;begini&#39;, &#39;cara&#39;, &#39;properti&#39;, &#39;barus&#39;, &#39;rempah&#39;, &#39;nusantara&#39;, &#39;yang&#39;, &#39;lupa&#39;, &#39;agri&#39;, &#39;stafsus&#39;, &#39;kemenko&#39;, &#39;infrastruktur&#39;, &#39;bantah&#39;, &#39;rombong&#39;, &#39;ahy&#39;, &#39;susul&#39;, &#39;sultan&#39;, &#39;hb&#39;, &#39;x&#39;, &#39;pakai&#39;, &#39;tot&#39;, &#39;tot&#39;, &#39;wuk&#39;, &#39;wuk&#39;, &#39;di&#39;, &#39;jalan&#39;, &#39;regional&#39;, &#39;butuh&#39;, &#39;biaya&#39;, &#39;obat&#39;, &#39;untuk&#39;, &#39;ibu&#39;, &#39;eks&#39;, &#39;karyawan&#39;, &#39;bobol&#39;, &#39;brankas&#39;, &#39;restoran&#39;, &#39;di&#39;, &#39;halim&#39;, &#39;news&#39;, &#39;harga&#39;, &#39;emas&#39;, &#39;terus&#39;, &#39;naik&#39;, &#39;tepat&#39;, &#39;investasi&#39;, &#39;saat&#39;, &#39;ini&#39;, &#39;tren&#39;, &#39;atur&#39;, &#39;pilih&#39;, &#39;konten&#39;, &#39;otomotif&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;alva&#39;, &#39;sedang&#39;, &#39;sertifikasi&#39;, &#39;homologasi&#39;, &#39;cervo&#39;, &#39;dan&#39;, &#39;n&#39;, &#39;untuk&#39;, &#39;ekspor&#39;, &#39;tren&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;potret&#39;, &#39;satusatunya&#39;, &#39;warung&#39;, &#39;yang&#39;, &#39;jual&#39;, &#39;di&#39;, &#39;dekat&#39;, &#39;rumah&#39;, &#39;jokowi&#39;, &#39;bola&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;reaksi&#39;, &#39;eks&#39;, &#39;asisten&#39;, &#39;shin&#39;, &#39;taeyong&#39;, &#39;usai&#39;, &#39;indonesia&#39;, &#39;gagal&#39;, &#39;lolos&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;regional&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;kakak&#39;, &#39;adik&#39;, &#39;tewas&#39;, &#39;tabrak&#39;, &#39;truk&#39;, &#39;di&#39;, &#39;taput&#39;, &#39;begini&#39;, &#39;kronologi&#39;, &#39;regional&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;dinkes&#39;, &#39;ungkap&#39;, &#39;sppg&#39;, &#39;salur&#39;, &#39;mbg&#39;, &#39;yang&#39;, &#39;bikin&#39;, &#39;murid&#39;, &#39;sdn&#39;, &#39;matangkuli&#39;, &#39;muntah&#39;, &#39;belum&#39;, &#39;laik&#39;, &#39;higiene&#39;, &#39;reaksi&#39;, &#39;patrick&#39;, &#39;kluivert&#39;, &#39;usai&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;kalah&#39;, &#39;dari&#39;, &#39;irak&#39;, &#39;dan&#39;, &#39;tak&#39;, &#39;lolos&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;prabowo&#39;, &#39;rapat&#39;, &#39;bareng&#39;, &#39;ketua&#39;, &#39;mpr&#39;, &#39;dan&#39;, &#39;kepala&#39;, &#39;bin&#39;, &#39;di&#39;, &#39;hambalang&#39;, &#39;bahas&#39;, &#39;apa&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;hamas&#39;, &#39;absen&#39;, &#39;dari&#39;, &#39;janji&#39;, &#39;damai&#39;, &#39;gaza&#39;, &#39;mesir&#39;, &#39;tetap&#39;, &#39;siap&#39;, &#39;gelar&#39;, &#39;ktt&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;banyak&#39;, &#39;santri&#39;, &#39;ponpes&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;amputasi&#39;, &#39;perintah&#39;, &#39;siap&#39;, &#39;santun&#39;, &#39;dan&#39;, &#39;beasiswa&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;parade&#39;, &#39;militer&#39;, &#39;korut&#39;, &#39;pamer&#39;, &#39;nuklir&#39;, &#39;canggih&#39;, &#39;warga&#39;, &#39;bersoraksorai&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;sepakat&#39;, &#39;dengan&#39;, &#39;israel&#39;, &#39;besok&#39;, &#39;hamas&#39;, &#39;akan&#39;, &#39;bebas&#39;, &#39;sandera&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;babak&#39;, &#39;baru&#39;, &#39;perang&#39;, &#39;dagang&#39;, &#39;mulai&#39;, &#39;hubung&#39;, &#39;aschina&#39;, &#39;retak&#39;, &#39;lagi&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;tentara&#39;, &#39;madagaskar&#39;, &#39;balik&#39;, &#39;gabung&#39;, &#39;demonstran&#39;, &#39;tolak&#39;, &#39;perintah&#39;, &#39;tembak&#39;, &#39;warga&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;regional&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;gak&#39;, &#39;mau&#39;, &#39;sekolah&#39;, &#39;isyarat&#39;, &#39;akhir&#39;, &#39;angga&#39;, &#39;belum&#39;, &#39;tewas&#39;, &#39;dibully&#39;, &#39;temantemannya&#39;, &#39;global&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;gaza&#39;, &#39;dari&#39;, &#39;pandang&#39;, &#39;drone&#39;, &#39;kota&#39;, &#39;tanpa&#39;, &#39;warna&#39;, &#39;hanya&#39;, &#39;puing&#39;, &#39;dan&#39;, &#39;debu&#39;, &#39;money&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;ajar&#39;, &#39;dari&#39;, &#39;sipadan&#39;, &#39;dan&#39;, &#39;ligitan&#39;, &#39;saat&#39;, &#39;pulau&#39;, &#39;di&#39;, &#39;indonesia&#39;, &#39;lepas&#39;, &#39;karena&#39;, &#39;tak&#39;, &#39;ada&#39;, &#39;edar&#39;, &#39;rupiah&#39;, &#39;news&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;laku&#39;, &#39;tawur&#39;, &#39;di&#39;, &#39;rorotan&#39;, &#39;rusak&#39;, &#39;jemur&#39;, &#39;hingga&#39;, &#39;rumah&#39;, &#39;warga&#39;, &#39;hype&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;warganet&#39;, &#39;menang&#39;, &#39;minta&#39;, &#39;maaf&#39;, &#39;ke&#39;, &#39;ruben&#39;, &#39;onsu&#39;, &#39;usai&#39;, &#39;sebut&#39;, &#39;orang&#39;, &#39;bodoh&#39;, &#39;karena&#39;, &#39;tinggal&#39;, &#39;sarwendah&#39;, &#39;baca&#39;, &#39;berita&#39;, &#39;tanpa&#39;, &#39;iklan&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;unduh&#39;, &#39;kompascom&#39;, &#39;app&#39;, &#39;untuk&#39;, &#39;berita&#39;, &#39;kini&#39;, &#39;akurat&#39;, &#39;dan&#39;, &#39;percaya&#39;, &#39;tiap&#39;, &#39;saat&#39;, &#39;arah&#39;, &#39;kamera&#39;, &#39;ke&#39;, &#39;kode&#39;, &#39;qr&#39;, &#39;ini&#39;, &#39;untuk&#39;, &#39;download&#39;, &#39;app&#39;, &#39;follow&#39;, &#39;us&#39;, &#39;kompasid&#39;, &#39;premium&#39;, &#39;cinta&#39;, &#39;pada&#39;, &#39;pandang&#39;, &#39;pertama&#39;, &#39;itu&#39;, &#39;hanya&#39;, &#39;ilusi&#39;, &#39;baca&#39;, &#39;lengkap&#39;, &#39;di&#39;, &#39;kompasid&#39;, &#39;dapat&#39;, &#39;akses&#39;, &#39;penuh&#39;, &#39;berita&#39;, &#39;kompasid&#39;, &#39;dengan&#39;, &#39;langgan&#39;, &#39;baca&#39;, &#39;berita&#39;, &#39;tanpa&#39;, &#39;iklan&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;kilas&#39;, &#39;layan&#39;, &#39;juta&#39;, &#39;tumpang&#39;, &#39;bandara&#39;, &#39;i&#39;, &#39;gusti&#39;, &#39;ngurah&#39;, &#39;rai&#39;, &#39;sukses&#39;, &#39;bal&#39;, &#39;jadi&#39;, &#39;pulau&#39;, &#39;indah&#39;, &#39;asia&#39;, &#39;wujud&#39;, &#39;pertanggungjawaban&#39;, &#39;dan&#39;, &#39;buka&#39;, &#39;publik&#39;, &#39;trans&#39;, &#39;akan&#39;, &#39;open&#39;, &#39;house&#39;, &#39;dengan&#39;, &#39;live&#39;, &#39;media&#39;, &#39;sosial&#39;, &#39;jam&#39;, &#39;jajak&#39;, &#39;peluang&#39;, &#39;investasi&#39;, &#39;dari&#39;, &#39;tiongkok&#39;, &#39;menteri&#39;, &#39;transmigrasi&#39;, &#39;akan&#39;, &#39;fokus&#39;, &#39;pada&#39;, &#39;papua&#39;, &#39;kolom&#39;, &#39;gagal&#39;, &#39;timnas&#39;, &#39;ke&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;dan&#39;, &#39;kisah&#39;, &#39;bodoh&#39;, &#39;tambang&#39;, &#39;emas&#39;, &#39;abdullah&#39;, &#39;sammy&#39;, &#39;teliti&#39;, &#39;dan&#39;, &#39;amat&#39;, &#39;barus&#39;, &#39;rempah&#39;, &#39;nusantara&#39;, &#39;yang&#39;, &#39;lupa&#39;, &#39;kuntoro&#39;, &#39;boga&#39;, &#39;direktur&#39;, &#39;hilir&#39;, &#39;hasil&#39;, &#39;kebun&#39;, &#39;tan&#39;, &#39;tak&#39;, &#39;perlu&#39;, &#39;sali&#39;, &#39;toh&#39;, &#39;main&#39;, &#39;juga&#39;, &#39;naturalisasi&#39;, &#39;silahudin&#39;, &#39;dosen&#39;, &#39;fenomena&#39;, &#39;dead&#39;, &#39;horse&#39;, &#39;pt&#39;, &#39;sepatu&#39;, &#39;bata&#39;, &#39;tbk&#39;, &#39;mochammad&#39;, &#39;mukti&#39;, &#39;ali&#39;, &#39;rektor&#39;, &#39;dan&#39;, &#39;wirausahawan&#39;, &#39;politik&#39;, &#39;olahraga&#39;, &#39;naturalisasi&#39;, &#39;dan&#39;, &#39;disorientasi&#39;, &#39;tuju&#39;, &#39;negara&#39;, &#39;dwi&#39;, &#39;munthaha&#39;, &#39;teliti&#39;, &#39;konsultan&#39;, &#39;lihat&#39;, &#39;lain&#39;, &#39;tualang&#39;, &#39;jajah&#39;, &#39;hidden&#39;, &#39;gems&#39;, &#39;di&#39;, &#39;hong&#39;, &#39;kong&#39;, &#39;hong&#39;, &#39;kong&#39;, &#39;milik&#39;, &#39;banyak&#39;, &#39;spot&#39;, &#39;wisata&#39;, &#39;tarik&#39;, &#39;jelajah&#39;, &#39;hidden&#39;, &#39;gems&#39;, &#39;di&#39;, &#39;hong&#39;, &#39;kong&#39;, &#39;rekomendasi&#39;, &#39;hktb&#39;, &#39;dan&#39;, &#39;dapat&#39;, &#39;alam&#39;, &#39;libur&#39;, &#39;tak&#39;, &#39;lupa&#39;, &#39;wib&#39;, &#39;wujud&#39;, &#39;kotakabupaten&#39;, &#39;ham&#39;, &#39;pantas&#39;, &#39;kota&#39;, &#39;bisa&#39;, &#39;jadi&#39;, &#39;ruang&#39;, &#39;aman&#39;, &#39;bagi&#39;, &#39;siapa&#39;, &#39;pun&#39;, &#39;apa&#39;, &#39;bisa&#39;, &#39;capai&#39;, &#39;kota&#39;, &#39;ham&#39;, &#39;wib&#39;, &#39;tirta&#39;, &#39;dan&#39;, &#39;emiliana&#39;, &#39;banyak&#39;, &#39;wilayah&#39;, &#39;indonesia&#39;, &#39;alami&#39;, &#39;krisis&#39;, &#39;air&#39;, &#39;nyata&#39;, &#39;masalah&#39;, &#39;tak&#39;, &#39;selalu&#39;, &#39;soal&#39;, &#39;air&#39;, &#39;tak&#39;, &#39;ada&#39;, &#39;tetapi&#39;, &#39;tata&#39;, &#39;kelola&#39;, &#39;alam&#39;, &#39;wahana&#39;, &#39;visi&#39;, &#39;indonesia&#39;, &#39;beri&#39;, &#39;gambar&#39;, &#39;upaya&#39;, &#39;selesai&#39;, &#39;wib&#39;, &#39;rapah&#39;, &#39;transjawa&#39;, &#39;eksplorasi&#39;, &#39;km&#39;, &#39;jalur&#39;, &#39;pansela&#39;, &#39;rekam&#39;, &#39;pesona&#39;, &#39;mudik&#39;, &#39;dari&#39;, &#39;jakarta&#39;, &#39;ke&#39;, &#39;banyuwangi&#39;, &#39;nikmat&#39;, &#39;panorama&#39;, &#39;alam&#39;, &#39;dan&#39;, &#39;budaya&#39;, &#39;di&#39;, &#39;jalur&#39;, &#39;transjawa&#39;, &#39;wib&#39;, &#39;otomotif&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;rapor&#39;, &#39;jual&#39;, &#39;motor&#39;, &#39;listrik&#39;, &#39;di&#39;, &#39;indonesia&#39;, &#39;news&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;polisi&#39;, &#39;tangkap&#39;, &#39;eks&#39;, &#39;karyawan&#39;, &#39;yang&#39;, &#39;bobol&#39;, &#39;brankas&#39;, &#39;restoran&#39;, &#39;di&#39;, &#39;halim&#39;, &#39;bola&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;usai&#39;, &#39;indonesia&#39;, &#39;gagal&#39;, &#39;jurnalis&#39;, &#39;malaysia&#39;, &#39;ungkit&#39;, &#39;lagi&#39;, &#39;ganti&#39;, &#39;sty&#39;, &#39;ke&#39;, &#39;kluivert&#39;, &#39;tekno&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;cara&#39;, &#39;batas&#39;, &#39;guna&#39;, &#39;wifi&#39;, &#39;agar&#39;, &#39;cepat&#39;, &#39;internet&#39;, &#39;stabil&#39;, &#39;mudah&#39;, &#39;tren&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;prompt&#39;, &#39;ai&#39;, &#39;ubah&#39;, &#39;foto&#39;, &#39;jadi&#39;, &#39;animasi&#39;, &#39;bisa&#39;, &#39;di&#39;, &#39;gemini&#39;, &#39;dan&#39;, &#39;chatgpt&#39;, &#39;inspirasi&#39;, &#39;modifikasi&#39;, &#39;mobil&#39;, &#39;suzuki&#39;, &#39;dari&#39;, &#39;simpel&#39;, &#39;sampai&#39;, &#39;ekstrem&#39;, &#39;edukasi&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;sekolah&#39;, &#39;baik&#39;, &#39;di&#39;, &#39;bogor&#39;, &#39;referensi&#39;, &#39;ikut&#39;, &#39;spmb&#39;, &#39;otomotif&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;honda&#39;, &#39;cbf&#39;, &#39;siap&#39;, &#39;luncur&#39;, &#39;harga&#39;, &#39;mulai&#39;, &#39;rp&#39;, &#39;juta&#39;, &#39;money&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;khofifah&#39;, &#39;produksi&#39;, &#39;padi&#39;, &#39;jatim&#39;, &#39;lebih&#39;, &#39;dari&#39;, &#39;juta&#39;, &#39;ton&#39;, &#39;tinggi&#39;, &#39;indonesia&#39;, &#39;news&#39;, &#39;menit&#39;, &#39;lalu&#39;, &#39;warga&#39;, &#39;rorotan&#39;, &#39;resah&#39;, &#39;usai&#39;, &#39;marak&#39;, &#39;tawur&#39;, &#39;remaja&#39;, &#39;bersajam&#39;, &#39;hype&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;one&#39;, &#39;punch&#39;, &#39;man&#39;, &#39;season&#39;, &#39;rilis&#39;, &#39;jadwal&#39;, &#39;tayang&#39;, &#39;dan&#39;, &#39;link&#39;, &#39;nonton&#39;, &#39;resmi&#39;, &#39;jajal&#39;, &#39;bus&#39;, &#39;trans&#39;, &#39;jatim&#39;, &#39;koridor&#39;, &#39;rute&#39;, &#39;lamonganpaciran&#39;, &#39;sembari&#39;, &#39;makna&#39;, &#39;ajar&#39;, &#39;sunan&#39;, &#39;drajat&#39;, &#39;viral&#39;, &#39;di&#39;, &#39;tiktok&#39;, &#39;lagu&#39;, &#39;timing&#39;, &#39;jadi&#39;, &#39;cara&#39;, &#39;asyik&#39;, &#39;ajar&#39;, &#39;kata&#39;, &#39;jepang&#39;, &#39;sukkari&#39;, &#39;kini&#39;, &#39;tak&#39;, &#39;daya&#39;, &#39;dagang&#39;, &#39;buku&#39;, &#39;bekas&#39;, &#39;pasar&#39;, &#39;blauran&#39;, &#39;surabaya&#39;, &#39;tinggal&#39;, &#39;beli&#39;, &#39;raba&#39;, &#39;masa&#39;, &#39;depan&#39;, &#39;dengan&#39;, &#39;ai&#39;, &#39;bagai&#39;, &#39;copilot&#39;, &#39;close&#39;, &#39;ads&#39;, &#39;baca&#39;, &#39;berita&#39;, &#39;tanpa&#39;, &#39;iklan&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;bola&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;maarten&#39;, &#39;paes&#39;, &#39;pulang&#39;, &#39;ke&#39;, &#39;as&#39;, &#39;usai&#39;, &#39;bela&#39;, &#39;indonesia&#39;, &#39;di&#39;, &#39;kualifikasi&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;news&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;kirim&#39;, &#39;bus&#39;, &#39;listrik&#39;, &#39;transjakarta&#39;, &#39;target&#39;, &#39;rampung&#39;, &#39;akhir&#39;, &#39;properti&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;cek&#39;, &#39;tanah&#39;, &#39;kini&#39;, &#39;bisa&#39;, &#39;lewat&#39;, &#39;aplikasi&#39;, &#39;sentuh&#39;, &#39;tanah&#39;, &#39;begini&#39;, &#39;cara&#39;, &#39;bola&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;andre&#39;, &#39;rosiade&#39;, &#39;kluivert&#39;, &#39;silah&#39;, &#39;mundur&#39;, &#39;usai&#39;, &#39;gagal&#39;, &#39;ke&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;hype&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;axl&#39;, &#39;ramanda&#39;, &#39;kemas&#39;, &#39;ulang&#39;, &#39;lagu&#39;, &#39;kirana&#39;, &#39;cipta&#39;, &#39;ahmad&#39;, &#39;dhani&#39;, &#39;dan&#39;, &#39;erwin&#39;, &#39;prasetya&#39;, &#39;topik&#39;, &#39;pilih&#39;, &#39;tahun&#39;, &#39;perintah&#39;, &#39;prabowogibran&#39;, &#39;satu&#39;, &#39;tahun&#39;, &#39;perintah&#39;, &#39;prabowogibran&#39;, &#39;hukum&#39;, &#39;yang&#39;, &#39;belum&#39;, &#39;daulat&#39;, &#39;tahun&#39;, &#39;perintah&#39;, &#39;prabowo&#39;, &#39;bahlil&#39;, &#39;ungkap&#39;, &#39;capai&#39;, &#39;swasembada&#39;, &#39;energi&#39;, &#39;satu&#39;, &#39;tahun&#39;, &#39;komunikasi&#39;, &#39;publik&#39;, &#39;presiden&#39;, &#39;prabowo&#39;, &#39;lihat&#39;, &#39;semua&#39;, &#39;racun&#39;, &#39;mbg&#39;, &#39;sorot&#39;, &#39;mbg&#39;, &#39;lpk&#39;, &#39;jateng&#39;, &#39;para&#39;, &#39;siswa&#39;, &#39;juga&#39;, &#39;konsumen&#39;, &#39;karena&#39;, &#39;benar&#39;, &#39;tidak&#39;, &#39;makan&#39;, &#39;gratis&#39;, &#39;pemprov&#39;, &#39;jateng&#39;, &#39;bagi&#39;, &#39;nomor&#39;, &#39;hotline&#39;, &#39;adu&#39;, &#39;racun&#39;, &#39;mbg&#39;, &#39;temu&#39;, &#39;kadinkes&#39;, &#39;kota&#39;, &#39;malang&#39;, &#39;sppg&#39;, &#39;mbg&#39;, &#39;di&#39;, &#39;sdn&#39;, &#39;dinoyo&#39;, &#39;belum&#39;, &#39;kantong&#39;, &#39;sertifikat&#39;, &#39;lihat&#39;, &#39;semua&#39;, &#39;ponpes&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;sidoarjo&#39;, &#39;ambruk&#39;, &#39;hut&#39;, &#39;ke&#39;, &#39;jatim&#39;, &#39;khofifah&#39;, &#39;doa&#39;, &#39;untuk&#39;, &#39;korban&#39;, &#39;ponpes&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;pascatragedi&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;eri&#39;, &#39;cahyadi&#39;, &#39;bakal&#39;, &#39;cek&#39;, &#39;struktur&#39;, &#39;bangun&#39;, &#39;ponpes&#39;, &#39;di&#39;, &#39;surabaya&#39;, &#39;santri&#39;, &#39;duga&#39;, &#39;ikut&#39;, &#39;ngecor&#39;, &#39;ponpes&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;pakar&#39;, &#39;hukum&#39;, &#39;unair&#39;, &#39;beri&#39;, &#39;perintah&#39;, &#39;bisa&#39;, &#39;kena&#39;, &#39;sanksi&#39;, &#39;hukum&#39;, &#39;lihat&#39;, &#39;semua&#39;, &#39;edukasi&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;khofifah&#39;, &#39;sebut&#39;, &#39;jumlah&#39;, &#39;sekolah&#39;, &#39;rakyat&#39;, &#39;jatim&#39;, &#39;banyak&#39;, &#39;indonesia&#39;, &#39;tekno&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;youtuber&#39;, &#39;mrbeast&#39;, &#39;cemas&#39;, &#39;dan&#39;, &#39;khawatir&#39;, &#39;ai&#39;, &#39;makin&#39;, &#39;canggih&#39;, &#39;regional&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;stafsus&#39;, &#39;kemenko&#39;, &#39;infrastruktur&#39;, &#39;bantah&#39;, &#39;rombong&#39;, &#39;ahy&#39;, &#39;susul&#39;, &#39;sultan&#39;, &#39;hb&#39;, &#39;x&#39;, &#39;pakai&#39;, &#39;tot&#39;, &#39;tot&#39;, &#39;wuk&#39;, &#39;wuk&#39;, &#39;di&#39;, &#39;jalan&#39;, &#39;news&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;ammar&#39;, &#39;zoni&#39;, &#39;edar&#39;, &#39;narkoba&#39;, &#39;di&#39;, &#39;rutan&#39;, &#39;ditjen&#39;, &#39;pas&#39;, &#39;pasti&#39;, &#39;napi&#39;, &#39;yang&#39;, &#39;libat&#39;, &#39;sanksi&#39;, &#39;tren&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;daftar&#39;, &#39;magang&#39;, &#39;kemnaker&#39;, &#39;panjang&#39;, &#39;ini&#39;, &#39;cara&#39;, &#39;daftar&#39;, &#39;foto&#39;, &#39;lihat&#39;, &#39;semua&#39;, &#39;berita&#39;, &#39;foto&#39;, &#39;lion&#39;, &#39;city&#39;, &#39;sailors&#39;, &#39;pupus&#39;, &#39;menang&#39;, &#39;persib&#39;, &#39;di&#39;, &#39;menit&#39;, &#39;akhir&#39;, &#39;berita&#39;, &#39;foto&#39;, &#39;debut&#39;, &#39;thom&#39;, &#39;haye&#39;, &#39;dan&#39;, &#39;eliano&#39;, &#39;reijnders&#39;, &#39;di&#39;, &#39;persib&#39;, &#39;berita&#39;, &#39;foto&#39;, &#39;unisba&#39;, &#39;dan&#39;, &#39;unpas&#39;, &#39;tembak&#39;, &#39;gas&#39;, &#39;air&#39;, &#39;mata&#39;, &#39;puluh&#39;, &#39;proyektil&#39;, &#39;sera&#39;, &#39;berita&#39;, &#39;foto&#39;, &#39;tilik&#39;, &#39;sumur&#39;, &#39;minyak&#39;, &#39;ilegal&#39;, &#39;di&#39;, &#39;blora&#39;, &#39;sumber&#39;, &#39;petaka&#39;, &#39;di&#39;, &#39;tengah&#39;, &#39;mukim&#39;, &#39;berita&#39;, &#39;foto&#39;, &#39;suasana&#39;, &#39;demo&#39;, &#39;pati&#39;, &#39;agustus&#39;, &#39;travel&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;asal&#39;, &#39;usul&#39;, &#39;jalan&#39;, &#39;harmoni&#39;, &#39;pusat&#39;, &#39;rumah&#39;, &#39;ibadah&#39;, &#39;lintas&#39;, &#39;agama&#39;, &#39;di&#39;, &#39;melaka&#39;, &#39;money&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;usai&#39;, &#39;bata&#39;, &#39;stop&#39;, &#39;produksi&#39;, &#39;sepatu&#39;, &#39;menaker&#39;, &#39;akan&#39;, &#39;monitor&#39;, &#39;potensi&#39;, &#39;phk&#39;, &#39;news&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;butuh&#39;, &#39;biaya&#39;, &#39;obat&#39;, &#39;untuk&#39;, &#39;ibu&#39;, &#39;eks&#39;, &#39;karyawan&#39;, &#39;bobol&#39;, &#39;brankas&#39;, &#39;restoran&#39;, &#39;di&#39;, &#39;halim&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;reaksi&#39;, &#39;patrick&#39;, &#39;kluivert&#39;, &#39;usai&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;kalah&#39;, &#39;dari&#39;, &#39;irak&#39;, &#39;dan&#39;, &#39;tak&#39;, &#39;lolos&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;health&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;aktivitas&#39;, &#39;luar&#39;, &#39;ruang&#39;, &#39;bantu&#39;, &#39;cegah&#39;, &#39;mata&#39;, &#39;minus&#39;, &#39;pada&#39;, &#39;anak&#39;, &#39;warga&#39;, &#39;gaza&#39;, &#39;ramairamai&#39;, &#39;pulang&#39;, &#39;ke&#39;, &#39;rumah&#39;, &#39;yang&#39;, &#39;hancur&#39;, &#39;di&#39;, &#39;hari&#39;, &#39;dua&#39;, &#39;gencat&#39;, &#39;senjata&#39;, &#39;bola&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;djanur&#39;, &#39;soal&#39;, &#39;garuda&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;belum&#39;, &#39;siap&#39;, &#39;ke&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;regional&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;turis&#39;, &#39;surabaya&#39;, &#39;seret&#39;, &#39;ombak&#39;, &#39;di&#39;, &#39;pantai&#39;, &#39;modangan&#39;, &#39;malang&#39;, &#39;hilang&#39;, &#39;tewas&#39;, &#39;bola&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;maarten&#39;, &#39;paes&#39;, &#39;patah&#39;, &#39;hati&#39;, &#39;garuda&#39;, &#39;gagal&#39;, &#39;lolos&#39;, &#39;tapi&#39;, &#39;janji&#39;, &#39;juang&#39;, &#39;lagi&#39;, &#39;otomotif&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;kenal&#39;, &#39;xiaomi&#39;, &#39;su&#39;, &#39;sedan&#39;, &#39;listrik&#39;, &#39;pintar&#39;, &#39;yang&#39;, &#39;lirik&#39;, &#39;perintah&#39;, &#39;edukasi&#39;, &#39;jam&#39;, &#39;lalu&#39;, &#39;universitas&#39;, &#39;baik&#39;, &#39;di&#39;, &#39;jepang&#39;, &#39;versi&#39;, &#39;the&#39;, &#39;wur&#39;, &#39;referensi&#39;, &#39;kuliah&#39;, &#39;ke&#39;, &#39;luar&#39;, &#39;negeri&#39;, &#39;next&#39;, &#39;produk&#39;, &#39;rekomendasi&#39;, &#39;baca&#39;, &#39;berita&#39;, &#39;tanpa&#39;, &#39;iklan&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;komentar&#39;, &#39;klik&#39;, &#39;untuk&#39;, &#39;berita&#39;, &#39;baru&#39;, &#39;harga&#39;, &#39;dan&#39;, &#39;sertifikat&#39;, &#39;dapat&#39;, &#39;informasi&#39;, &#39;dan&#39;, &#39;insight&#39;, &#39;pilih&#39;, &#39;redaksi&#39;, &#39;kompascom&#39;, &#39;daftar&#39;, &#39;email&#39;, &#39;kanal&#39;, &#39;news&#39;, &#39;nasional&#39;, &#39;global&#39;, &#39;megapolitan&#39;, &#39;regional&#39;, &#39;milu&#39;, &#39;ikn&#39;, &#39;bola&#39;, &#39;tekno&#39;, &#39;otomotif&#39;, &#39;entertainment&#39;, &#39;sains&#39;, &#39;health&#39;, &#39;money&#39;, &#39;tren&#39;, &#39;properti&#39;, &#39;lifestyle&#39;, &#39;hype&#39;, &#39;travel&#39;, &#39;homey&#39;, &#39;food&#39;, &#39;umkm&#39;, &#39;edukasi&#39;, &#39;parapuan&#39;, &#39;foto&#39;, &#39;video&#39;, &#39;kolom&#39;, &#39;vik&#39;, &#39;jeo&#39;, &#39;lestari&#39;, &#39;ohayo&#39;, &#39;jepang&#39;, &#39;pesona&#39;, &#39;indonesia&#39;, &#39;play&#39;, &#39;artikel&#39;, &#39;populer&#39;, &#39;artikel&#39;, &#39;kini&#39;, &#39;topik&#39;, &#39;pilih&#39;, &#39;artikel&#39;, &#39;headline&#39;, &#39;network&#39;, &#39;kompascom&#39;, &#39;hari&#39;, &#39;kompas&#39;, &#39;kompastv&#39;, &#39;kompasiana&#39;, &#39;kg&#39;, &#39;media&#39;, &#39;kgnow&#39;, &#39;pasangiklancom&#39;, &#39;kontan&#39;, &#39;sonora&#39;, &#39;gridid&#39;, &#39;gridotocom&#39;, &#39;bolasportcom&#39;, &#39;parapuan&#39;, &#39;tribunnews&#39;, &#39;gramediacom&#39;, &#39;gramedia&#39;, &#39;digital&#39;, &#39;kabar&#39;, &#39;palmerah&#39;, &#39;about&#39;, &#39;us&#39;, &#39;advertise&#39;, &#39;tentu&#39;, &#39;guna&#39;, &#39;bijak&#39;, &#39;data&#39;, &#39;pribadi&#39;, &#39;pedoman&#39;, &#39;media&#39;, &#39;siber&#39;, &#39;career&#39;, &#39;contact&#39;, &#39;us&#39;, &#39;copyright&#39;, &#39;pt&#39;, &#39;kompas&#39;, &#39;cyber&#39;, &#39;media&#39;, &#39;kompas&#39;, &#39;gramedia&#39;, &#39;digital&#39;, &#39;group&#39;, &#39;all&#39;, &#39;rights&#39;, &#39;reserved&#39;, &#39;bagi&#39;, &#39;artikel&#39;, &#39;ini&#39;, &#39;lalu&#39;, &#39;facebook&#39;, &#39;x&#39;, &#39;whatsapp&#39;, &#39;line&#39;, &#39;telegram&#39;, &#39;copy&#39;, &#39;link&#39;, &#39;oke&#39;, &#39;living&#39;, &#39;assistance&#39;, &#39;cuaca&#39;, &#39;emas&#39;, &#39;plus&#39;, &#39;baca&#39;, &#39;cepat&#39;, &#39;cek&#39;, &#39;sehat&#39;, &#39;atur&#39;, &#39;uang&#39;, &#39;klasemen&#39;, &#39;olahraga&#39;, &#39;jadwal&#39;, &#39;salat&#39;, &#39;game&#39;, &#39;kuis&#39;, &#39;beri&#39;, &#39;masuk&#39;, &#39;atur&#39;, &#39;minat&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># menghapus stopwords dari tokens</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
+<span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;indonesian&#39;</span><span class="p">))</span>
+<span class="n">filtered_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">filtered_tokens</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;berita&#39;, &#39;kabar&#39;, &#39;akurat&#39;, &#39;percaya&#39;, &#39;kompascom&#39;, &#39;otomatis&#39;, &#39;mode&#39;, &#39;gelap&#39;, &#39;mode&#39;, &#39;terang&#39;, &#39;login&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;konten&#39;, &#39;simpan&#39;, &#39;konten&#39;, &#39;suka&#39;, &#39;atur&#39;, &#39;minat&#39;, &#39;ikan&#39;, &#39;masuk&#39;, &#39;langgan&#39;, &#39;kompas&#39;, &#39;one&#39;, &#39;news&#39;, &#39;nasional&#39;, &#39;global&#39;, &#39;megapolitan&#39;, &#39;regional&#39;, &#39;milu&#39;, &#39;hype&#39;, &#39;konsultasi&#39;, &#39;hukum&#39;, &#39;cek&#39;, &#39;fakta&#39;, &#39;surat&#39;, &#39;baca&#39;, &#39;indeks&#39;, &#39;kilas&#39;, &#39;daerah&#39;, &#39;kilas&#39;, &#39;korporasi&#39;, &#39;kilas&#39;, &#39;menteri&#39;, &#39;sorot&#39;, &#39;politik&#39;, &#39;kilas&#39;, &#39;badan&#39;, &#39;negara&#39;, &#39;kelana&#39;, &#39;indonesia&#39;, &#39;kalbe&#39;, &#39;health&#39;, &#39;corner&#39;, &#39;kilas&#39;, &#39;parlemen&#39;, &#39;kilas&#39;, &#39;bumn&#39;, &#39;nusaraya&#39;, &#39;sumatera&#39;, &#39;utara&#39;, &#39;sumatera&#39;, &#39;selatan&#39;, &#39;sumatera&#39;, &#39;barat&#39;, &#39;riau&#39;, &#39;lampung&#39;, &#39;banten&#39;, &#39;yogyakarta&#39;, &#39;jawa&#39;, &#39;barat&#39;, &#39;jawa&#39;, &#39;jawa&#39;, &#39;timur&#39;, &#39;kalimantan&#39;, &#39;barat&#39;, &#39;kalimantan&#39;, &#39;timur&#39;, &#39;sulawesi&#39;, &#39;selatan&#39;, &#39;bal&#39;, &#39;indeks&#39;, &#39;jagat&#39;, &#39;literasi&#39;, &#39;artikel&#39;, &#39;foto&#39;, &#39;video&#39;, &#39;rolls&#39;, &#39;donasi&#39;, &#39;stem&#39;, &#39;cahaya&#39;, &#39;aktual&#39;, &#39;doa&#39;, &#39;niat&#39;, &#39;jadwal&#39;, &#39;sholat&#39;, &#39;tekno&#39;, &#39;apps&#39;, &#39;os&#39;, &#39;gadget&#39;, &#39;internet&#39;, &#39;hardware&#39;, &#39;business&#39;, &#39;game&#39;, &#39;galeri&#39;, &#39;indeks&#39;, &#39;tech&#39;, &#39;innovation&#39;, &#39;kilas&#39;, &#39;internet&#39;, &#39;otomotif&#39;, &#39;motor&#39;, &#39;mobil&#39;, &#39;sport&#39;, &#39;niaga&#39;, &#39;komunitas&#39;, &#39;otopedia&#39;, &#39;rapah&#39;, &#39;ev&#39;, &#39;leadership&#39;, &#39;elektrifikasi&#39;, &#39;pamer&#39;, &#39;bola&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;liga&#39;, &#39;indonesia&#39;, &#39;liga&#39;, &#39;inggris&#39;, &#39;liga&#39;, &#39;italia&#39;, &#39;liga&#39;, &#39;champions&#39;, &#39;klasemen&#39;, &#39;sports&#39;, &#39;motogp&#39;, &#39;badminton&#39;, &#39;indeks&#39;, &#39;lifestyle&#39;, &#39;wellness&#39;, &#39;fashion&#39;, &#39;relationship&#39;, &#39;parenting&#39;, &#39;beauty&#39;, &#39;grooming&#39;, &#39;buku&#39;, &#39;indeks&#39;, &#39;sadar&#39;, &#39;stunting&#39;, &#39;kilas&#39;, &#39;lifestyle&#39;, &#39;tren&#39;, &#39;lestari&#39;, &#39;health&#39;, &#39;sakit&#39;, &#39;az&#39;, &#39;kilas&#39;, &#39;sehat&#39;, &#39;money&#39;, &#39;ekbis&#39;, &#39;uang&#39;, &#39;syariah&#39;, &#39;industri&#39;, &#39;energi&#39;, &#39;karier&#39;, &#39;cuan&#39;, &#39;belanja&#39;, &#39;pajak&#39;, &#39;indeks&#39;, &#39;kilas&#39;, &#39;badan&#39;, &#39;kilas&#39;, &#39;transportasi&#39;, &#39;kilas&#39;, &#39;fintech&#39;, &#39;kilas&#39;, &#39;perban&#39;, &#39;kilas&#39;, &#39;investasi&#39;, &#39;transaksi&#39;, &#39;digital&#39;, &#39;jejak&#39;, &#39;umkm&#39;, &#39;properti&#39;, &#39;news&#39;, &#39;listing&#39;, &#39;properti&#39;, &#39;arsitektur&#39;, &#39;konstruksi&#39;, &#39;tips&#39;, &#39;properti&#39;, &#39;ikn&#39;, &#39;homey&#39;, &#39;indeks&#39;, &#39;sorot&#39;, &#39;properti&#39;, &#39;edukasi&#39;, &#39;sekolah&#39;, &#39;edu&#39;, &#39;news&#39;, &#39;guru&#39;, &#39;didik&#39;, &#39;khusus&#39;, &#39;beasiswa&#39;, &#39;literasi&#39;, &#39;skola&#39;, &#39;kilas&#39;, &#39;didik&#39;, &#39;ideaksi&#39;, &#39;travel&#39;, &#39;travel&#39;, &#39;news&#39;, &#39;travel&#39;, &#39;ideas&#39;, &#39;hotel&#39;, &#39;story&#39;, &#39;travelpedia&#39;, &#39;food&#39;, &#39;ohayo&#39;, &#39;jepang&#39;, &#39;indeks&#39;, &#39;video&#39;, &#39;parapuan&#39;, &#39;kolom&#39;, &#39;sains&#39;, &#39;jeo&#39;, &#39;foto&#39;, &#39;vik&#39;, &#39;netizen&#39;, &#39;warta&#39;, &#39;membership&#39;, &#39;kompascom&#39;, &#39;perintah&#39;, &#39;swasta&#39;, &#39;lsmfigur&#39;, &#39;bumn&#39;, &#39;umkm&#39;, &#39;nusatirta&#39;, &#39;sehat&#39;, &#39;hidup&#39;, &#39;sehat&#39;, &#39;sejahtera&#39;, &#39;air&#39;, &#39;bersih&#39;, &#39;sanitasi&#39;, &#39;layak&#39;, &#39;didik&#39;, &#39;didik&#39;, &#39;kualitas&#39;, &#39;lingkung&#39;, &#39;energi&#39;, &#39;bersih&#39;, &#39;jangkau&#39;, &#39;tangan&#39;, &#39;ubah&#39;, &#39;iklim&#39;, &#39;ekosistem&#39;, &#39;laut&#39;, &#39;ekosistem&#39;, &#39;darat&#39;, &#39;ekonomi&#39;, &#39;umkm&#39;, &#39;miskin&#39;, &#39;lapar&#39;, &#39;tara&#39;, &#39;gender&#39;, &#39;kerja&#39;, &#39;layak&#39;, &#39;tumbuh&#39;, &#39;ekonomi&#39;, &#39;industri&#39;, &#39;inovasi&#39;, &#39;infrastruktur&#39;, &#39;senjang&#39;, &#39;kota&#39;, &#39;mukim&#39;, &#39;konsumsi&#39;, &#39;produksi&#39;, &#39;bertanggungjawab&#39;, &#39;program&#39;, &#39;lestari&#39;, &#39;lihat&#39;, &#39;baca&#39;, &#39;berita&#39;, &#39;iklan&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;trending&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;ponpes&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;donald&#39;, &#39;trump&#39;, &#39;gencat&#39;, &#39;senjata&#39;, &#39;grand&#39;, &#39;mall&#39;, &#39;bekas&#39;, &#39;etanol&#39;, &#39;bbm&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;irak&#39;, &#39;pelat&#39;, &#39;nomor&#39;, &#39;indonesia&#39;, &#39;living&#39;, &#39;assistance&#39;, &#39;c&#39;, &#39;kualitas&#39;, &#39;udara&#39;, &#39;harga&#39;, &#39;beli&#39;, &#39;emas&#39;, &#39;jt&#39;, &#39;gr&#39;, &#39;jadwal&#39;, &#39;sholat&#39;, &#39;headline&#39;, &#39;bata&#39;, &#39;stop&#39;, &#39;produksi&#39;, &#39;sepatu&#39;, &#39;menaker&#39;, &#39;monitor&#39;, &#39;potensi&#39;, &#39;phk&#39;, &#39;seskab&#39;, &#39;magang&#39;, &#39;nasional&#39;, &#39;gaji&#39;, &#39;tara&#39;, &#39;upah&#39;, &#39;minimun&#39;, &#39;jakarta&#39;, &#39;rp&#39;, &#39;juta&#39;, &#39;news&#39;, &#39;israel&#39;, &#39;operasi&#39;, &#39;hancur&#39;, &#39;terowongan&#39;, &#39;hamas&#39;, &#39;gaza&#39;, &#39;global&#39;, &#39;ammar&#39;, &#39;zoni&#39;, &#39;edar&#39;, &#39;narkoba&#39;, &#39;rutan&#39;, &#39;ditjen&#39;, &#39;pas&#39;, &#39;napi&#39;, &#39;libat&#39;, &#39;sanksi&#39;, &#39;news&#39;, &#39;ole&#39;, &#39;romeny&#39;, &#39;sulit&#39;, &#39;gambar&#39;, &#39;sakit&#39;, &#39;gagal&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;bola&#39;, &#39;mendikdasmen&#39;, &#39;bahasa&#39;, &#39;inggris&#39;, &#39;mapel&#39;, &#39;wajib&#39;, &#39;edukasi&#39;, &#39;saksi&#39;, &#39;warga&#39;, &#39;tawur&#39;, &#39;remaja&#39;, &#39;pekan&#39;, &#39;rorotan&#39;, &#39;bawa&#39;, &#39;parang&#39;, &#39;kejar&#39;, &#39;news&#39;, &#39;populer&#39;, &#39;stafsus&#39;, &#39;kemenko&#39;, &#39;infrastruktur&#39;, &#39;bantah&#39;, &#39;rombong&#39;, &#39;ahy&#39;, &#39;susul&#39;, &#39;sultan&#39;, &#39;hb&#39;, &#39;x&#39;, &#39;pakai&#39;, &#39;tot&#39;, &#39;tot&#39;, &#39;wuk&#39;, &#39;wuk&#39;, &#39;jalan&#39;, &#39;regional&#39;, &#39;mendikdasmen&#39;, &#39;bahasa&#39;, &#39;inggris&#39;, &#39;mapel&#39;, &#39;wajib&#39;, &#39;edukasi&#39;, &#39;gak&#39;, &#39;sekolah&#39;, &#39;isyarat&#39;, &#39;angga&#39;, &#39;tewas&#39;, &#39;dibully&#39;, &#39;temantemannya&#39;, &#39;regional&#39;, &#39;israel&#39;, &#39;operasi&#39;, &#39;hancur&#39;, &#39;terowongan&#39;, &#39;hamas&#39;, &#39;gaza&#39;, &#39;global&#39;, &#39;bata&#39;, &#39;stop&#39;, &#39;produksi&#39;, &#39;sepatu&#39;, &#39;menaker&#39;, &#39;monitor&#39;, &#39;potensi&#39;, &#39;phk&#39;, &#39;money&#39;, &#39;populer&#39;, &#39;sorot&#39;, &#39;cek&#39;, &#39;tanah&#39;, &#39;aplikasi&#39;, &#39;sentuh&#39;, &#39;tanah&#39;, &#39;properti&#39;, &#39;barus&#39;, &#39;rempah&#39;, &#39;nusantara&#39;, &#39;lupa&#39;, &#39;agri&#39;, &#39;stafsus&#39;, &#39;kemenko&#39;, &#39;infrastruktur&#39;, &#39;bantah&#39;, &#39;rombong&#39;, &#39;ahy&#39;, &#39;susul&#39;, &#39;sultan&#39;, &#39;hb&#39;, &#39;x&#39;, &#39;pakai&#39;, &#39;tot&#39;, &#39;tot&#39;, &#39;wuk&#39;, &#39;wuk&#39;, &#39;jalan&#39;, &#39;regional&#39;, &#39;butuh&#39;, &#39;biaya&#39;, &#39;obat&#39;, &#39;eks&#39;, &#39;karyawan&#39;, &#39;bobol&#39;, &#39;brankas&#39;, &#39;restoran&#39;, &#39;halim&#39;, &#39;news&#39;, &#39;harga&#39;, &#39;emas&#39;, &#39;investasi&#39;, &#39;tren&#39;, &#39;atur&#39;, &#39;pilih&#39;, &#39;konten&#39;, &#39;otomotif&#39;, &#39;menit&#39;, &#39;alva&#39;, &#39;sertifikasi&#39;, &#39;homologasi&#39;, &#39;cervo&#39;, &#39;n&#39;, &#39;ekspor&#39;, &#39;tren&#39;, &#39;menit&#39;, &#39;potret&#39;, &#39;satusatunya&#39;, &#39;warung&#39;, &#39;jual&#39;, &#39;rumah&#39;, &#39;jokowi&#39;, &#39;bola&#39;, &#39;menit&#39;, &#39;reaksi&#39;, &#39;eks&#39;, &#39;asisten&#39;, &#39;shin&#39;, &#39;taeyong&#39;, &#39;indonesia&#39;, &#39;gagal&#39;, &#39;lolos&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;regional&#39;, &#39;menit&#39;, &#39;kakak&#39;, &#39;adik&#39;, &#39;tewas&#39;, &#39;tabrak&#39;, &#39;truk&#39;, &#39;taput&#39;, &#39;kronologi&#39;, &#39;regional&#39;, &#39;menit&#39;, &#39;dinkes&#39;, &#39;sppg&#39;, &#39;salur&#39;, &#39;mbg&#39;, &#39;bikin&#39;, &#39;murid&#39;, &#39;sdn&#39;, &#39;matangkuli&#39;, &#39;muntah&#39;, &#39;laik&#39;, &#39;higiene&#39;, &#39;reaksi&#39;, &#39;patrick&#39;, &#39;kluivert&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;kalah&#39;, &#39;irak&#39;, &#39;lolos&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;jam&#39;, &#39;prabowo&#39;, &#39;rapat&#39;, &#39;bareng&#39;, &#39;ketua&#39;, &#39;mpr&#39;, &#39;kepala&#39;, &#39;bin&#39;, &#39;hambalang&#39;, &#39;bahas&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;hamas&#39;, &#39;absen&#39;, &#39;janji&#39;, &#39;damai&#39;, &#39;gaza&#39;, &#39;mesir&#39;, &#39;gelar&#39;, &#39;ktt&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;santri&#39;, &#39;ponpes&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;amputasi&#39;, &#39;perintah&#39;, &#39;santun&#39;, &#39;beasiswa&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;parade&#39;, &#39;militer&#39;, &#39;korut&#39;, &#39;pamer&#39;, &#39;nuklir&#39;, &#39;canggih&#39;, &#39;warga&#39;, &#39;bersoraksorai&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;sepakat&#39;, &#39;israel&#39;, &#39;besok&#39;, &#39;hamas&#39;, &#39;bebas&#39;, &#39;sandera&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;babak&#39;, &#39;perang&#39;, &#39;dagang&#39;, &#39;hubung&#39;, &#39;aschina&#39;, &#39;retak&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;tentara&#39;, &#39;madagaskar&#39;, &#39;gabung&#39;, &#39;demonstran&#39;, &#39;tolak&#39;, &#39;perintah&#39;, &#39;tembak&#39;, &#39;warga&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;regional&#39;, &#39;menit&#39;, &#39;gak&#39;, &#39;sekolah&#39;, &#39;isyarat&#39;, &#39;angga&#39;, &#39;tewas&#39;, &#39;dibully&#39;, &#39;temantemannya&#39;, &#39;global&#39;, &#39;menit&#39;, &#39;gaza&#39;, &#39;pandang&#39;, &#39;drone&#39;, &#39;kota&#39;, &#39;warna&#39;, &#39;puing&#39;, &#39;debu&#39;, &#39;money&#39;, &#39;menit&#39;, &#39;ajar&#39;, &#39;sipadan&#39;, &#39;ligitan&#39;, &#39;pulau&#39;, &#39;indonesia&#39;, &#39;lepas&#39;, &#39;edar&#39;, &#39;rupiah&#39;, &#39;news&#39;, &#39;menit&#39;, &#39;laku&#39;, &#39;tawur&#39;, &#39;rorotan&#39;, &#39;rusak&#39;, &#39;jemur&#39;, &#39;rumah&#39;, &#39;warga&#39;, &#39;hype&#39;, &#39;menit&#39;, &#39;warganet&#39;, &#39;menang&#39;, &#39;maaf&#39;, &#39;ruben&#39;, &#39;onsu&#39;, &#39;orang&#39;, &#39;bodoh&#39;, &#39;tinggal&#39;, &#39;sarwendah&#39;, &#39;baca&#39;, &#39;berita&#39;, &#39;iklan&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;unduh&#39;, &#39;kompascom&#39;, &#39;app&#39;, &#39;berita&#39;, &#39;akurat&#39;, &#39;percaya&#39;, &#39;arah&#39;, &#39;kamera&#39;, &#39;kode&#39;, &#39;qr&#39;, &#39;download&#39;, &#39;app&#39;, &#39;follow&#39;, &#39;us&#39;, &#39;kompasid&#39;, &#39;premium&#39;, &#39;cinta&#39;, &#39;pandang&#39;, &#39;ilusi&#39;, &#39;baca&#39;, &#39;lengkap&#39;, &#39;kompasid&#39;, &#39;akses&#39;, &#39;penuh&#39;, &#39;berita&#39;, &#39;kompasid&#39;, &#39;langgan&#39;, &#39;baca&#39;, &#39;berita&#39;, &#39;iklan&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;kilas&#39;, &#39;layan&#39;, &#39;juta&#39;, &#39;tumpang&#39;, &#39;bandara&#39;, &#39;i&#39;, &#39;gusti&#39;, &#39;ngurah&#39;, &#39;rai&#39;, &#39;sukses&#39;, &#39;bal&#39;, &#39;pulau&#39;, &#39;indah&#39;, &#39;asia&#39;, &#39;wujud&#39;, &#39;pertanggungjawaban&#39;, &#39;buka&#39;, &#39;publik&#39;, &#39;trans&#39;, &#39;open&#39;, &#39;house&#39;, &#39;live&#39;, &#39;media&#39;, &#39;sosial&#39;, &#39;jam&#39;, &#39;jajak&#39;, &#39;peluang&#39;, &#39;investasi&#39;, &#39;tiongkok&#39;, &#39;menteri&#39;, &#39;transmigrasi&#39;, &#39;fokus&#39;, &#39;papua&#39;, &#39;kolom&#39;, &#39;gagal&#39;, &#39;timnas&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;kisah&#39;, &#39;bodoh&#39;, &#39;tambang&#39;, &#39;emas&#39;, &#39;abdullah&#39;, &#39;sammy&#39;, &#39;teliti&#39;, &#39;barus&#39;, &#39;rempah&#39;, &#39;nusantara&#39;, &#39;lupa&#39;, &#39;kuntoro&#39;, &#39;boga&#39;, &#39;direktur&#39;, &#39;hilir&#39;, &#39;hasil&#39;, &#39;kebun&#39;, &#39;tan&#39;, &#39;sali&#39;, &#39;main&#39;, &#39;naturalisasi&#39;, &#39;silahudin&#39;, &#39;dosen&#39;, &#39;fenomena&#39;, &#39;dead&#39;, &#39;horse&#39;, &#39;pt&#39;, &#39;sepatu&#39;, &#39;bata&#39;, &#39;tbk&#39;, &#39;mochammad&#39;, &#39;mukti&#39;, &#39;ali&#39;, &#39;rektor&#39;, &#39;wirausahawan&#39;, &#39;politik&#39;, &#39;olahraga&#39;, &#39;naturalisasi&#39;, &#39;disorientasi&#39;, &#39;tuju&#39;, &#39;negara&#39;, &#39;dwi&#39;, &#39;munthaha&#39;, &#39;teliti&#39;, &#39;konsultan&#39;, &#39;lihat&#39;, &#39;tualang&#39;, &#39;jajah&#39;, &#39;hidden&#39;, &#39;gems&#39;, &#39;hong&#39;, &#39;kong&#39;, &#39;hong&#39;, &#39;kong&#39;, &#39;milik&#39;, &#39;spot&#39;, &#39;wisata&#39;, &#39;tarik&#39;, &#39;jelajah&#39;, &#39;hidden&#39;, &#39;gems&#39;, &#39;hong&#39;, &#39;kong&#39;, &#39;rekomendasi&#39;, &#39;hktb&#39;, &#39;alam&#39;, &#39;libur&#39;, &#39;lupa&#39;, &#39;wib&#39;, &#39;wujud&#39;, &#39;kotakabupaten&#39;, &#39;ham&#39;, &#39;kota&#39;, &#39;ruang&#39;, &#39;aman&#39;, &#39;capai&#39;, &#39;kota&#39;, &#39;ham&#39;, &#39;wib&#39;, &#39;tirta&#39;, &#39;emiliana&#39;, &#39;wilayah&#39;, &#39;indonesia&#39;, &#39;alami&#39;, &#39;krisis&#39;, &#39;air&#39;, &#39;nyata&#39;, &#39;air&#39;, &#39;tata&#39;, &#39;kelola&#39;, &#39;alam&#39;, &#39;wahana&#39;, &#39;visi&#39;, &#39;indonesia&#39;, &#39;gambar&#39;, &#39;upaya&#39;, &#39;selesai&#39;, &#39;wib&#39;, &#39;rapah&#39;, &#39;transjawa&#39;, &#39;eksplorasi&#39;, &#39;km&#39;, &#39;jalur&#39;, &#39;pansela&#39;, &#39;rekam&#39;, &#39;pesona&#39;, &#39;mudik&#39;, &#39;jakarta&#39;, &#39;banyuwangi&#39;, &#39;nikmat&#39;, &#39;panorama&#39;, &#39;alam&#39;, &#39;budaya&#39;, &#39;jalur&#39;, &#39;transjawa&#39;, &#39;wib&#39;, &#39;otomotif&#39;, &#39;menit&#39;, &#39;rapor&#39;, &#39;jual&#39;, &#39;motor&#39;, &#39;listrik&#39;, &#39;indonesia&#39;, &#39;news&#39;, &#39;menit&#39;, &#39;polisi&#39;, &#39;tangkap&#39;, &#39;eks&#39;, &#39;karyawan&#39;, &#39;bobol&#39;, &#39;brankas&#39;, &#39;restoran&#39;, &#39;halim&#39;, &#39;bola&#39;, &#39;menit&#39;, &#39;indonesia&#39;, &#39;gagal&#39;, &#39;jurnalis&#39;, &#39;malaysia&#39;, &#39;ungkit&#39;, &#39;ganti&#39;, &#39;sty&#39;, &#39;kluivert&#39;, &#39;tekno&#39;, &#39;menit&#39;, &#39;batas&#39;, &#39;wifi&#39;, &#39;cepat&#39;, &#39;internet&#39;, &#39;stabil&#39;, &#39;mudah&#39;, &#39;tren&#39;, &#39;menit&#39;, &#39;prompt&#39;, &#39;ai&#39;, &#39;ubah&#39;, &#39;foto&#39;, &#39;animasi&#39;, &#39;gemini&#39;, &#39;chatgpt&#39;, &#39;inspirasi&#39;, &#39;modifikasi&#39;, &#39;mobil&#39;, &#39;suzuki&#39;, &#39;simpel&#39;, &#39;ekstrem&#39;, &#39;edukasi&#39;, &#39;menit&#39;, &#39;sekolah&#39;, &#39;bogor&#39;, &#39;referensi&#39;, &#39;spmb&#39;, &#39;otomotif&#39;, &#39;menit&#39;, &#39;honda&#39;, &#39;cbf&#39;, &#39;luncur&#39;, &#39;harga&#39;, &#39;rp&#39;, &#39;juta&#39;, &#39;money&#39;, &#39;menit&#39;, &#39;khofifah&#39;, &#39;produksi&#39;, &#39;padi&#39;, &#39;jatim&#39;, &#39;juta&#39;, &#39;ton&#39;, &#39;indonesia&#39;, &#39;news&#39;, &#39;menit&#39;, &#39;warga&#39;, &#39;rorotan&#39;, &#39;resah&#39;, &#39;marak&#39;, &#39;tawur&#39;, &#39;remaja&#39;, &#39;bersajam&#39;, &#39;hype&#39;, &#39;jam&#39;, &#39;one&#39;, &#39;punch&#39;, &#39;man&#39;, &#39;season&#39;, &#39;rilis&#39;, &#39;jadwal&#39;, &#39;tayang&#39;, &#39;link&#39;, &#39;nonton&#39;, &#39;resmi&#39;, &#39;jajal&#39;, &#39;bus&#39;, &#39;trans&#39;, &#39;jatim&#39;, &#39;koridor&#39;, &#39;rute&#39;, &#39;lamonganpaciran&#39;, &#39;sembari&#39;, &#39;makna&#39;, &#39;ajar&#39;, &#39;sunan&#39;, &#39;drajat&#39;, &#39;viral&#39;, &#39;tiktok&#39;, &#39;lagu&#39;, &#39;timing&#39;, &#39;asyik&#39;, &#39;ajar&#39;, &#39;jepang&#39;, &#39;sukkari&#39;, &#39;daya&#39;, &#39;dagang&#39;, &#39;buku&#39;, &#39;bekas&#39;, &#39;pasar&#39;, &#39;blauran&#39;, &#39;surabaya&#39;, &#39;tinggal&#39;, &#39;beli&#39;, &#39;raba&#39;, &#39;ai&#39;, &#39;copilot&#39;, &#39;close&#39;, &#39;ads&#39;, &#39;baca&#39;, &#39;berita&#39;, &#39;iklan&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;bola&#39;, &#39;jam&#39;, &#39;maarten&#39;, &#39;paes&#39;, &#39;pulang&#39;, &#39;as&#39;, &#39;bela&#39;, &#39;indonesia&#39;, &#39;kualifikasi&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;news&#39;, &#39;jam&#39;, &#39;kirim&#39;, &#39;bus&#39;, &#39;listrik&#39;, &#39;transjakarta&#39;, &#39;target&#39;, &#39;rampung&#39;, &#39;properti&#39;, &#39;jam&#39;, &#39;cek&#39;, &#39;tanah&#39;, &#39;aplikasi&#39;, &#39;sentuh&#39;, &#39;tanah&#39;, &#39;bola&#39;, &#39;jam&#39;, &#39;andre&#39;, &#39;rosiade&#39;, &#39;kluivert&#39;, &#39;silah&#39;, &#39;mundur&#39;, &#39;gagal&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;hype&#39;, &#39;jam&#39;, &#39;axl&#39;, &#39;ramanda&#39;, &#39;kemas&#39;, &#39;ulang&#39;, &#39;lagu&#39;, &#39;kirana&#39;, &#39;cipta&#39;, &#39;ahmad&#39;, &#39;dhani&#39;, &#39;erwin&#39;, &#39;prasetya&#39;, &#39;topik&#39;, &#39;pilih&#39;, &#39;perintah&#39;, &#39;prabowogibran&#39;, &#39;perintah&#39;, &#39;prabowogibran&#39;, &#39;hukum&#39;, &#39;daulat&#39;, &#39;perintah&#39;, &#39;prabowo&#39;, &#39;bahlil&#39;, &#39;capai&#39;, &#39;swasembada&#39;, &#39;energi&#39;, &#39;komunikasi&#39;, &#39;publik&#39;, &#39;presiden&#39;, &#39;prabowo&#39;, &#39;lihat&#39;, &#39;racun&#39;, &#39;mbg&#39;, &#39;sorot&#39;, &#39;mbg&#39;, &#39;lpk&#39;, &#39;jateng&#39;, &#39;siswa&#39;, &#39;konsumen&#39;, &#39;makan&#39;, &#39;gratis&#39;, &#39;pemprov&#39;, &#39;jateng&#39;, &#39;nomor&#39;, &#39;hotline&#39;, &#39;adu&#39;, &#39;racun&#39;, &#39;mbg&#39;, &#39;temu&#39;, &#39;kadinkes&#39;, &#39;kota&#39;, &#39;malang&#39;, &#39;sppg&#39;, &#39;mbg&#39;, &#39;sdn&#39;, &#39;dinoyo&#39;, &#39;kantong&#39;, &#39;sertifikat&#39;, &#39;lihat&#39;, &#39;ponpes&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;sidoarjo&#39;, &#39;ambruk&#39;, &#39;hut&#39;, &#39;jatim&#39;, &#39;khofifah&#39;, &#39;doa&#39;, &#39;korban&#39;, &#39;ponpes&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;pascatragedi&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;eri&#39;, &#39;cahyadi&#39;, &#39;cek&#39;, &#39;struktur&#39;, &#39;bangun&#39;, &#39;ponpes&#39;, &#39;surabaya&#39;, &#39;santri&#39;, &#39;duga&#39;, &#39;ngecor&#39;, &#39;ponpes&#39;, &#39;al&#39;, &#39;khoziny&#39;, &#39;pakar&#39;, &#39;hukum&#39;, &#39;unair&#39;, &#39;perintah&#39;, &#39;kena&#39;, &#39;sanksi&#39;, &#39;hukum&#39;, &#39;lihat&#39;, &#39;edukasi&#39;, &#39;jam&#39;, &#39;khofifah&#39;, &#39;sekolah&#39;, &#39;rakyat&#39;, &#39;jatim&#39;, &#39;indonesia&#39;, &#39;tekno&#39;, &#39;jam&#39;, &#39;youtuber&#39;, &#39;mrbeast&#39;, &#39;cemas&#39;, &#39;khawatir&#39;, &#39;ai&#39;, &#39;canggih&#39;, &#39;regional&#39;, &#39;jam&#39;, &#39;stafsus&#39;, &#39;kemenko&#39;, &#39;infrastruktur&#39;, &#39;bantah&#39;, &#39;rombong&#39;, &#39;ahy&#39;, &#39;susul&#39;, &#39;sultan&#39;, &#39;hb&#39;, &#39;x&#39;, &#39;pakai&#39;, &#39;tot&#39;, &#39;tot&#39;, &#39;wuk&#39;, &#39;wuk&#39;, &#39;jalan&#39;, &#39;news&#39;, &#39;jam&#39;, &#39;ammar&#39;, &#39;zoni&#39;, &#39;edar&#39;, &#39;narkoba&#39;, &#39;rutan&#39;, &#39;ditjen&#39;, &#39;pas&#39;, &#39;napi&#39;, &#39;libat&#39;, &#39;sanksi&#39;, &#39;tren&#39;, &#39;jam&#39;, &#39;daftar&#39;, &#39;magang&#39;, &#39;kemnaker&#39;, &#39;daftar&#39;, &#39;foto&#39;, &#39;lihat&#39;, &#39;berita&#39;, &#39;foto&#39;, &#39;lion&#39;, &#39;city&#39;, &#39;sailors&#39;, &#39;pupus&#39;, &#39;menang&#39;, &#39;persib&#39;, &#39;menit&#39;, &#39;berita&#39;, &#39;foto&#39;, &#39;debut&#39;, &#39;thom&#39;, &#39;haye&#39;, &#39;eliano&#39;, &#39;reijnders&#39;, &#39;persib&#39;, &#39;berita&#39;, &#39;foto&#39;, &#39;unisba&#39;, &#39;unpas&#39;, &#39;tembak&#39;, &#39;gas&#39;, &#39;air&#39;, &#39;mata&#39;, &#39;puluh&#39;, &#39;proyektil&#39;, &#39;sera&#39;, &#39;berita&#39;, &#39;foto&#39;, &#39;tilik&#39;, &#39;sumur&#39;, &#39;minyak&#39;, &#39;ilegal&#39;, &#39;blora&#39;, &#39;sumber&#39;, &#39;petaka&#39;, &#39;mukim&#39;, &#39;berita&#39;, &#39;foto&#39;, &#39;suasana&#39;, &#39;demo&#39;, &#39;pati&#39;, &#39;agustus&#39;, &#39;travel&#39;, &#39;jam&#39;, &#39;usul&#39;, &#39;jalan&#39;, &#39;harmoni&#39;, &#39;pusat&#39;, &#39;rumah&#39;, &#39;ibadah&#39;, &#39;lintas&#39;, &#39;agama&#39;, &#39;melaka&#39;, &#39;money&#39;, &#39;jam&#39;, &#39;bata&#39;, &#39;stop&#39;, &#39;produksi&#39;, &#39;sepatu&#39;, &#39;menaker&#39;, &#39;monitor&#39;, &#39;potensi&#39;, &#39;phk&#39;, &#39;news&#39;, &#39;jam&#39;, &#39;butuh&#39;, &#39;biaya&#39;, &#39;obat&#39;, &#39;eks&#39;, &#39;karyawan&#39;, &#39;bobol&#39;, &#39;brankas&#39;, &#39;restoran&#39;, &#39;halim&#39;, &#39;video&#39;, &#39;jam&#39;, &#39;reaksi&#39;, &#39;patrick&#39;, &#39;kluivert&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;kalah&#39;, &#39;irak&#39;, &#39;lolos&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;health&#39;, &#39;jam&#39;, &#39;aktivitas&#39;, &#39;ruang&#39;, &#39;bantu&#39;, &#39;cegah&#39;, &#39;mata&#39;, &#39;minus&#39;, &#39;anak&#39;, &#39;warga&#39;, &#39;gaza&#39;, &#39;ramairamai&#39;, &#39;pulang&#39;, &#39;rumah&#39;, &#39;hancur&#39;, &#39;gencat&#39;, &#39;senjata&#39;, &#39;bola&#39;, &#39;jam&#39;, &#39;djanur&#39;, &#39;garuda&#39;, &#39;timnas&#39;, &#39;indonesia&#39;, &#39;piala&#39;, &#39;dunia&#39;, &#39;regional&#39;, &#39;jam&#39;, &#39;turis&#39;, &#39;surabaya&#39;, &#39;seret&#39;, &#39;ombak&#39;, &#39;pantai&#39;, &#39;modangan&#39;, &#39;malang&#39;, &#39;hilang&#39;, &#39;tewas&#39;, &#39;bola&#39;, &#39;jam&#39;, &#39;maarten&#39;, &#39;paes&#39;, &#39;patah&#39;, &#39;hati&#39;, &#39;garuda&#39;, &#39;gagal&#39;, &#39;lolos&#39;, &#39;janji&#39;, &#39;juang&#39;, &#39;otomotif&#39;, &#39;jam&#39;, &#39;kenal&#39;, &#39;xiaomi&#39;, &#39;su&#39;, &#39;sedan&#39;, &#39;listrik&#39;, &#39;pintar&#39;, &#39;lirik&#39;, &#39;perintah&#39;, &#39;edukasi&#39;, &#39;jam&#39;, &#39;universitas&#39;, &#39;jepang&#39;, &#39;versi&#39;, &#39;the&#39;, &#39;wur&#39;, &#39;referensi&#39;, &#39;kuliah&#39;, &#39;negeri&#39;, &#39;next&#39;, &#39;produk&#39;, &#39;rekomendasi&#39;, &#39;baca&#39;, &#39;berita&#39;, &#39;iklan&#39;, &#39;gabung&#39;, &#39;kompascom&#39;, &#39;komentar&#39;, &#39;klik&#39;, &#39;berita&#39;, &#39;harga&#39;, &#39;sertifikat&#39;, &#39;informasi&#39;, &#39;insight&#39;, &#39;pilih&#39;, &#39;redaksi&#39;, &#39;kompascom&#39;, &#39;daftar&#39;, &#39;email&#39;, &#39;kanal&#39;, &#39;news&#39;, &#39;nasional&#39;, &#39;global&#39;, &#39;megapolitan&#39;, &#39;regional&#39;, &#39;milu&#39;, &#39;ikn&#39;, &#39;bola&#39;, &#39;tekno&#39;, &#39;otomotif&#39;, &#39;entertainment&#39;, &#39;sains&#39;, &#39;health&#39;, &#39;money&#39;, &#39;tren&#39;, &#39;properti&#39;, &#39;lifestyle&#39;, &#39;hype&#39;, &#39;travel&#39;, &#39;homey&#39;, &#39;food&#39;, &#39;umkm&#39;, &#39;edukasi&#39;, &#39;parapuan&#39;, &#39;foto&#39;, &#39;video&#39;, &#39;kolom&#39;, &#39;vik&#39;, &#39;jeo&#39;, &#39;lestari&#39;, &#39;ohayo&#39;, &#39;jepang&#39;, &#39;pesona&#39;, &#39;indonesia&#39;, &#39;play&#39;, &#39;artikel&#39;, &#39;populer&#39;, &#39;artikel&#39;, &#39;topik&#39;, &#39;pilih&#39;, &#39;artikel&#39;, &#39;headline&#39;, &#39;network&#39;, &#39;kompascom&#39;, &#39;kompas&#39;, &#39;kompastv&#39;, &#39;kompasiana&#39;, &#39;kg&#39;, &#39;media&#39;, &#39;kgnow&#39;, &#39;pasangiklancom&#39;, &#39;kontan&#39;, &#39;sonora&#39;, &#39;gridid&#39;, &#39;gridotocom&#39;, &#39;bolasportcom&#39;, &#39;parapuan&#39;, &#39;tribunnews&#39;, &#39;gramediacom&#39;, &#39;gramedia&#39;, &#39;digital&#39;, &#39;kabar&#39;, &#39;palmerah&#39;, &#39;about&#39;, &#39;us&#39;, &#39;advertise&#39;, &#39;bijak&#39;, &#39;data&#39;, &#39;pribadi&#39;, &#39;pedoman&#39;, &#39;media&#39;, &#39;siber&#39;, &#39;career&#39;, &#39;contact&#39;, &#39;us&#39;, &#39;copyright&#39;, &#39;pt&#39;, &#39;kompas&#39;, &#39;cyber&#39;, &#39;media&#39;, &#39;kompas&#39;, &#39;gramedia&#39;, &#39;digital&#39;, &#39;group&#39;, &#39;all&#39;, &#39;rights&#39;, &#39;reserved&#39;, &#39;artikel&#39;, &#39;facebook&#39;, &#39;x&#39;, &#39;whatsapp&#39;, &#39;line&#39;, &#39;telegram&#39;, &#39;copy&#39;, &#39;link&#39;, &#39;oke&#39;, &#39;living&#39;, &#39;assistance&#39;, &#39;cuaca&#39;, &#39;emas&#39;, &#39;plus&#39;, &#39;baca&#39;, &#39;cepat&#39;, &#39;cek&#39;, &#39;sehat&#39;, &#39;atur&#39;, &#39;uang&#39;, &#39;klasemen&#39;, &#39;olahraga&#39;, &#39;jadwal&#39;, &#39;salat&#39;, &#39;game&#39;, &#39;kuis&#39;, &#39;masuk&#39;, &#39;atur&#39;, &#39;minat&#39;]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\hp\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+</pre></div>
+</div>
+</div>
+</div>
+<section id="tf-idf">
+<h1>tf-idf<a class="headerlink" href="#tf-idf" title="Link to this heading">#</a></h1>
+<p>TF-IDF (Term Frequency-Inverse Document Frequency): TF-IDF menghitung seberapa penting sebuah kata dalam sebuah dokumen relatif terhadap seluruh koleksi dokumen. Outputnya adalah matriks di mana setiap baris mewakili dokumen dan setiap kolom mewakili kata unik dalam seluruh koleksi. Nilai di dalam sel menunjukkan skor TF-IDF kata tersebut dalam dokumen. Karena setiap kolom mewakili sebuah kata, maka header kolomnya adalah kata-kata itu sendiri.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">()</span>
+<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">filtered_tokens</span><span class="p">)</span>
+
+<span class="c1"># ubah ke DataFrame biar keliatan</span>
+<span class="n">tfidf_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">vectorizer</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">TF-IDF shape:&quot;</span><span class="p">,</span> <span class="n">tfidf_df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tfidf_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Simpan hasil TF-IDF ke CSV</span>
+<span class="c1"># Jika Anda ingin menyimpan dokumen x fitur, indeks baris mewakili dokumen yang diberikan ke fit_transform</span>
+<span class="n">tfidf_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;tfidf.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.6f</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TF-IDF shape: (1456, 796)
+   abdullah  about  absen  adik  ads  adu  advertise  agama  agri  agustus  \
+0       0.0    0.0    0.0   0.0  0.0  0.0        0.0    0.0   0.0      0.0   
+1       0.0    0.0    0.0   0.0  0.0  0.0        0.0    0.0   0.0      0.0   
+2       0.0    0.0    0.0   0.0  0.0  0.0        0.0    0.0   0.0      0.0   
+3       0.0    0.0    0.0   0.0  0.0  0.0        0.0    0.0   0.0      0.0   
+4       0.0    0.0    0.0   0.0  0.0  0.0        0.0    0.0   0.0      0.0   
+
+   ...  wilayah  wirausahawan  wisata  wujud  wuk  wur  xiaomi  yogyakarta  \
+0  ...      0.0           0.0     0.0    0.0  0.0  0.0     0.0         0.0   
+1  ...      0.0           0.0     0.0    0.0  0.0  0.0     0.0         0.0   
+2  ...      0.0           0.0     0.0    0.0  0.0  0.0     0.0         0.0   
+3  ...      0.0           0.0     0.0    0.0  0.0  0.0     0.0         0.0   
+4  ...      0.0           0.0     0.0    0.0  0.0  0.0     0.0         0.0   
+
+   youtuber  zoni  
+0       0.0   0.0  
+1       0.0   0.0  
+2       0.0   0.0  
+3       0.0   0.0  
+4       0.0   0.0  
+
+[5 rows x 796 columns]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="word-embedding">
+<h1>word embedding<a class="headerlink" href="#word-embedding" title="Link to this heading">#</a></h1>
+<p>Word2Vec: Word2Vec adalah teknik word embedding yang memetakan setiap kata ke dalam sebuah vektor numerik dalam ruang berdimensi rendah (dalam kasus Anda, 56 dimensi). Outputnya adalah sekumpulan vektor, satu untuk setiap kata. Tabel yang Anda lihat menampilkan vektor-vektor ini. Setiap baris adalah kata, dan setiap kolom adalah salah satu dari 56 dimensi vektor tersebut. Oleh karena itu, header kolomnya adalah indeks dimensi (0 hingga 55), bukan kata-kata itu sendiri.
+Singkatnya, TF-IDF menggunakan kata sebagai fitur, sedangkan Word2Vec menggunakan dimensi vektor sebagai fitur untuk merepresentasikan kata.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">filtered_tokens</span><span class="p">:</span>
+   <span class="n">word_list</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+   <span class="n">corpus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word_list</span><span class="p">)</span>
+
+<span class="c1">#show first value</span>
+<span class="n">corpus</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1">#generate vectors from corpus</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vector_size</span> <span class="o">=</span> <span class="mi">56</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Word2Vec&lt;vocab=800, vector_size=56, alpha=0.025&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyTokenizer</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texts</span><span class="p">):</span>
+        <span class="c1"># Tokenisasi sederhana: lowercase + split</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">]</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MeanEmbeddingVectorizer</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word2vec_model</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word2vec</span> <span class="o">=</span> <span class="n">word2vec_model</span>
+        <span class="c1"># Perbaikan: gunakan vector_size (Gensim ≥ 4.0)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="n">word2vec_model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vector_size</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="n">X_tokenized</span> <span class="o">=</span> <span class="n">MyTokenizer</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">embeddings</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">words</span> <span class="ow">in</span> <span class="n">X_tokenized</span><span class="p">:</span>
+            <span class="c1"># Ambil vektor hanya untuk kata yang ada di vocab</span>
+            <span class="n">valid_vectors</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">word2vec</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span>
+                <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">word2vec</span><span class="o">.</span><span class="n">wv</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">valid_vectors</span><span class="p">:</span>
+                <span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">valid_vectors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dim</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_embedding_vectorizer</span> <span class="o">=</span> <span class="n">MeanEmbeddingVectorizer</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">mean_embedded</span> <span class="o">=</span> <span class="n">mean_embedding_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered_tokens</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean_embedded</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-2.7003392e-04  4.2531066e-04  4.4232607e-04  4.2322406e-04
+   7.7212469e-05 -7.8060210e-04  4.6681592e-04 -8.3155493e-04
+  -1.0894785e-03 -8.0118043e-04 -7.6753751e-04 -9.3880153e-05
+  -4.6876841e-05 -4.1861497e-04  2.8906083e-05  1.2218597e-03
+  -2.7702877e-04  2.4325485e-04  4.1746885e-06 -4.0944316e-05
+   5.2286213e-04  4.8105698e-04  5.1001966e-04 -7.3930481e-04
+   7.2097656e-04 -3.5313162e-04  1.2111743e-03  7.7221193e-04
+  -1.6289912e-04 -5.9976231e-04 -5.7370332e-04  2.9825687e-04
+   1.3926017e-04 -5.5644003e-05 -7.7885552e-04 -5.6212716e-04
+   7.7202480e-04 -2.4221546e-04  7.2814245e-04 -4.2646125e-04
+  -6.7524007e-04 -1.8738526e-04  3.0446419e-05  4.7901477e-04
+  -1.8967327e-04  4.5508673e-04  5.8436219e-04  7.4628787e-04
+   2.8179557e-04  5.2998320e-04 -5.3852674e-04  7.1011134e-04
+  -2.6477117e-04  9.3438757e-05  2.0440969e-04 -4.8174334e-04]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ambil semua fitur (kata unik) dari model</span>
+<span class="n">features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">index_to_key</span><span class="p">)</span>
+
+<span class="c1"># Ambil vektor embedding untuk setiap fitur</span>
+<span class="n">embedding_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">features</span><span class="p">]</span>
+
+<span class="c1"># Buat DataFrame, setiap kolom adalah dimensi vektor</span>
+<span class="n">embedding_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">embedding_vectors</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">features</span><span class="p">)</span>
+<span class="n">embedding_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;fitur&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">embedding_df</span><span class="p">)</span>
+
+<span class="c1"># Simpan per-term embeddings ke CSV</span>
+<span class="n">embedding_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;cbow_terms.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">float_format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%.6f</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Saved cbow_terms.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                     0         1         2         3         4         5   \
+fitur                                                                       
+jam           -0.000958  0.000422  0.009113  0.016088 -0.016612 -0.012709   
+menit          0.008067 -0.012120 -0.006337  0.016783 -0.002817  0.000574   
+indonesia     -0.010000  0.012687  0.005987  0.012903  0.012143  0.013448   
+kilas          0.013274  0.011831 -0.006625 -0.015617  0.009710  0.011625   
+news           0.014206 -0.008650  0.015042  0.009397 -0.011696  0.007068   
+...                 ...       ...       ...       ...       ...       ...   
+kotakabupaten  0.013327  0.002652  0.002008  0.003133 -0.013068 -0.015387   
+libur         -0.005501 -0.004963  0.015005  0.005179  0.016734  0.009346   
+hktb          -0.014825  0.012826  0.009712 -0.004105  0.017197 -0.010001   
+jelajah       -0.012210 -0.003749 -0.000723 -0.010214 -0.012091 -0.014488   
+aschina       -0.011090 -0.010163  0.012937  0.013762 -0.016622  0.002457   
+
+                     6         7         8         9   ...        46  \
+fitur                                                  ...             
+jam            0.011534  0.016023 -0.008956 -0.006720  ... -0.013681   
+menit         -0.007394 -0.013719 -0.002693  0.004410  ...  0.009268   
+indonesia     -0.006766 -0.001003  0.004194 -0.008070  ... -0.001271   
+kilas         -0.001406 -0.011982 -0.012653 -0.004459  ...  0.013376   
+news           0.009768 -0.013262 -0.013224 -0.004420  ...  0.007159   
+...                 ...       ...       ...       ...  ...       ...   
+kotakabupaten -0.016092 -0.004357  0.017350 -0.002217  ...  0.013296   
+libur         -0.012750  0.017845  0.008450  0.010547  ...  0.005180   
+hktb           0.017261 -0.007753  0.010304  0.016148  ... -0.008731   
+jelajah       -0.017403 -0.004692  0.016214  0.000006  ... -0.014288   
+aschina       -0.000359  0.001201 -0.014816 -0.010232  ...  0.004290   
+
+                     47        48        49        50        51        52  \
+fitur                                                                       
+jam            0.017169  0.008897  0.016488 -0.014568  0.008028 -0.007388   
+menit          0.010253  0.013334 -0.011014  0.001974  0.010799 -0.005072   
+indonesia      0.013769 -0.015240  0.005727 -0.008282 -0.009087  0.006410   
+kilas         -0.010847  0.009215  0.017719 -0.015102 -0.009171 -0.012616   
+news           0.009260  0.007600  0.003464 -0.005661  0.014918  0.017165   
+...                 ...       ...       ...       ...       ...       ...   
+kotakabupaten -0.010542 -0.012573  0.017822  0.008691  0.002535 -0.013751   
+libur         -0.012284  0.005541 -0.007483  0.011931  0.014473  0.001368   
+hktb          -0.013430  0.000492  0.006636  0.001952 -0.009912 -0.014943   
+jelajah        0.016175 -0.003430  0.000780 -0.005616  0.016072  0.000579   
+aschina        0.008589 -0.000431 -0.003260  0.004620  0.003257  0.011345   
+
+                     53        54        55  
+fitur                                        
+jam            0.001472  0.015176 -0.007968  
+menit         -0.011024 -0.000733 -0.014945  
+indonesia      0.009590  0.013874 -0.010297  
+kilas         -0.008683 -0.006747 -0.015243  
+news           0.006773 -0.005066  0.000013  
+...                 ...       ...       ...  
+kotakabupaten  0.017420 -0.017000  0.009128  
+libur          0.002353 -0.000511  0.006060  
+hktb           0.001973 -0.009549 -0.010506  
+jelajah        0.006629 -0.000731 -0.014785  
+aschina       -0.013501 -0.016358  0.008256  
+
+[800 rows x 56 columns]
+Saved cbow_terms.csv
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tugas_4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">tf-idf</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embedding">word embedding</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
