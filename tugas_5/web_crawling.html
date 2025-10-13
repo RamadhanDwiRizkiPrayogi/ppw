@@ -384,6 +384,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inisisalisasi-preprocessing">inisisalisasi preprocessing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-per-kalimat">preprocessing per kalimat</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">LDA model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#topik-topik-yang-ditemukan-oleh-model-lda">Topik-topik yang ditemukan oleh model LDA:</a></li>
 </ul>
             </nav>
         </div>
@@ -422,6 +423,7 @@ document.write(`
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scraping berhasil. Teks mentah siap diproses.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Scraping berhasil. Teks mentah siap diproses.</p>
 </section>
 <section id="inisisalisasi-preprocessing">
 <h2>inisisalisasi preprocessing<a class="headerlink" href="#inisisalisasi-preprocessing" title="Link to this heading">#</a></h2>
@@ -436,6 +438,9 @@ document.write(`
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stemmer dan Stopwords siap digunakan.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\hp\AppData\Roaming\nltk_data…
+[nltk_data]   Package stopwords is already up-to-date!</p>
 </section>
 <section id="preprocessing-per-kalimat">
 <h2>preprocessing per kalimat<a class="headerlink" href="#preprocessing-per-kalimat" title="Link to this heading">#</a></h2>
@@ -469,12 +474,13 @@ document.write(`
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dokumen </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">doc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Preprocessing selesai. Dihasilkan 42 dokumen yang siap diproses.</p>
+<p>Contoh 3 dokumen pertama:</p>
+<p>Dokumen 0: [‘haru’, ‘keluarga’, ‘identitas’, ‘jasad’, ‘santri’, ‘ponpes’, ‘al’, ‘khoziny’, ‘identifikasi’, ‘otomatis’, ‘mode’, ‘gelap’, ‘mode’, ‘terang’, ‘login’, ‘gabung’, ‘kompas’]</p>
+<p>Dokumen 1: [‘com’, ‘konten’, ‘simpan’, ‘konten’, ‘suka’, ‘atur’, ‘minat’, ‘ikan’, ‘masuk’, ‘langgan’, ‘kompas’, ‘one’, ‘news’, ‘nasional’, ‘global’, ‘megapolitan’, ‘regional’, ‘milu’, ‘hype’, ‘konsultasi’, ‘hukum’, ‘cek’, ‘fakta’, ‘surat’, ‘baca’, ‘indeks’, ‘kilas’, ‘daerah’, ‘kilas’, ‘korporasi’, ‘kilas’, ‘menteri’, ‘sorot’, ‘politik’, ‘kilas’, ‘badan’, ‘negara’, ‘kelana’, ‘indonesia’, ‘kalbe’, ‘health’, ‘corner’, ‘kilas’, ‘parlemen’, ‘kilas’, ‘bumn’, ‘nusaraya’, ‘sumatera’, ‘utara’, ‘sumatera’, ‘selatan’, ‘sumatera’, ‘barat’, ‘riau’, ‘lampung’, ‘banten’, ‘yogyakarta’, ‘jawa’, ‘barat’, ‘jawa’, ‘jawa’, ‘timur’, ‘kalimantan’, ‘barat’, ‘kalimantan’, ‘timur’, ‘sulawesi’, ‘selatan’, ‘bal’, ‘indeks’, ‘jagat’, ‘literasi’, ‘artikel’, ‘foto’, ‘video’, ‘rolls’, ‘donasi’, ‘stem’, ‘cahaya’, ‘aktual’, ‘doa’, ‘niat’, ‘jadwal’, ‘sholat’, ‘tekno’, ‘apps’, ‘os’, ‘gadget’, ‘internet’, ‘hardware’, ‘business’, ‘game’, ‘galeri’, ‘indeks’, ‘tech’, ‘innovation’, ‘kilas’, ‘internet’, ‘otomotif’, ‘motor’, ‘mobil’, ‘sport’, ‘niaga’, ‘komunitas’, ‘otopedia’, ‘rapah’, ‘ev’, ‘leadership’, ‘elektrifikasi’, ‘pamer’, ‘bola’, ‘timnas’, ‘indonesia’, ‘liga’, ‘indonesia’, ‘liga’, ‘inggris’, ‘liga’, ‘italia’, ‘liga’, ‘champions’, ‘klasemen’, ‘sports’, ‘motogp’, ‘badminton’, ‘indeks’, ‘lifestyle’, ‘wellness’, ‘fashion’, ‘relationship’, ‘parenting’, ‘beauty’, ‘grooming’, ‘buku’, ‘indeks’, ‘sadar’, ‘stunting’, ‘kilas’, ‘lifestyle’, ‘tren’, ‘lestari’, ‘health’, ‘sakit’, ‘az’, ‘kilas’, ‘sehat’, ‘money’, ‘ekbis’, ‘uang’, ‘syariah’, ‘industri’, ‘energi’, ‘karier’, ‘cuan’, ‘belanja’, ‘pajak’, ‘indeks’, ‘kilas’, ‘badan’, ‘kilas’, ‘transportasi’, ‘kilas’, ‘fintech’, ‘kilas’, ‘perban’, ‘kilas’, ‘investasi’, ‘transaksi’, ‘digital’, ‘jejak’, ‘umkm’, ‘properti’, ‘news’, ‘listing’, ‘properti’, ‘arsitektur’, ‘konstruksi’, ‘tips’, ‘properti’, ‘ikn’, ‘homey’, ‘indeks’, ‘sorot’, ‘properti’, ‘edukasi’, ‘sekolah’, ‘edu’, ‘news’, ‘guru’, ‘didik’, ‘khusus’, ‘beasiswa’, ‘literasi’, ‘skola’, ‘kilas’, ‘didik’, ‘ideaksi’, ‘travel’, ‘travel’, ‘news’, ‘travel’, ‘ideas’, ‘hotel’, ‘story’, ‘travelpedia’, ‘food’, ‘ohayo’, ‘jepang’, ‘indeks’, ‘video’, ‘parapuan’, ‘kolom’, ‘sains’, ‘jeo’, ‘foto’, ‘vik’, ‘netizen’, ‘warta’, ‘membership’, ‘kompas’]</p>
+<p>Dokumen 2: [‘com’, ‘perintah’, ‘swasta’, ‘lsmfigur’, ‘bumn’, ‘umkm’, ‘nusatirta’, ‘sehat’, ‘hidup’, ‘sehat’, ‘sejahtera’, ‘air’, ‘bersih’, ‘sanitasi’, ‘layak’, ‘didik’, ‘didik’, ‘kualitas’, ‘lingkung’, ‘energi’, ‘bersih’, ‘jangkau’, ‘tangan’, ‘ubah’, ‘iklim’, ‘ekosistem’, ‘laut’, ‘ekosistem’, ‘darat’, ‘ekonomi’, ‘umkm’, ‘miskin’, ‘lapar’, ‘tara’, ‘gender’, ‘kerja’, ‘layak’, ‘tumbuh’, ‘ekonomi’, ‘industri’, ‘inovasi’, ‘infrastruktur’, ‘senjang’, ‘kota’, ‘mukim’, ‘konsumsi’, ‘produksi’, ‘bertanggungjawab’, ‘program’, ‘lestari’, ‘lihat’, ‘haru’, ‘keluarga’, ‘identitas’, ‘jasad’, ‘santri’, ‘ponpes’, ‘al’, ‘khoziny’, ‘identifikasi’, ‘komentar’, ‘baca’, ‘berita’, ‘iklan’]</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membuat kamus: memetakan setiap kata unik ke sebuah ID</span>
 <span class="n">dictionary</span> <span class="o">=</span> <span class="n">corpora</span><span class="o">.</span><span class="n">Dictionary</span><span class="p">(</span><span class="n">processed_docs</span><span class="p">)</span>
-
-<span class="c1"># Opsional: Filter kata-kata yang terlalu jarang atau terlalu sering muncul</span>
-<span class="n">dictionary</span><span class="o">.</span><span class="n">filter_extremes</span><span class="p">(</span><span class="n">no_below</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">no_above</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dictionary berhasil dibuat dengan </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span><span class="si">}</span><span class="s2"> kata unik setelah filtering.&quot;</span><span class="p">)</span>
 
 <span class="c1"># Membuat corpus: mengubah setiap dokumen menjadi representasi BoW (ID kata, frekuensi)</span>
 <span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">processed_docs</span><span class="p">]</span>
@@ -483,6 +489,10 @@ document.write(`
 <span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
+<p>Dictionary berhasil dibuat dengan 183 kata unik setelah filtering.</p>
+<p>Corpus berhasil dibuat.
+Contoh representasi BoW untuk dokumen pertama:
+[(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 2), (12, 1), (13, 1), (14, 1), (15, 1)]</p>
 </section>
 <section id="id1">
 <h2>LDA model<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
@@ -503,6 +513,8 @@ document.write(`
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model LDA berhasil dilatih!&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Memulai pelatihan model LDA untuk menemukan 5 topik…
+Model LDA berhasil dilatih!</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s1">&#39;lda_model&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Topik-topik yang ditemukan oleh model LDA:&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
@@ -519,6 +531,22 @@ document.write(`
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model LDA belum dilatih. Jalankan sel sebelumnya terlebih dahulu.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
+<section id="topik-topik-yang-ditemukan-oleh-model-lda">
+<h2>Topik-topik yang ditemukan oleh model LDA:<a class="headerlink" href="#topik-topik-yang-ditemukan-oleh-model-lda" title="Link to this heading">#</a></h2>
+<p>Topik: 0
+Kata Kunci: 0.048*“com” + 0.038*“kompas” + 0.030*“artikel” + 0.024*“news” + 0.023*“properti” + 0.020*“berita” + 0.020*“tewas” + 0.020*“travel” + 0.019*“baca” + 0.019*“indonesia”</p>
+<p>Topik: 1
+Kata Kunci: 0.081*“jenazah” + 0.060*“dvi” + 0.057*“kantong” + 0.050*“rs” + 0.050*“bhayangkara” + 0.038*“dna” + 0.037*“tim” + 0.026*“posko” + 0.026*“polri” + 0.026*“pusdokkes”</p>
+<p>Topik: 2
+Kata Kunci: 0.051*“bangkal” + 0.042*“nomor” + 0.040*“jenazah” + 0.032*“kabupaten” + 0.022*“santri” + 0.022*“timur” + 0.022*“proses” + 0.022*“butuh” + 0.022*“dna” + 0.022*“nama”</p>
+<p>Topik: 3
+Kata Kunci: 0.037*“identifikasi” + 0.031*“korban” + 0.024*“com” + 0.024*“jenazah” + 0.020*“laku” + 0.018*“body” + 0.016*“kantong” + 0.014*“ruang” + 0.014*“hasil” + 0.014*“metode”</p>
+<p>Topik: 4
+Kata Kunci: 0.067*“ponpes” + 0.063*“surabaya” + 0.049*“al” + 0.046*“wib” + 0.046*“khoziny” + 0.043*“korban” + 0.035*“identifikasi” + 0.022*“ambruk” + 0.019*“baca” + 0.019*“keluarga”</p>
+<hr class="docutils" />
+<p>Coherence Score (c_v): 0.5310
+(Skor Coherence yang baik biasanya mendekati 1.0)</p>
 </section>
 </section>
 
@@ -582,6 +610,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inisisalisasi-preprocessing">inisisalisasi preprocessing</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-per-kalimat">preprocessing per kalimat</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">LDA model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#topik-topik-yang-ditemukan-oleh-model-lda">Topik-topik yang ditemukan oleh model LDA:</a></li>
 </ul>
   </nav></div>
 
