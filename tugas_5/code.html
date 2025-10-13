@@ -554,19 +554,19 @@ document.write(`
 <span class="g g-Whitespace">     </span><span class="mi">90</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
 <span class="g g-Whitespace">     </span><span class="mi">91</span>             <span class="k">return</span>
 
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:110,</span> in <span class="ni">Context.accept_prefix_visitors</span><span class="nt">(self, visitors)</span>
-<span class="g g-Whitespace">    </span><span class="mi">108</span> <span class="n">removalCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removals</span><span class="p">)</span>
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:111,</span> in <span class="ni">Context.accept_prefix_visitors</span><span class="nt">(self, visitors)</span>
 <span class="g g-Whitespace">    </span><span class="mi">109</span> <span class="k">for</span> <span class="n">visitor</span> <span class="ow">in</span> <span class="n">visitors</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">110</span>     <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">visitor</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">111</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">110</span>     <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">visitor</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">111</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
 <span class="g g-Whitespace">    </span><span class="mi">112</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span>
+<span class="g g-Whitespace">    </span><span class="mi">113</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_is_stopped</span><span class="p">:</span>
 
-<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:96,</span> in <span class="ni">Context.accept</span><span class="nt">(self, visitor)</span>
-<span class="g g-Whitespace">     </span><span class="mi">93</span> <span class="k">def</span><span class="w"> </span><span class="nf">remove_suffixes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">94</span>     <span class="bp">self</span><span class="o">.</span><span class="n">accept_visitors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">suffix_visitors</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">96</span> <span class="k">def</span><span class="w"> </span><span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitor</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">97</span>     <span class="n">visitor</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">99</span> <span class="k">def</span><span class="w"> </span><span class="nf">accept_visitors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitors</span><span class="p">):</span>
+<span class="nn">File ~\AppData\Local\Programs\Python\Python311\Lib\site-packages\Sastrawi\Dictionary\ArrayDictionary.py:9,</span> in <span class="ni">ArrayDictionary.contains</span><span class="nt">(self, word)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="k">if</span> <span class="n">words</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>         <span class="bp">self</span><span class="o">.</span><span class="n">add_words</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">9</span> <span class="k">def</span><span class="w"> </span><span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="k">return</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">words</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="k">def</span><span class="w"> </span><span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
@@ -577,6 +577,11 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membuat kamus: memetakan setiap kata unik ke sebuah ID</span>
 <span class="n">dictionary</span> <span class="o">=</span> <span class="n">corpora</span><span class="o">.</span><span class="n">Dictionary</span><span class="p">(</span><span class="n">processed_docs</span><span class="p">)</span>
+
+<span class="c1"># (Opsional) Filter kata-kata yang terlalu jarang atau terlalu sering muncul</span>
+<span class="c1"># no_below=2 : mengabaikan kata yang muncul di kurang dari 2 dokumen</span>
+<span class="c1"># no_above=0.7 : mengabaikan kata yang muncul di lebih dari 70% dokumen</span>
+<span class="n">dictionary</span><span class="o">.</span><span class="n">filter_extremes</span><span class="p">(</span><span class="n">no_below</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">no_above</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 
 <span class="c1"># Membuat corpus: mengubah setiap dokumen menjadi representasi BoW (ID kata, frekuensi)</span>
 <span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">processed_docs</span><span class="p">]</span>
@@ -589,7 +594,7 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Corpus berhasil dibuat.
 Contoh representasi BoW untuk dokumen pertama:
-[(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 2), (12, 1), (13, 1), (14, 1), (15, 1)]
+[(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 1)]
 </pre></div>
 </div>
 </div>
@@ -647,22 +652,22 @@ Model LDA berhasil dilatih!
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topik-topik yang ditemukan oleh model LDA:
 --------------------------------------------------
 Topik: 0 
-Kata Kunci: 0.029*&quot;kilas&quot; + 0.016*&quot;indeks&quot; + 0.012*&quot;properti&quot; + 0.010*&quot;news&quot; + 0.009*&quot;tewas&quot; + 0.009*&quot;jenazah&quot; + 0.008*&quot;artikel&quot; + 0.008*&quot;indonesia&quot; + 0.008*&quot;travel&quot; + 0.008*&quot;nomor&quot;
+Kata Kunci: 0.061*&quot;com&quot; + 0.037*&quot;kompas&quot; + 0.030*&quot;berita&quot; + 0.024*&quot;sekolah&quot; + 0.024*&quot;iklan&quot; + 0.024*&quot;tewas&quot; + 0.024*&quot;smp&quot; + 0.024*&quot;media&quot; + 0.022*&quot;baca&quot; + 0.019*&quot;grobogan&quot;
 
 Topik: 1 
-Kata Kunci: 0.033*&quot;body&quot; + 0.028*&quot;part&quot; + 0.017*&quot;com&quot; + 0.013*&quot;identifikasi&quot; + 0.012*&quot;berita&quot; + 0.012*&quot;cocok&quot; + 0.012*&quot;app&quot; + 0.012*&quot;forensik&quot; + 0.012*&quot;tugas&quot; + 0.012*&quot;wahyu&quot;
+Kata Kunci: 0.043*&quot;nama&quot; + 0.043*&quot;jenazah&quot; + 0.023*&quot;hasil&quot; + 0.023*&quot;com&quot; + 0.023*&quot;daftar&quot; + 0.023*&quot;haikal&quot; + 0.023*&quot;foto&quot; + 0.023*&quot;makam&quot; + 0.023*&quot;lihat&quot; + 0.023*&quot;kantong&quot;
 
 Topik: 2 
-Kata Kunci: 0.021*&quot;com&quot; + 0.013*&quot;kompas&quot; + 0.011*&quot;media&quot; + 0.008*&quot;gramedia&quot; + 0.008*&quot;layak&quot; + 0.008*&quot;iklim&quot; + 0.006*&quot;sekolah&quot; + 0.006*&quot;login&quot; + 0.006*&quot;iklan&quot; + 0.006*&quot;berita&quot;
+Kata Kunci: 0.064*&quot;jenazah&quot; + 0.052*&quot;kantong&quot; + 0.039*&quot;dna&quot; + 0.038*&quot;body&quot; + 0.033*&quot;dvi&quot; + 0.033*&quot;identifikasi&quot; + 0.032*&quot;bangkal&quot; + 0.032*&quot;part&quot; + 0.032*&quot;cocok&quot; + 0.027*&quot;nomor&quot;
 
 Topik: 3 
-Kata Kunci: 0.048*&quot;ponpes&quot; + 0.045*&quot;surabaya&quot; + 0.036*&quot;wib&quot; + 0.034*&quot;al&quot; + 0.032*&quot;khoziny&quot; + 0.030*&quot;korban&quot; + 0.022*&quot;identifikasi&quot; + 0.016*&quot;ambruk&quot; + 0.012*&quot;pamekasan&quot; + 0.012*&quot;santri&quot;
+Kata Kunci: 0.072*&quot;surabaya&quot; + 0.072*&quot;ponpes&quot; + 0.052*&quot;al&quot; + 0.050*&quot;korban&quot; + 0.049*&quot;wib&quot; + 0.049*&quot;khoziny&quot; + 0.038*&quot;identifikasi&quot; + 0.025*&quot;keluarga&quot; + 0.023*&quot;ambruk&quot; + 0.017*&quot;santri&quot;
 
 Topik: 4 
-Kata Kunci: 0.032*&quot;jenazah&quot; + 0.029*&quot;kantong&quot; + 0.020*&quot;korban&quot; + 0.017*&quot;identifikasi&quot; + 0.017*&quot;dna&quot; + 0.017*&quot;proses&quot; + 0.015*&quot;rs&quot; + 0.015*&quot;bhayangkara&quot; + 0.013*&quot;khusnan&quot; + 0.013*&quot;polri&quot;
+Kata Kunci: 0.032*&quot;properti&quot; + 0.027*&quot;news&quot; + 0.022*&quot;didik&quot; + 0.022*&quot;umkm&quot; + 0.022*&quot;travel&quot; + 0.022*&quot;indonesia&quot; + 0.020*&quot;artikel&quot; + 0.019*&quot;kompas&quot; + 0.017*&quot;jawa&quot; + 0.017*&quot;sehat&quot;
 
 --------------------------------------------------
-Coherence Score (c_v): 0.4390
+Coherence Score (c_v): 0.4458
 (Skor Coherence yang baik biasanya mendekati 1.0)
 </pre></div>
 </div>
