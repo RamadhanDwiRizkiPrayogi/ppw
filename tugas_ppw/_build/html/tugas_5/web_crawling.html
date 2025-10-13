@@ -482,6 +482,11 @@ document.write(`
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membuat kamus: memetakan setiap kata unik ke sebuah ID</span>
 <span class="n">dictionary</span> <span class="o">=</span> <span class="n">corpora</span><span class="o">.</span><span class="n">Dictionary</span><span class="p">(</span><span class="n">processed_docs</span><span class="p">)</span>
 
+<span class="c1"># (Opsional) Filter kata-kata yang terlalu jarang atau terlalu sering muncul</span>
+<span class="c1"># no_below=2 : mengabaikan kata yang muncul di kurang dari 2 dokumen</span>
+<span class="c1"># no_above=0.7 : mengabaikan kata yang muncul di lebih dari 70% dokumen</span>
+<span class="n">dictionary</span><span class="o">.</span><span class="n">filter_extremes</span><span class="p">(</span><span class="n">no_below</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">no_above</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
 <span class="c1"># Membuat corpus: mengubah setiap dokumen menjadi representasi BoW (ID kata, frekuensi)</span>
 <span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">processed_docs</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Corpus berhasil dibuat.&quot;</span><span class="p">)</span>
@@ -492,7 +497,7 @@ document.write(`
 <p>Dictionary berhasil dibuat dengan 183 kata unik setelah filtering.</p>
 <p>Corpus berhasil dibuat.
 Contoh representasi BoW untuk dokumen pertama:
-[(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 2), (12, 1), (13, 1), (14, 1), (15, 1)]</p>
+[(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 1)]</p>
 </section>
 <section id="id1">
 <h2>LDA model<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
@@ -535,17 +540,17 @@ Model LDA berhasil dilatih!</p>
 <section id="topik-topik-yang-ditemukan-oleh-model-lda">
 <h2>Topik-topik yang ditemukan oleh model LDA:<a class="headerlink" href="#topik-topik-yang-ditemukan-oleh-model-lda" title="Link to this heading">#</a></h2>
 <p>Topik: 0
-Kata Kunci: 0.048*“com” + 0.038*“kompas” + 0.030*“artikel” + 0.024*“news” + 0.023*“properti” + 0.020*“berita” + 0.020*“tewas” + 0.020*“travel” + 0.019*“baca” + 0.019*“indonesia”</p>
+Kata Kunci: 0.061*“com” + 0.037*“kompas” + 0.030*“berita” + 0.024*“sekolah” + 0.024*“iklan” + 0.024*“tewas” + 0.024*“smp” + 0.024*“media” + 0.022*“baca” + 0.019*“grobogan”</p>
 <p>Topik: 1
-Kata Kunci: 0.081*“jenazah” + 0.060*“dvi” + 0.057*“kantong” + 0.050*“rs” + 0.050*“bhayangkara” + 0.038*“dna” + 0.037*“tim” + 0.026*“posko” + 0.026*“polri” + 0.026*“pusdokkes”</p>
+Kata Kunci: 0.043*“nama” + 0.043*“jenazah” + 0.023*“hasil” + 0.023*“com” + 0.023*“daftar” + 0.023*“haikal” + 0.023*“foto” + 0.023*“makam” + 0.023*“lihat” + 0.023*“kantong”</p>
 <p>Topik: 2
-Kata Kunci: 0.051*“bangkal” + 0.042*“nomor” + 0.040*“jenazah” + 0.032*“kabupaten” + 0.022*“santri” + 0.022*“timur” + 0.022*“proses” + 0.022*“butuh” + 0.022*“dna” + 0.022*“nama”</p>
+Kata Kunci: 0.064*“jenazah” + 0.052*“kantong” + 0.039*“dna” + 0.038*“body” + 0.033*“dvi” + 0.033*“identifikasi” + 0.032*“bangkal” + 0.032*“part” + 0.032*“cocok” + 0.027*“nomor”</p>
 <p>Topik: 3
-Kata Kunci: 0.037*“identifikasi” + 0.031*“korban” + 0.024*“com” + 0.024*“jenazah” + 0.020*“laku” + 0.018*“body” + 0.016*“kantong” + 0.014*“ruang” + 0.014*“hasil” + 0.014*“metode”</p>
+Kata Kunci: 0.072*“surabaya” + 0.072*“ponpes” + 0.052*“al” + 0.050*“korban” + 0.049*“wib” + 0.049*“khoziny” + 0.038*“identifikasi” + 0.025*“keluarga” + 0.023*“ambruk” + 0.017*“santri”</p>
 <p>Topik: 4
-Kata Kunci: 0.067*“ponpes” + 0.063*“surabaya” + 0.049*“al” + 0.046*“wib” + 0.046*“khoziny” + 0.043*“korban” + 0.035*“identifikasi” + 0.022*“ambruk” + 0.019*“baca” + 0.019*“keluarga”</p>
+Kata Kunci: 0.032*“properti” + 0.027*“news” + 0.022*“didik” + 0.022*“umkm” + 0.022*“travel” + 0.022*“indonesia” + 0.020*“artikel” + 0.019*“kompas” + 0.017*“jawa” + 0.017*“sehat”</p>
 <hr class="docutils" />
-<p>Coherence Score (c_v): 0.5310
+<p>Coherence Score (c_v): 0.4458
 (Skor Coherence yang baik biasanya mendekati 1.0)</p>
 </section>
 </section>

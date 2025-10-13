@@ -88,6 +88,11 @@ Dokumen 2: ['com', 'perintah', 'swasta', 'lsmfigur', 'bumn', 'umkm', 'nusatirta'
 # Membuat kamus: memetakan setiap kata unik ke sebuah ID
 dictionary = corpora.Dictionary(processed_docs)
 
+# (Opsional) Filter kata-kata yang terlalu jarang atau terlalu sering muncul
+# no_below=2 : mengabaikan kata yang muncul di kurang dari 2 dokumen
+# no_above=0.7 : mengabaikan kata yang muncul di lebih dari 70% dokumen
+dictionary.filter_extremes(no_below=2, no_above=0.7)
+
 # Membuat corpus: mengubah setiap dokumen menjadi representasi BoW (ID kata, frekuensi)
 corpus = [dictionary.doc2bow(doc) for doc in processed_docs]
 print("\nCorpus berhasil dibuat.")
@@ -99,7 +104,7 @@ Dictionary berhasil dibuat dengan 183 kata unik setelah filtering.
 
 Corpus berhasil dibuat.
 Contoh representasi BoW untuk dokumen pertama:
-[(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 2), (12, 1), (13, 1), (14, 1), (15, 1)]
+[(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 1)]
 
 ## LDA model
 
@@ -143,20 +148,20 @@ else:
 Topik-topik yang ditemukan oleh model LDA:
 --------------------------------------------------
 Topik: 0 
-Kata Kunci: 0.048*"com" + 0.038*"kompas" + 0.030*"artikel" + 0.024*"news" + 0.023*"properti" + 0.020*"berita" + 0.020*"tewas" + 0.020*"travel" + 0.019*"baca" + 0.019*"indonesia"
+Kata Kunci: 0.061*"com" + 0.037*"kompas" + 0.030*"berita" + 0.024*"sekolah" + 0.024*"iklan" + 0.024*"tewas" + 0.024*"smp" + 0.024*"media" + 0.022*"baca" + 0.019*"grobogan"
 
 Topik: 1 
-Kata Kunci: 0.081*"jenazah" + 0.060*"dvi" + 0.057*"kantong" + 0.050*"rs" + 0.050*"bhayangkara" + 0.038*"dna" + 0.037*"tim" + 0.026*"posko" + 0.026*"polri" + 0.026*"pusdokkes"
+Kata Kunci: 0.043*"nama" + 0.043*"jenazah" + 0.023*"hasil" + 0.023*"com" + 0.023*"daftar" + 0.023*"haikal" + 0.023*"foto" + 0.023*"makam" + 0.023*"lihat" + 0.023*"kantong"
 
 Topik: 2 
-Kata Kunci: 0.051*"bangkal" + 0.042*"nomor" + 0.040*"jenazah" + 0.032*"kabupaten" + 0.022*"santri" + 0.022*"timur" + 0.022*"proses" + 0.022*"butuh" + 0.022*"dna" + 0.022*"nama"
+Kata Kunci: 0.064*"jenazah" + 0.052*"kantong" + 0.039*"dna" + 0.038*"body" + 0.033*"dvi" + 0.033*"identifikasi" + 0.032*"bangkal" + 0.032*"part" + 0.032*"cocok" + 0.027*"nomor"
 
 Topik: 3 
-Kata Kunci: 0.037*"identifikasi" + 0.031*"korban" + 0.024*"com" + 0.024*"jenazah" + 0.020*"laku" + 0.018*"body" + 0.016*"kantong" + 0.014*"ruang" + 0.014*"hasil" + 0.014*"metode"
+Kata Kunci: 0.072*"surabaya" + 0.072*"ponpes" + 0.052*"al" + 0.050*"korban" + 0.049*"wib" + 0.049*"khoziny" + 0.038*"identifikasi" + 0.025*"keluarga" + 0.023*"ambruk" + 0.017*"santri"
 
 Topik: 4 
-Kata Kunci: 0.067*"ponpes" + 0.063*"surabaya" + 0.049*"al" + 0.046*"wib" + 0.046*"khoziny" + 0.043*"korban" + 0.035*"identifikasi" + 0.022*"ambruk" + 0.019*"baca" + 0.019*"keluarga"
+Kata Kunci: 0.032*"properti" + 0.027*"news" + 0.022*"didik" + 0.022*"umkm" + 0.022*"travel" + 0.022*"indonesia" + 0.020*"artikel" + 0.019*"kompas" + 0.017*"jawa" + 0.017*"sehat"
 
 --------------------------------------------------
-Coherence Score (c_v): 0.5310
+Coherence Score (c_v): 0.4458
 (Skor Coherence yang baik biasanya mendekati 1.0)
