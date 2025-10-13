@@ -31,8 +31,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['# stemming/lemmatization (mengembalikan kata ke bentuk dasar) untuk Bahasa Indonesia', '', '# Stemming', 'factory = StemmerFactory()', 'stemmer = factory.create_stemmer()']
+['# Memecah teks mentah menjadi daftar kalimat (sentences)', "sentences = re.split(r'[.!?]\\s*', text) # Memecah berdasarkan tanda titik, tanda tanya, atau tanda seru diikuti oleh spasi", 'print(f"Teks berhasil dipecah menjadi {len(sentences)} kalimat.\\n") # Ditambah \\n', '', '#perulangan untuk preprocessing pada setiap kalimat ']
 ...
-['factory = StemmerFactory()', 'stemmer = factory.create_stemmer()', 'output = stemmer.stem(teks)', '', 'print("Hasil stemming/lemmatization (Bahasa Indonesia):", output)']
+['', 'print(f"Preprocessing selesai. Dihasilkan {len(processed_docs)} dokumen yang siap diproses.")', 'print("\\nContoh 3 dokumen pertama:")', 'for i, doc in enumerate(processed_docs[:3]):', '    print(f"Dokumen {i}: {doc}")']
 -------------------
 

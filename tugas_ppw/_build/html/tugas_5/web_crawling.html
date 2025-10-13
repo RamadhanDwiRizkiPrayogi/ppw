@@ -1,0 +1,668 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>LDA model &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tugas_5/web_crawling';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="preprocessing, tf-idf dan cbow" href="../tugas_4/web_crawling.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/foto_profil.jpg" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="../_static/foto_profil.jpg" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Profile
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tugas_1/pengantar_ppw.html">Pengantar Web Mining</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tugas_2/web_crawling.html">web crawling - tugas 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tugas_3/web_crawling.html">Web Crawling - Tugas 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tugas_4/web_crawling.html">preprocessing, tf-idf dan cbow</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">LDA model</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Ftugas_5/web_crawling.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tugas_5/web_crawling.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>LDA model</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports-setup">Imports &amp; setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scraping-berita-kompas">scraping berita kompas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inisisalisasi-preprocessing">inisisalisasi preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-per-kalimat">preprocessing per kalimat</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">LDA model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#topik-topik-yang-ditemukan-oleh-model-lda">Topik-topik yang ditemukan oleh model LDA:</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lda-model">
+<h1>LDA model<a class="headerlink" href="#lda-model" title="Link to this heading">#</a></h1>
+<section id="imports-setup">
+<h2>Imports &amp; setup<a class="headerlink" href="#imports-setup" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bs4</span><span class="w"> </span><span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nltk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.Stemmer.StemmerFactory</span><span class="w"> </span><span class="kn">import</span> <span class="n">StemmerFactory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gensim</span><span class="w"> </span><span class="kn">import</span> <span class="n">corpora</span><span class="p">,</span> <span class="n">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gensim.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">CoherenceModel</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+</section>
+<section id="scraping-berita-kompas">
+<h2>scraping berita kompas<a class="headerlink" href="#scraping-berita-kompas" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">web</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://surabaya.kompas.com/read/2025/10/13/073714878/keharuan-keluarga-saat-identitas-2-jasad-santri-ponpes-al-khoziny&quot;</span><span class="p">)</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">web</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s1">&#39;html.parser&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">soup</span><span class="p">([</span><span class="s1">&#39;script&#39;</span><span class="p">,</span> <span class="s1">&#39;style&#39;</span><span class="p">]):</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">stripped_strings</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scraping berhasil. Teks mentah siap diproses.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Scraping berhasil. Teks mentah siap diproses.</p>
+</section>
+<section id="inisisalisasi-preprocessing">
+<h2>inisisalisasi preprocessing<a class="headerlink" href="#inisisalisasi-preprocessing" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membuat stemmer dari Sastrawi</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
+<span class="n">stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
+
+<span class="c1"># Mengunduh dan menyiapkan daftar stopwords Bahasa Indonesia</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
+<span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;indonesian&#39;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stemmer dan Stopwords siap digunakan.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\hp\AppData\Roaming\nltk_data…
+[nltk_data]   Package stopwords is already up-to-date!</p>
+</section>
+<section id="preprocessing-per-kalimat">
+<h2>preprocessing per kalimat<a class="headerlink" href="#preprocessing-per-kalimat" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Memecah teks mentah menjadi daftar kalimat (sentences)</span>
+<span class="n">sentences</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[.!?]\s*&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="c1"># Memecah berdasarkan tanda titik, tanda tanya, atau tanda seru diikuti oleh spasi</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Teks berhasil dipecah menjadi </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span><span class="si">}</span><span class="s2"> kalimat.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Ditambah \n</span>
+<span class="c1">#perulangan untuk preprocessing pada setiap kalimat </span>
+<span class="n">processed_docs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+    <span class="c1"># Hanya proses kalimat yang tidak terlalu pendek</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="c1">#Case Folding &amp; Cleaning (angka, tanda baca)</span>
+        <span class="n">sent</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">sent</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sent</span><span class="p">)</span>
+        <span class="n">sent</span> <span class="o">=</span> <span class="n">sent</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">))</span>
+        <span class="n">sent</span> <span class="o">=</span> <span class="n">sent</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="c1">#Stemming</span>
+        <span class="n">stemmed_sent</span> <span class="o">=</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">sent</span><span class="p">)</span>
+
+        <span class="c1">#Tokenizing &amp; Stopword Removal</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">stemmed_sent</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span>
+
+        <span class="c1"># Tambahkan hasil (daftar token) jika tidak kosong</span>
+        <span class="k">if</span> <span class="n">tokens</span><span class="p">:</span>
+            <span class="n">processed_docs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Preprocessing selesai. Dihasilkan </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">processed_docs</span><span class="p">)</span><span class="si">}</span><span class="s2"> dokumen yang siap diproses.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Contoh 3 dokumen pertama:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">doc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">processed_docs</span><span class="p">[:</span><span class="mi">3</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dokumen </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">doc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Preprocessing selesai. Dihasilkan 42 dokumen yang siap diproses.</p>
+<p>Contoh 3 dokumen pertama:</p>
+<p>Dokumen 0: [‘haru’, ‘keluarga’, ‘identitas’, ‘jasad’, ‘santri’, ‘ponpes’, ‘al’, ‘khoziny’, ‘identifikasi’, ‘otomatis’, ‘mode’, ‘gelap’, ‘mode’, ‘terang’, ‘login’, ‘gabung’, ‘kompas’]</p>
+<p>Dokumen 1: [‘com’, ‘konten’, ‘simpan’, ‘konten’, ‘suka’, ‘atur’, ‘minat’, ‘ikan’, ‘masuk’, ‘langgan’, ‘kompas’, ‘one’, ‘news’, ‘nasional’, ‘global’, ‘megapolitan’, ‘regional’, ‘milu’, ‘hype’, ‘konsultasi’, ‘hukum’, ‘cek’, ‘fakta’, ‘surat’, ‘baca’, ‘indeks’, ‘kilas’, ‘daerah’, ‘kilas’, ‘korporasi’, ‘kilas’, ‘menteri’, ‘sorot’, ‘politik’, ‘kilas’, ‘badan’, ‘negara’, ‘kelana’, ‘indonesia’, ‘kalbe’, ‘health’, ‘corner’, ‘kilas’, ‘parlemen’, ‘kilas’, ‘bumn’, ‘nusaraya’, ‘sumatera’, ‘utara’, ‘sumatera’, ‘selatan’, ‘sumatera’, ‘barat’, ‘riau’, ‘lampung’, ‘banten’, ‘yogyakarta’, ‘jawa’, ‘barat’, ‘jawa’, ‘jawa’, ‘timur’, ‘kalimantan’, ‘barat’, ‘kalimantan’, ‘timur’, ‘sulawesi’, ‘selatan’, ‘bal’, ‘indeks’, ‘jagat’, ‘literasi’, ‘artikel’, ‘foto’, ‘video’, ‘rolls’, ‘donasi’, ‘stem’, ‘cahaya’, ‘aktual’, ‘doa’, ‘niat’, ‘jadwal’, ‘sholat’, ‘tekno’, ‘apps’, ‘os’, ‘gadget’, ‘internet’, ‘hardware’, ‘business’, ‘game’, ‘galeri’, ‘indeks’, ‘tech’, ‘innovation’, ‘kilas’, ‘internet’, ‘otomotif’, ‘motor’, ‘mobil’, ‘sport’, ‘niaga’, ‘komunitas’, ‘otopedia’, ‘rapah’, ‘ev’, ‘leadership’, ‘elektrifikasi’, ‘pamer’, ‘bola’, ‘timnas’, ‘indonesia’, ‘liga’, ‘indonesia’, ‘liga’, ‘inggris’, ‘liga’, ‘italia’, ‘liga’, ‘champions’, ‘klasemen’, ‘sports’, ‘motogp’, ‘badminton’, ‘indeks’, ‘lifestyle’, ‘wellness’, ‘fashion’, ‘relationship’, ‘parenting’, ‘beauty’, ‘grooming’, ‘buku’, ‘indeks’, ‘sadar’, ‘stunting’, ‘kilas’, ‘lifestyle’, ‘tren’, ‘lestari’, ‘health’, ‘sakit’, ‘az’, ‘kilas’, ‘sehat’, ‘money’, ‘ekbis’, ‘uang’, ‘syariah’, ‘industri’, ‘energi’, ‘karier’, ‘cuan’, ‘belanja’, ‘pajak’, ‘indeks’, ‘kilas’, ‘badan’, ‘kilas’, ‘transportasi’, ‘kilas’, ‘fintech’, ‘kilas’, ‘perban’, ‘kilas’, ‘investasi’, ‘transaksi’, ‘digital’, ‘jejak’, ‘umkm’, ‘properti’, ‘news’, ‘listing’, ‘properti’, ‘arsitektur’, ‘konstruksi’, ‘tips’, ‘properti’, ‘ikn’, ‘homey’, ‘indeks’, ‘sorot’, ‘properti’, ‘edukasi’, ‘sekolah’, ‘edu’, ‘news’, ‘guru’, ‘didik’, ‘khusus’, ‘beasiswa’, ‘literasi’, ‘skola’, ‘kilas’, ‘didik’, ‘ideaksi’, ‘travel’, ‘travel’, ‘news’, ‘travel’, ‘ideas’, ‘hotel’, ‘story’, ‘travelpedia’, ‘food’, ‘ohayo’, ‘jepang’, ‘indeks’, ‘video’, ‘parapuan’, ‘kolom’, ‘sains’, ‘jeo’, ‘foto’, ‘vik’, ‘netizen’, ‘warta’, ‘membership’, ‘kompas’]</p>
+<p>Dokumen 2: [‘com’, ‘perintah’, ‘swasta’, ‘lsmfigur’, ‘bumn’, ‘umkm’, ‘nusatirta’, ‘sehat’, ‘hidup’, ‘sehat’, ‘sejahtera’, ‘air’, ‘bersih’, ‘sanitasi’, ‘layak’, ‘didik’, ‘didik’, ‘kualitas’, ‘lingkung’, ‘energi’, ‘bersih’, ‘jangkau’, ‘tangan’, ‘ubah’, ‘iklim’, ‘ekosistem’, ‘laut’, ‘ekosistem’, ‘darat’, ‘ekonomi’, ‘umkm’, ‘miskin’, ‘lapar’, ‘tara’, ‘gender’, ‘kerja’, ‘layak’, ‘tumbuh’, ‘ekonomi’, ‘industri’, ‘inovasi’, ‘infrastruktur’, ‘senjang’, ‘kota’, ‘mukim’, ‘konsumsi’, ‘produksi’, ‘bertanggungjawab’, ‘program’, ‘lestari’, ‘lihat’, ‘haru’, ‘keluarga’, ‘identitas’, ‘jasad’, ‘santri’, ‘ponpes’, ‘al’, ‘khoziny’, ‘identifikasi’, ‘komentar’, ‘baca’, ‘berita’, ‘iklan’]</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membuat kamus: memetakan setiap kata unik ke sebuah ID</span>
+<span class="n">dictionary</span> <span class="o">=</span> <span class="n">corpora</span><span class="o">.</span><span class="n">Dictionary</span><span class="p">(</span><span class="n">processed_docs</span><span class="p">)</span>
+
+<span class="c1"># Membuat corpus: mengubah setiap dokumen menjadi representasi BoW (ID kata, frekuensi)</span>
+<span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">processed_docs</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Corpus berhasil dibuat.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Contoh representasi BoW untuk dokumen pertama:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corpus</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Dictionary berhasil dibuat dengan 183 kata unik setelah filtering.</p>
+<p>Corpus berhasil dibuat.
+Contoh representasi BoW untuk dokumen pertama:
+[(0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 1), (9, 1), (10, 1), (11, 2), (12, 1), (13, 1), (14, 1), (15, 1)]</p>
+</section>
+<section id="id1">
+<h2>LDA model<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tentukan jumlah topik yang ingin dicari</span>
+<span class="n">num_topics</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Memulai pelatihan model LDA untuk menemukan </span><span class="si">{</span><span class="n">num_topics</span><span class="si">}</span><span class="s2"> topik...&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">corpus</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">dictionary</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Corpus atau Dictionary kosong. Tidak dapat melatih model LDA.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">lda_model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">LdaModel</span><span class="p">(</span>
+        <span class="n">corpus</span><span class="o">=</span><span class="n">corpus</span><span class="p">,</span>
+        <span class="n">id2word</span><span class="o">=</span><span class="n">dictionary</span><span class="p">,</span>
+        <span class="n">num_topics</span><span class="o">=</span><span class="n">num_topics</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>  <span class="c1"># Agar hasil bisa direproduksi</span>
+        <span class="n">passes</span><span class="o">=</span><span class="mi">15</span>          <span class="c1"># Jumlah iterasi pelatihan</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model LDA berhasil dilatih!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Memulai pelatihan model LDA untuk menemukan 5 topik…
+Model LDA berhasil dilatih!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s1">&#39;lda_model&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Topik-topik yang ditemukan oleh model LDA:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">lda_model</span><span class="o">.</span><span class="n">print_topics</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Topik: </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">Kata Kunci: </span><span class="si">{</span><span class="n">topic</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Evaluasi dengan Coherence Score dengan c_v</span>
+    <span class="n">coherence_model_lda</span> <span class="o">=</span> <span class="n">CoherenceModel</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">lda_model</span><span class="p">,</span> <span class="n">texts</span><span class="o">=</span><span class="n">processed_docs</span><span class="p">,</span> <span class="n">dictionary</span><span class="o">=</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">coherence</span><span class="o">=</span><span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
+    <span class="n">coherence_lda</span> <span class="o">=</span> <span class="n">coherence_model_lda</span><span class="o">.</span><span class="n">get_coherence</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Coherence Score (c_v): </span><span class="si">{</span><span class="n">coherence_lda</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;(Skor Coherence yang baik biasanya mendekati 1.0)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model LDA belum dilatih. Jalankan sel sebelumnya terlebih dahulu.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="topik-topik-yang-ditemukan-oleh-model-lda">
+<h2>Topik-topik yang ditemukan oleh model LDA:<a class="headerlink" href="#topik-topik-yang-ditemukan-oleh-model-lda" title="Link to this heading">#</a></h2>
+<p>Topik: 0
+Kata Kunci: 0.048*“com” + 0.038*“kompas” + 0.030*“artikel” + 0.024*“news” + 0.023*“properti” + 0.020*“berita” + 0.020*“tewas” + 0.020*“travel” + 0.019*“baca” + 0.019*“indonesia”</p>
+<p>Topik: 1
+Kata Kunci: 0.081*“jenazah” + 0.060*“dvi” + 0.057*“kantong” + 0.050*“rs” + 0.050*“bhayangkara” + 0.038*“dna” + 0.037*“tim” + 0.026*“posko” + 0.026*“polri” + 0.026*“pusdokkes”</p>
+<p>Topik: 2
+Kata Kunci: 0.051*“bangkal” + 0.042*“nomor” + 0.040*“jenazah” + 0.032*“kabupaten” + 0.022*“santri” + 0.022*“timur” + 0.022*“proses” + 0.022*“butuh” + 0.022*“dna” + 0.022*“nama”</p>
+<p>Topik: 3
+Kata Kunci: 0.037*“identifikasi” + 0.031*“korban” + 0.024*“com” + 0.024*“jenazah” + 0.020*“laku” + 0.018*“body” + 0.016*“kantong” + 0.014*“ruang” + 0.014*“hasil” + 0.014*“metode”</p>
+<p>Topik: 4
+Kata Kunci: 0.067*“ponpes” + 0.063*“surabaya” + 0.049*“al” + 0.046*“wib” + 0.046*“khoziny” + 0.043*“korban” + 0.035*“identifikasi” + 0.022*“ambruk” + 0.019*“baca” + 0.019*“keluarga”</p>
+<hr class="docutils" />
+<p>Coherence Score (c_v): 0.5310
+(Skor Coherence yang baik biasanya mendekati 1.0)</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./tugas_5"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../tugas_4/web_crawling.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">preprocessing, tf-idf dan cbow</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports-setup">Imports &amp; setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scraping-berita-kompas">scraping berita kompas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inisisalisasi-preprocessing">inisisalisasi preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-per-kalimat">preprocessing per kalimat</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">LDA model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#topik-topik-yang-ditemukan-oleh-model-lda">Topik-topik yang ditemukan oleh model LDA:</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
