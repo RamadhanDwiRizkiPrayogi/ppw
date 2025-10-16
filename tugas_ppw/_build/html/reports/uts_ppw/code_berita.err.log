@@ -31,8 +31,8 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['import requests', 'from bs4 import BeautifulSoup', 'import pandas as pd', '', 'def ptaa():']
+['# Fungsi untuk menghitung perplexity score', '# Perplexity: Semakin rendah, semakin baik model', 'def compute_perplexity(lda_model, data):', '    return lda_model.perplexity(data)', '']
 ...
-['', '    return df', '', '# Jalankan fungsi', 'ptaa()']
+['    perplexity_scores.append(perplexity)', '    ', '    print(f"  Perplexity: {perplexity:.2f}")', '', 'print("\\n✓ Selesai menghitung perplexity untuk berbagai jumlah topik")']
 -------------------
 
