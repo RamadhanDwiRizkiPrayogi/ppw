@@ -1,4 +1,4 @@
-# # UTS: Klasifikasi Teks Berita dengan LDA Feature Extraction dan SVM dan Naive Bayes
+# UTS: Klasifikasi Teks Berita dengan LDA Feature Extraction dan SVM dan Naive Bayes
 
 ### Tugas ini bertujuan untuk melakukan Klasifikasi Teks Berita menggunakan:
 
